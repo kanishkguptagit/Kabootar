@@ -2,10 +2,10 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "prepare": "husky install",
-    "postinstall": "lerna bootstrap",
+    "boots": "lerna bootstrap",
+    "postinstall": "npm run bootstrap",
     "diff": "lerna diff",
-    "clean": "lerna clean",
+    "clean": "lerna clean -y",
     "version": "lerna version --no-changelog -m \"chore: RELEASE %s\" --no-push",
     "preformat": "prettier --write --find-config-path .prettierrc",
     "format": "prettier --config .prettierrc --ignore-path .prettierignore --write client/**"
