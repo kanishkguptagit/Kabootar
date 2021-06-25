@@ -6,7 +6,7 @@
     "postinstall": "lerna bootstrap",
     "diff": "lerna diff",
     "clean": "lerna clean",
-    "version": "lerna version --no-changelog -m \"chore: REALEASE %s\" --no-push",
+    "version": "lerna version --no-changelog -m \"chore: RELEASE %s\" --no-push",
     "preformat": "prettier --write --find-config-path .prettierrc",
     "format": "prettier --config .prettierrc --ignore-path .prettierignore --write client/ server/"
   },
