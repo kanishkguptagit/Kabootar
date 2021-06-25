@@ -1,0 +1,12 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "diff": "lerna diff",
+    "preformat": "prettier --write --find-config-path .prettierrc",
+    "format": "prettier --config .prettierrc --ignore-path .prettierignore --write ../client"
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}
