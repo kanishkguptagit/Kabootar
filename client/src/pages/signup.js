@@ -12,7 +12,6 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
 import accountsStyles from "../styles/accounts";
-import { flexbox } from "@material-ui/system";
 
 export default function Login() {
   const classes = accountsStyles();
@@ -44,8 +43,7 @@ export default function Login() {
               fullWidth
               id="lname"
               label="Last Name"
-              name="lname"
-              autoFocus
+              name="lname"              
             />
             <TextField
               variant="outlined"
@@ -55,8 +53,7 @@ export default function Login() {
               id="email"
               label="Email Address"
               name="email"
-              autoComplete="email"
-              autoFocus
+              autoComplete="email"              
             />
             <TextField
               variant="outlined"
