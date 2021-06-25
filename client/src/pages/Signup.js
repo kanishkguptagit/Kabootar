@@ -1,4 +1,4 @@
-import Accounts from "../components/accounts";
+import Accounts from "../components/Accounts";
 
 const INPUT = [
     {
@@ -27,6 +27,13 @@ const INPUT = [
         label: 'Password',
         type: 'password',
         name: 'password',
+        autofocus: false,
+    },
+    {
+        id: 'cnfpassword',
+        label: 'Confirm Password',
+        type: 'password',
+        name: 'cnfpassword',
         autofocus: false,
     }
 ];

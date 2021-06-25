@@ -1,4 +1,4 @@
-import Accounts from "../components/accounts";
+import Accounts from "../components/Accounts";
 
 const INPUT = [
     {
