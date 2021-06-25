@@ -8,9 +8,10 @@
     "clean": "lerna clean",
     "version": "lerna version --no-changelog -m \"chore: RELEASE %s\" --no-push",
     "preformat": "prettier --write --find-config-path .prettierrc",
-    "format": "prettier --config .prettierrc --ignore-path .prettierignore --write client/ server/"
+    "format": "prettier --config .prettierrc --ignore-path .prettierignore --write client/**"
   },
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "lerna": "^4.0.0",
+    "prettier": "^2.3.1"
   }
 }
