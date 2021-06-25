@@ -1,24 +1,37 @@
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
+import { Route, Switch } from 'react-router-dom';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    "& > *": {
-      margin: theme.spacing(1),
-    },
-  },
-}));
+import Signin from './pages/signin';
+import Signup from './pages/signup';
 
 function App() {
-  const classes = useStyles();
 
   return (
     <div className="App">
-      <div className={classes.root}>
-        <Button variant="contained" color="primary">
-          Primary
-        </Button>
-      </div>
+      <main>
+        <Switch>
+          <Route path="/" exact>
+            <p>Welcome Page</p>
+          </Route>
+          <Route path="/signin" exact>
+            <Signin />
+          </Route>
+          <Route path="/signup" exact>
+            <Signup />
+          </Route>
+          <Route path="/home" exact>
+            <p>home</p>
+          </Route>
+          <Route path="/history" exact>
+            <p>history</p>
+          </Route>
+          <Route path="/create" exact>
+            <p>create</p>
+          </Route>
+          <Route path="*">
+            <p>404 Not Found</p>
+          </Route>
+        </Switch>
+      </main>
     </div>
   );
 }
