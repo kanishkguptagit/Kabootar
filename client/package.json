@@ -12,9 +12,7 @@
 	},
 	"scripts": {
 		"start": "react-scripts start",
-		"build": "react-scripts build",
-		"preformat": "prettier --write --find-config-path ../.prettierrc",
-		"format": "prettier --config ../.prettierrc --ignore-path ../.prettierignore --write ."
+		"build": "react-scripts build"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -32,8 +30,5 @@
 			"last 1 firefox version",
 			"last 1 safari version"
 		]
-	},
-	"devDependencies": {
-		"prettier": "^2.3.1"
 	}
 }

@@ -1,0 +1,22 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "scripts to format and automate",
+  "scripts": {
+    "preformat": "prettier --write --find-config-path .prettierrc",
+    "format": "prettier --config .prettierrc --ignore-path .prettierignore --write ../client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kanishkguptagit/Kabootar.git"
+  },
+  "author": "aditya-mitra",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kanishkguptagit/Kabootar/issues"
+  },
+  "homepage": "https://github.com/kanishkguptagit/Kabootar#readme",
+  "dependencies": {
+    "prettier": "^2.3.1"
+  }
+}
