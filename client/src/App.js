@@ -1,17 +1,12 @@
 import { Route, Switch } from 'react-router-dom';
-import CssBaseline from "@material-ui/core/CssBaseline";
 
-import Signin from './pages/Signin';
-import Signup from './pages/Signup';
-import NavBar from './components/NavBar';
-
+import Signin from './pages/signin';
+import Signup from './pages/signup';
 
 function App() {
 
   return (
-    <div >
-      <CssBaseline />
-      <NavBar />
+    <div className="App">
       <main>
         <Switch>
           <Route path="/" exact>
