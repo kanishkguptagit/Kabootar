@@ -2,13 +2,17 @@
   "name": "root",
   "private": true,
   "scripts": {
+    "prepare": "husky install",
     "postinstall": "lerna bootstrap",
     "diff": "lerna diff",
     "clean": "lerna clean",
     "preformat": "prettier --write --find-config-path .prettierrc",
-    "format": "prettier --config .prettierrc --ignore-path .prettierignore --write ../client"
+    "format": "prettier --config .prettierrc --ignore-path .prettierignore --write client/ server/"
   },
   "devDependencies": {
     "lerna": "^4.0.0"
+  },
+  "dependencies": {
+    "husky": "^6.0.0"
   }
 }
