@@ -1,4 +1,7 @@
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom';
+
+import Signin from './pages/signin';
+import Signup from './pages/signup';
 import "./App.css";
 
 function App() {
@@ -10,8 +13,11 @@ function App() {
           <Route path="/" exact>
             <p>Welcome Page</p>
           </Route>
-          <Route path="/accounts" exact>
-            <p>accounts</p>
+          <Route path="/signin" exact>
+            <Signin />
+          </Route>
+          <Route path="/signup" exact>
+            <Signup />
           </Route>
           <Route path="/home" exact>
             <p>home</p>
