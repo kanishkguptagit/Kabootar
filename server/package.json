@@ -19,6 +19,7 @@
 	"main": "server.js",
 	"license": "MIT",
 	"devDependencies": {
+		"@types/cors": "^2.8.10",
 		"@types/express": "^4.17.12",
 		"@types/mongoose": "^5.11.97",
 		"@types/node": "^15.12.4",
