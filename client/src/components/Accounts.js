@@ -13,28 +13,30 @@ import accountsStyles from '../styles/Accounts';
 export default function Accounts(props) {
 	const classes = accountsStyles();
 
-  return (
-    <Grid container component="main" className={classes.root}>      
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar} src="/logos/icon.png"></Avatar>
-          <Typography component="h1" variant="h5">
-            {props.action}
-          </Typography>
-          <form className={classes.form} noValidate>
-            {props.items.map((item) => {
-              return (<TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id={item.id}
-                label={item.label}
-                name={item.name}
-                autoFocus={item.autofocus}
-                type={item.type}
-              />);
-            })}
+	return (
+		<Grid container component="main" className={classes.root}>
+			<Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+				<div className={classes.paper}>
+					<Avatar className={classes.avatar} src="/logos/icon.png"></Avatar>
+					<Typography component="h1" variant="h5">
+						{props.action}
+					</Typography>
+					<form className={classes.form} noValidate>
+						{props.items.map(item => {
+							return (
+								<TextField
+									variant="outlined"
+									margin="normal"
+									required
+									fullWidth
+									id={item.id}
+									label={item.label}
+									name={item.name}
+									autoFocus={item.autofocus}
+									type={item.type}
+								/>
+							);
+						})}
 
 						<Button
 							type="submit"
