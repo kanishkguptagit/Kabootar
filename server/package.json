@@ -1,26 +1,26 @@
 {
-  "name": "app",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "start": "node server",
-    "dev": "nodemon server",
-    "build": "node build.js"
-  },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "debug": "~2.6.9",
-    "dotenv": "^10.0.0",
-    "esbuild": "^0.12.9",
-    "express": "~4.16.1",
-    "mongoose": "^5.12.15"
-  },
-  "main": "app.js",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "mongodb-client-encryption": "^1.2.5"
-  }
+	"name": "app",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"start": "node server",
+		"dev": "nodemon server",
+		"build": "node build.js"
+	},
+	"dependencies": {
+		"cors": "^2.8.5",
+		"debug": "~2.6.9",
+		"dotenv": "^10.0.0",
+		"esbuild": "^0.12.9",
+		"express": "~4.16.1",
+		"mongoose": "^5.12.15"
+	},
+	"main": "app.js",
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"devDependencies": {
+		"mongodb-client-encryption": "^1.2.5"
+	}
 }

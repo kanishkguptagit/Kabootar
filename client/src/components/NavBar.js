@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import NavStyles from '../styles/NavBar';
 
 export default function NavBar() {
-  const classes = NavStyles();
+	const classes = NavStyles();
 
 	return (
 		<div className={classes.root}>
