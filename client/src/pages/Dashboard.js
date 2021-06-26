@@ -27,7 +27,7 @@ const list = {
 }
 
 function Dashboard () {
-    return <Layout chart={chart} block={block} list={list}  />
+    return <Layout chart={chart} block={block} list={list} title={"Dashboard"} />
 }
 
 export default Dashboard;

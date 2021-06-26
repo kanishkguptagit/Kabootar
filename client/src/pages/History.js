@@ -27,7 +27,7 @@ const list = {
 };
 
 function History() {
-	return <Layout chart={chart} block={block} list={list} />;
+	return <Layout chart={chart} block={block} list={list} title={"History"} />;
 }
 
 export default History;
