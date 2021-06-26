@@ -6,6 +6,7 @@ import Signup from './pages/Signup';
 import NavBar from './components/NavBar';
 import Dashboard from './pages/Dashboard';
 import Landing from './pages/Landing';
+import History from './pages/History';
 
 function App() {
 	return (
@@ -26,9 +27,8 @@ function App() {
 					<Route path="/dashboard" exact>						
 						<Dashboard />
 					</Route>
-					<Route path="/history" exact>
-						<NavBar />
-						<p>history</p>
+					<Route path="/history" exact>						
+						<History />
 					</Route>
 					<Route path="/create" exact>
 						<NavBar />
