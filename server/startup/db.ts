@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import chalk from 'chalk';
 
+import { startAgenda } from './scheduler';
+
 export default function connectToDB(): void {
 	console.log(chalk.white.bgYellow('attempting connection to database'));
 
@@ -17,6 +19,10 @@ export default function connectToDB(): void {
 	});
 
 	mongoose.connection.once('open', () => {
-		console.log(chalk.whiteBright.bgGreenBright('connection to database successful'));
+		console.log(chalk.whiteBright.bgGreenBright('connection to database successful!'));
+	});
+
+	mongoose.connection.once('open', () => {
+		startAgenda();
 	});
 }
