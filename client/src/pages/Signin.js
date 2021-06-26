@@ -17,8 +17,8 @@ const INPUT = [
 	},
 ];
 
-function Login() {
-	return <Accounts items={INPUT} action={'sign in'} />;
+function Signin(){
+    return <Accounts items={INPUT} action={"sign in"} />
 }
 
-export default Login;
+export default Signin;

@@ -38,8 +38,8 @@ const INPUT = [
 	},
 ];
 
-function Login() {
-	return <Accounts items={INPUT} action={'sign up'} />;
+function Signup(){
+    return <Accounts items={INPUT} action={"sign up"} />
 }
 
-export default Login;
+export default Signup;

@@ -8,8 +8,8 @@ import Button from '@material-ui/core/Button';
 
 import NavStyles from '../styles/NavBar';
 
-export default function ButtonAppBar() {
-	const classes = NavStyles();
+export default function NavBar() {
+  const classes = NavStyles();
 
 	return (
 		<div className={classes.root}>
