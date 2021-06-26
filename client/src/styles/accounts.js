@@ -5,8 +5,7 @@ const accountsStyles = makeStyles(theme => ({
 		height: '100vh',
 	},
 	image: {
-		backgroundImage:
-			'url(https://source.unsplash.com/G_lwAp0TF38/1800x1800),url(https://source.unsplash.com/G_lwAp0TF38/300x300)',
+		backgroundImage: 'url(https://source.unsplash.com/random)',
 		backgroundRepeat: 'no-repeat',
 		backgroundColor:
 			theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -21,8 +20,7 @@ const accountsStyles = makeStyles(theme => ({
 	},
 	avatar: {
 		margin: theme.spacing(1),
-		height: '75px',
-		width: '75px',
+		backgroundColor: theme.palette.secondary.main,
 	},
 	form: {
 		width: '100%', // Fix IE 11 issue.
@@ -30,7 +28,6 @@ const accountsStyles = makeStyles(theme => ({
 	},
 	submit: {
 		margin: theme.spacing(3, 0, 2),
-		height: '60px',
 	},
 }));
 

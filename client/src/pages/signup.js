@@ -1,4 +1,4 @@
-import Accounts from '../components/Accounts';
+import Accounts from '../components/accounts';
 
 const INPUT = [
 	{
@@ -29,17 +29,10 @@ const INPUT = [
 		name: 'password',
 		autofocus: false,
 	},
-	{
-		id: 'cnfpassword',
-		label: 'Confirm Password',
-		type: 'password',
-		name: 'cnfpassword',
-		autofocus: false,
-	},
 ];
 
-function Signup() {
+function Login() {
 	return <Accounts items={INPUT} action={'sign up'} />;
 }
 
-export default Signup;
+export default Login;

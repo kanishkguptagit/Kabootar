@@ -1,4 +1,4 @@
-import Accounts from '../components/Accounts';
+import Accounts from '../components/accounts';
 
 const INPUT = [
 	{
@@ -17,8 +17,8 @@ const INPUT = [
 	},
 ];
 
-function Signin() {
+function Login() {
 	return <Accounts items={INPUT} action={'sign in'} />;
 }
 
-export default Signin;
+export default Login;

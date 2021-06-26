@@ -3,23 +3,25 @@ import { Link } from 'react-router-dom';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import accountsStyles from '../styles/Accounts';
+import accountsStyles from '../styles/accounts';
 
 export default function Accounts(props) {
 	const classes = accountsStyles();
 
 	return (
 		<Grid container component="main" className={classes.root}>
+			<CssBaseline />
 			<Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
 				<div className={classes.paper}>
-					<Avatar className={classes.avatar} src="/logos/icon.png"></Avatar>
+					<Avatar className={classes.avatar}></Avatar>
 					<Typography component="h1" variant="h5">
-						{props.action}
+						Sign in
 					</Typography>
 					<form className={classes.form} noValidate>
 						{props.items.map(item => {
