@@ -9,11 +9,11 @@ function App() {
 
   return (
     <div className="App">
-      <CssBaseline />
-      <NavBar />
+      <CssBaseline />      
       <main>
         <Switch>
           <Route path="/" exact>
+            <NavBar />
             <p>Welcome Page</p>
           </Route>
           <Route path="/signin" exact>
@@ -23,15 +23,19 @@ function App() {
             <Signup />
           </Route>
           <Route path="/home" exact>
+            <NavBar />
             <p>home</p>
           </Route>
           <Route path="/history" exact>
+            <NavBar />
             <p>history</p>
           </Route>
           <Route path="/create" exact>
+            <NavBar />
             <p>create</p>
           </Route>
           <Route path="*">
+            <NavBar />
             <p>404 Not Found</p>
           </Route>
         </Switch>
