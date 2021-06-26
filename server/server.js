@@ -14,6 +14,7 @@ app.use(cors()); //middleware
 app.use(express.json());
 
 app.use('/mail-track', expressApp(mailTrackOptions));
+app.use('/users', require('./routes/users'));
 
 app.listen(port, () => {
 	console.log(`Server is running on port: ${port}`);
