@@ -1,7 +1,6 @@
 {
     "watch": [
-        "server.js",
-        "routes/**"
+        "./"
     ],
     "ext": "ts,js,json",
     "ignore": [

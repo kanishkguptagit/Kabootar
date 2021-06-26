@@ -8,6 +8,7 @@
 		"build": "tsc"
 	},
 	"dependencies": {
+		"chalk": "^3.0.0",
 		"cors": "^2.8.5",
 		"debug": "~2.6.9",
 		"dotenv": "^10.0.0",
