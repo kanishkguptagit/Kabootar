@@ -3,6 +3,8 @@ const cors = require('cors');
 
 require('dotenv').config();
 
+require('./startup');
+
 const app = express();
 const port = process.env.PORT || 5000; //server defined
 
