@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import chalk from 'chalk';
-
-import { startAgenda } from './scheduler';
+import Scheduler from '../lib/scheduler';
 
 export default function connectToDB(): void {
 	console.log(chalk.white.bgYellow('attempting connection to database'));
@@ -20,9 +19,10 @@ export default function connectToDB(): void {
 
 	mongoose.connection.once('open', () => {
 		console.log(chalk.whiteBright.bgGreenBright('connection to database successful!'));
-	});
-
-	mongoose.connection.once('open', () => {
-		startAgenda();
+		// remove the following lines
+		const scheduler = new Scheduler();
+		const date = new Date();
+		date.setSeconds(date.getSeconds() + 5);
+		scheduler.createScheduledEmail(date, 'test user ' + Math.random() * 10 + ' id');
 	});
 }
