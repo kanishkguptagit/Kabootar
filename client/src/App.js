@@ -4,6 +4,7 @@ import { CssBaseline } from '@material-ui/core';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
 import NavBar from './components/NavBar';
+import Dashboard from './pages/Dashboard';
 
 function App() {
 	return (
@@ -21,9 +22,8 @@ function App() {
 					<Route path="/signup" exact>
 						<Signup />
 					</Route>
-					<Route path="/home" exact>
-						<NavBar />
-						<p>home</p>
+					<Route path="/dashboard" exact>						
+						<Dashboard />
 					</Route>
 					<Route path="/history" exact>
 						<NavBar />
