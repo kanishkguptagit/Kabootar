@@ -7,30 +7,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 
-// Generate Order Data
-function createData(id, date, schedule, recipient, subject ) {
-  return { id, date, schedule, recipient, subject };
-}
 
-const rows = [
-  createData(0, '16 Mar, 2019', '20 Mar, 2019, 10:40 am', 'Mitra Choda', 'Mitra being Mitra with his chutiyap'),
-  createData(1, '16 Mar, 2019', '20 Mar, 2019, 10:40 am', 'Mitra Choda', 'Chutiyap'),
-  createData(2, '16 Mar, 2019', '20 Mar, 2019, 10:40 am', 'Mitra Choda', 'Chutiyap'),
-  createData(3, '16 Mar, 2019', '20 Mar, 2019, 10:40 am', 'Mitra Choda', 'Chutiyap'),
-  createData(4, '16 Mar, 2019', '20 Mar, 2019, 10:40 am', 'Mitra Choda', 'Chutiyap'),
-];
-
-// function preventDefault(event) {
-//   event.preventDefault();
-// }
-
-// const useStyles = makeStyles((theme) => ({
-//   seeMore: {
-//     marginTop: theme.spacing(3),
-//   },
-// }));
-
-export default function Orders() {
+export default function Orders(props) {
   // const classes = useStyles();
   return (
     <React.Fragment>
@@ -45,7 +23,7 @@ export default function Orders() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {props.item.map((row) => (
             <TableRow key={row.id}>
               <TableCell>{row.date}</TableCell>
               <TableCell>{row.schedule}</TableCell>
