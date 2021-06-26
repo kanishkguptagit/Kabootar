@@ -15,7 +15,8 @@
 		"esbuild": "^0.12.9",
 		"express": "~4.16.1",
 		"mongoose": "^5.12.15",
-		"nodemailer": "^6.6.2"
+		"nodemailer": "^6.6.2",
+		"nodemailer-mail-tracking": "^0.1.7"
 	},
 	"main": "server.js",
 	"license": "MIT",
