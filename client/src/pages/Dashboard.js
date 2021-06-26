@@ -3,10 +3,6 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
-<<<<<<< HEAD
-=======
-import Box from '@material-ui/core/Box';
->>>>>>> main
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
@@ -17,10 +13,6 @@ import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-<<<<<<< HEAD
-=======
-import Link from '@material-ui/core/Link';
->>>>>>> main
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -29,22 +21,6 @@ import { mainListItems, secondaryListItems } from '../components/dashboard/listI
 import Deposits from '../components/dashboard/Deposits';
 import Orders from '../components/dashboard/Orders';
 
-<<<<<<< HEAD
-=======
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
->>>>>>> main
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -200,14 +176,7 @@ export default function Dashboard() {
                 <Orders />
               </Paper>
             </Grid>
-<<<<<<< HEAD
           </Grid>          
-=======
-          </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
->>>>>>> main
         </Container>
       </main>
     </div>
