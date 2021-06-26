@@ -20,9 +20,17 @@ import { mainListItems, secondaryListItems } from './dashboard/listItems';
 import Deposits from './dashboard/Deposits';
 import Orders from './dashboard/Orders';
 import layoutStyles from '../styles/Layout';
+import RichEditor from "./Editor/Editor";
+import TextFields from "./TextField";
 
 export default function Layout(props) {
   const classes = layoutStyles();
+
+  const chart = props.chart ?? false;
+  const block = props.block ?? false;
+  const list = props.list ?? false;
+  const editor = props.editor ?? false;
+
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -79,23 +87,34 @@ export default function Layout(props) {
           <Grid container spacing={3}>
 
             {/* Chart */}
-            { props.chart.enable && <Grid item xs={12} md={8} lg={9}>
+            { chart && <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
                 {/* <Chart /> */}
               </Paper>
             </Grid>}
 
             {/* Recent Deposits */}
-            { props.block.enable && <Grid item xs={12} md={4} lg={3}>
+            { block && <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 <Deposits detail={props.block.detail} />
               </Paper>
             </Grid>}
 
             {/* Recent Orders */}
-            { props.list.enable && <Grid item xs={12}>
+            { list && <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <Orders item={props.list.items} />
+              </Paper>
+            </Grid>}
+
+            {/* Editor */}
+            { editor && <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <TextFields label={'To'} autoFocus={true}/>
+                <TextFields label={'Subject'} />
+                <TextFields label={'Cc'} />
+                <TextFields label={'Bcc'} />
+                <RichEditor />
               </Paper>
             </Grid>}
           </Grid>          

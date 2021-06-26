@@ -7,6 +7,7 @@ import NavBar from './components/NavBar';
 import Dashboard from './pages/Dashboard';
 import Landing from './pages/Landing';
 import History from './pages/History';
+import Create from "./pages/Create";
 
 function App() {
 	return (
@@ -31,8 +32,7 @@ function App() {
 						<History />
 					</Route>
 					<Route path="/create" exact>
-						<NavBar />
-						<p>create</p>
+						<Create />
 					</Route>
 					<Route path="*">
 						<NavBar />
