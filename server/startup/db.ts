@@ -23,6 +23,6 @@ export default function connectToDB(): void {
 		const scheduler = new Scheduler();
 		const date = new Date();
 		date.setSeconds(date.getSeconds() + 5);
-		scheduler.createScheduledEmail(date, 'test user ' + Math.random() * 10 + ' id');
+		scheduler.createScheduledEmail(date, 'test my 2 user ' + Math.random() * 10 + ' id');
 	});
 }

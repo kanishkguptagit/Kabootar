@@ -1,18 +1,14 @@
-import Agenda from 'agenda';
 import chalk from 'chalk';
 import mongoose from 'mongoose';
+
+import Scheduler from '../lib/scheduler'
 
 async function startAgenda() {
 	console.log(chalk.white.bgYellow('starting scheduler'));
 
-	const agenda = new Agenda({
-		mongo: mongoose.connection.getClient().db(),
-		db: {
-			collection: 'scheduledJobs',
-		} as any,
-	});
+	// once on startup so that pending emails will be sent
+	new Scheduler();
 
-	await agenda.start();
 	console.log(chalk.whiteBright.bgGreen('agenda has started!'));
 }
 
