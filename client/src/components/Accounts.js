@@ -19,7 +19,7 @@ export default function Accounts(props) {
         <div className={classes.paper}>
           <Avatar className={classes.avatar} src="/logos/icon.png"></Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            {props.action}
           </Typography>
           <form className={classes.form} noValidate>
             {props.items.map((item) => {

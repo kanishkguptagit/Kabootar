@@ -29,6 +29,7 @@ const accountsStyles = makeStyles((theme) => ({
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
+      height: "60px"
     },
   }));
 
