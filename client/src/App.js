@@ -5,6 +5,7 @@ import Signin from './pages/Signin';
 import Signup from './pages/Signup';
 import NavBar from './components/NavBar';
 import Dashboard from './pages/Dashboard';
+import Landing from './pages/Landing';
 
 function App() {
 	return (
@@ -14,7 +15,7 @@ function App() {
 				<Switch>
 					<Route path="/" exact>
 						<NavBar />
-						<p>Welcome Page</p>
+						<Landing />
 					</Route>
 					<Route path="/signin" exact>
 						<Signin />
