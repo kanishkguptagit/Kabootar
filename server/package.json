@@ -2,6 +2,11 @@
 	"name": "app",
 	"version": "1.1.0",
 	"private": true,
+	"scripts": {
+		"start": "node server",
+		"dev": "nodemon server",
+		"build": "node build.js"
+	},
 	"dependencies": {
 		"cors": "^2.8.5",
 		"debug": "~2.6.9",
