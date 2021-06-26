@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .centered{
     display: flex;
     justify-content: center;
@@ -13,3 +14,8 @@
     font-size: 500%;
     color: cornflowerblue;
 }
+=======
+.image {
+    background-size: 10px;
+}
+>>>>>>> main
