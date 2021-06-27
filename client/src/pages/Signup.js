@@ -1,4 +1,5 @@
 import Accounts from '../components/Accounts';
+import { useHistory } from 'react-router';
 
 const INPUT = [
 	{
@@ -29,17 +30,41 @@ const INPUT = [
 		name: 'password',
 		autofocus: false,
 	},
-	{
-		id: 'cnfpassword',
-		label: 'Confirm Password',
-		type: 'password',
-		name: 'cnfpassword',
-		autofocus: false,
-	},
 ];
 
 function Signup() {
-	return <Accounts items={INPUT} action={'sign up'} />;
+
+	const history = useHistory();
+
+	const signupHandler = async (inputs) => {
+		const fname = inputs[0].value;
+		const lname = inputs[1].value;
+		const email = inputs[2].value;
+		const password = inputs[3].value;
+
+		const response = await fetch('http://localhost:5000/users/signup',{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				firstName: fname,
+				lastName: lname,
+				email: email,
+				password: password,
+			})
+		})
+
+		const data = await response.json();
+
+		console.log(response);
+		console.log(data);
+
+		history.push('/');
+		
+	}
+
+	return <Accounts items={INPUT} action={'sign up'} register={signupHandler} />;
 }
 
 export default Signup;
