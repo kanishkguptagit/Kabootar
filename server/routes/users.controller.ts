@@ -21,13 +21,16 @@ router.post('/signup', (req, res) => {
 		throw new Error('The email, password and the firstname fields are required');
 	}
 	const newUser = new Users({ email, firstName, lastName, password });
-	newUser
-		.save()
-		.then(user => {
-			delete (user as any).password;
-			return res.status(201).json({ sucess: true, result: user });
-		})
-		.catch(err => res.status(500).json({ success: false, result: err }));
+	newUser.save().then(user => {
+		const accessToken = createJWT(user.email, user._id);
+		return res.status(201).json({
+			sucess: true,
+			result: {
+				accessToken,
+				id: user._id,
+			},
+		});
+	});
 });
 
 router.post('/signin', async (req, res, next) => {
