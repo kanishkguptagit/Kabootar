@@ -1,7 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const { expressApp } = require('nodemailer-mail-tracking');
-const { mailTrackOptions, run } = require('./lib/mailer');
+
+const { mailTrackOptions } = require('./lib/mailer');
+const { UserRoutes } = require('./routes');
+const { default: errorHandler } = require('./lib/errorHandler');
 
 require('dotenv').config();
 
@@ -14,13 +17,10 @@ app.use(cors()); //middleware
 app.use(express.json());
 
 app.use('/mail-track', expressApp(mailTrackOptions));
-app.use('/users', require('./routes/users'));
+app.use('/users', UserRoutes);
+
+app.use((err, req, res, _next) => errorHandler(err, req, res));
 
 app.listen(port, () => {
 	console.log(`Server is running on port: ${port}`);
 });
-
-setTimeout(() => {
-	console.log('mail sent');
-	run();
-}, 5 * 1000);
