@@ -1,12 +1,12 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink,Link } from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 // import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
+import CreateIcon from '@material-ui/icons/Create';
 import BarChartIcon from '@material-ui/icons/BarChart';
 // import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
@@ -25,11 +25,11 @@ export const mainListItems = (
 		</ListItem>
 		<ListItem button>
 			<ListItemIcon>
-				<PeopleIcon />
+				<CreateIcon />
 			</ListItemIcon>
-			<NavLink to="#" className={classes.navlink}>
-				<ListItemText primary="Clients" />
-			</NavLink>
+			<Link to="/create" className={classes.navlink}>
+				<ListItemText primary="Compose" />
+			</Link>
 		</ListItem>
 		<ListItem button>
 			<ListItemIcon>
