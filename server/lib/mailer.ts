@@ -4,6 +4,7 @@ import { MailTrackOptions } from 'nodemailer-mail-tracking/src/types';
 // @ts-ignore
 import awsTransport from 'nodemailer-ses-transport';
 import { IMail } from '../models/Mail.model';
+import aws from 'aws-sdk';
 
 export const mailTrackOptions: MailTrackOptions = {
 	baseUrl: 'https://fe06c22bc3ef.ngrok.io/mail-track',
@@ -27,14 +28,14 @@ interface IMailContent {
 async function sendMail(mailContent: IMailContent) {
 	const transporter = nodemailer.createTransport(
 		awsTransport({
-			accessKeyId: process.env.AWS_ACCESS_KEY,
-			secretAccessKey: process.env.AWS_SECRET_KEY,
-			region: 'us-east-2',
+			accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+			secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+			region: process.env.AWS_REGION,
 		})
 	);
 
 	mailContent.to.forEach(async t => {
-		console.log('sending to', t);
+		console.log(chalk.yellow.bgWhite('sending email to'), t);
 		const info = await transporter.sendMail({
 			from: 'instinctzuper@gmail.com',
 			to: t,
@@ -61,4 +62,20 @@ export async function sendMailToRecipents(mail: IMail) {
 	} catch (e) {
 		console.log(chalk.red.bgWhite('failed', e));
 	}
+}
+
+export function sendConfirmationEmail(email: string) {
+	const ses = new aws.SES();
+	ses.verifyEmailAddress(
+		{
+			EmailAddress: email,
+		},
+		(err, data) => {
+			if (err) {
+				console.log(chalk.red.bgWhiteBright('sending confirmation mail error', err));
+				return;
+			}
+			console.log(chalk.green.bgWhiteBright('sent confirmation mail -'), data);
+		}
+	);
 }

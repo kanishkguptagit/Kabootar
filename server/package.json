@@ -8,6 +8,7 @@
 		"build": "tsc"
 	},
 	"dependencies": {
+		"aws-sdk": "^2.935.0",
 		"chalk": "^3.0.0",
 		"cors": "^2.8.5",
 		"debug": "~2.6.9",
