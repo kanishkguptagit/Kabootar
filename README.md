@@ -61,11 +61,12 @@ Install my-project with npm
 ```
     
 ## Features
-
+- Lightweight and fast
 - Light/dark mode toggle
 - Live previews
 - Fullscreen mode
 - Cross platform
+- Secure
 
   
 ## Usage/Examples
