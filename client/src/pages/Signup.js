@@ -13,7 +13,7 @@ const INPUT = [
 		label: 'Last Name',
 		type: 'text',
 		name: 'lname',
-		autofocus: false,
+		autofocus: true,
 	},
 	{
 		id: 'email',
@@ -29,17 +29,20 @@ const INPUT = [
 		name: 'password',
 		autofocus: false,
 	},
-	{
-		id: 'cnfpassword',
-		label: 'Confirm Password',
-		type: 'password',
-		name: 'cnfpassword',
-		autofocus: false,
-	},
 ];
 
 function Signup() {
-	return <Accounts items={INPUT} action={'sign up'} />;
+
+	const signupHandler = (inputs) => {
+		const fname = inputs[0].value;
+		const lname = inputs[1].value;
+		const email = inputs[2].value;
+		const password = inputs[3].value;
+
+		console(fname,lname,email,password);
+	}
+
+	return <Accounts items={INPUT} action={'sign up'} register={signupHandler} />;
 }
 
 export default Signup;
