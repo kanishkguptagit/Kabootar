@@ -1,6 +1,7 @@
+import chalk from 'chalk';
 import jwt from 'jsonwebtoken';
 
-import { IUser } from '../models/User.models';
+import Users, { IUser } from '../models/User.models';
 
 export function createJWT(
 	email: IUser['email'],
@@ -18,8 +19,13 @@ export function createJWT(
 	});
 }
 
-export function getUserFromJWT(token: string): IUser | null {
-	const payload = jwt.verify(token, process.env.JWT_TOKEN_SECRET ?? 'jwttokensecret');
-	console.log('the payload was', payload);
-	return payload as any;
+export function getPayloadFromJWT(token: string): Record<string, unknown> | null {
+	try {
+		const payload = jwt.verify(token, process.env.JWT_TOKEN_SECRET ?? 'jwttokensecret');
+
+		return payload as any;
+	} catch (e) {
+		console.log(chalk.bgRed.white('Could not verify JWT!'));
+		return null;
+	}
 }

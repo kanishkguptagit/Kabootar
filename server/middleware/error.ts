@@ -1,6 +1,11 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
-export default function errorHandler(err: Error | undefined | null, _req: Request, res: Response) {
+export default function errorHandler(
+	err: Error | undefined | null,
+	_req: Request,
+	res: Response,
+	_next: NextFunction
+) {
 	if (!err) {
 		return res.status(500).json({ success: false, result: 'Server internal error.' });
 	}
