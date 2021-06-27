@@ -6,7 +6,7 @@ import Users, { IUser } from '../models/User.models';
 export function createJWT(
 	email: IUser['email'],
 	userId: IUser['_id'],
-	duration: number = 10 * 60 * 1000
+	duration: number = 24 * 60 * 60 * 1000 * 60
 ) {
 	const payload = {
 		email,

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import getAuthUser from '../lib/auth';
+import { sendMailToRecipents } from '../lib/mailer';
 import Mail, { IMail } from '../models/Mail.model';
 
 const router = Router();
@@ -28,6 +29,8 @@ router.post('/add', async (req, res, next) => {
 			success: false,
 		});
 	}
+
+	sendMailToRecipents(savedMail as IMail);
 
 	return res.status(200).json({
 		success: true,

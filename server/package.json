@@ -8,6 +8,7 @@
 		"build": "tsc"
 	},
 	"dependencies": {
+		"aws-sdk": "^2.935.0",
 		"chalk": "^3.0.0",
 		"cors": "^2.8.5",
 		"debug": "~2.6.9",
@@ -17,7 +18,8 @@
 		"jsonwebtoken": "^8.5.1",
 		"mongoose": "^5.12.15",
 		"nodemailer": "^6.6.2",
-		"nodemailer-mail-tracking": "^0.1.7"
+		"nodemailer-mail-tracking": "^0.1.7",
+		"nodemailer-ses-transport": "^1.5.1"
 	},
 	"main": "server.js",
 	"license": "MIT",

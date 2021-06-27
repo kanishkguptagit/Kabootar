@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import { createJWT } from '../lib/jwt';
+import { sendConfirmationEmail } from '../lib/mailer';
 import { Users } from '../models';
 
 const router = Router();
@@ -23,6 +24,7 @@ router.post('/signup', (req, res) => {
 	const newUser = new Users({ email, firstName, lastName, password });
 	newUser.save().then(user => {
 		const accessToken = createJWT(user.email, user._id);
+		sendConfirmationEmail(user.email);
 		return res.status(201).json({
 			sucess: true,
 			result: {
