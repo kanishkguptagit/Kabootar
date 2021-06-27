@@ -16,7 +16,6 @@ export default function Orders(props) {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
             <TableCell>Scheduled</TableCell>
             <TableCell>To</TableCell>
             <TableCell>Subject</TableCell>            
@@ -25,7 +24,6 @@ export default function Orders(props) {
         <TableBody>
           {props.item.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
               <TableCell>{row.schedule}</TableCell>
               <TableCell>{row.recipient}</TableCell>
               <TableCell>{row.subject}</TableCell>
