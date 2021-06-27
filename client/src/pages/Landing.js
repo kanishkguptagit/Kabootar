@@ -1,12 +1,20 @@
-import { Fragment } from 'react';
+import { Fragment, useContext } from 'react';
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 import classes from '../styles/Landing.module.css';
+import AuthContext from '../store/auth-context';
 
 function Landing() {
 
-    const continueButton = "/signin";
+	const ctx = useContext(AuthContext);
+
+	let continueButton;
+
+	if(ctx.isLoggedIn)
+    	continueButton = "/dashboard";
+	else
+		continueButton = "/signin"
 
 	return (
 		<Fragment>

@@ -45,6 +45,7 @@ export default function Accounts(props) {
 									margin="normal"
 									required
 									fullWidth
+									key={item.id}
 									id={item.id}
 									label={item.label}
 									name={item.name}
