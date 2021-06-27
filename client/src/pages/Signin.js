@@ -1,4 +1,8 @@
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router';
+
 import Accounts from '../components/Accounts';
+import AuthContext from '../store/auth-context';
 
 const INPUT = [
 	{
@@ -18,7 +22,34 @@ const INPUT = [
 ];
 
 function Signin() {
-	return <Accounts items={INPUT} action={'sign in'} />;
+
+	const ctx = useContext(AuthContext);
+	const history = useHistory();
+
+	const signinHandler = async inputs => {
+		const email = inputs[0].value;
+		const password = inputs[1].value;
+
+		const response = await fetch('http://localhost:5000/users/signin', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				email: email,
+				password: password,
+			}),
+		});
+
+		const data = await response.json();
+
+		ctx.login(data.result.accessToken, data.result.id);
+
+		history.replace('/dashboard');
+
+	};
+
+	return <Accounts items={INPUT} action={'sign in'} login={signinHandler} />;
 }
 
 export default Signin;

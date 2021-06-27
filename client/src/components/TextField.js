@@ -15,9 +15,11 @@ const useStyles = makeStyles((theme) => ({
 export default function TextFields(props) {
     const classes = useStyles();
 
+    const inputRef = props.ref ?? null;
+
     return (
         <div className={classes.root}>
-            <TextField id="outlined-basic" label={props.label} variant="outlined" autoFocus={props.autoFocus} />
+            <TextField id="outlined-basic" label={props.label} variant="outlined" autoFocus={props.autoFocus} inputRef={inputRef}/>
         </div>
     );
 }

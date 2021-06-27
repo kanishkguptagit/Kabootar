@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import { Link } from 'react-router-dom';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -12,6 +12,22 @@ import accountsStyles from '../styles/Accounts';
 
 export default function Accounts(props) {
 	const classes = accountsStyles();
+	
+	const ref = useRef(props.items.map(() => null))
+
+	const userSigninHandler = (event) => {
+		event.preventDefault();
+		
+		props.login(ref.current);
+	};
+
+	const userSignupHandler = (event) => {
+		event.preventDefault();
+
+		props.register(ref.current);
+	};
+
+	const formSubmit = props.action === 'sign in' ? userSigninHandler : userSignupHandler;
 
 	return (
 		<Grid container component="main" className={classes.root}>
@@ -21,19 +37,21 @@ export default function Accounts(props) {
 					<Typography component="h1" variant="h5">
 						{props.action}
 					</Typography>
-					<form className={classes.form} noValidate>
-						{props.items.map(item => {
+					<form className={classes.form} noValidate onSubmit={formSubmit}>
+						{props.items.map((item,i) => {
 							return (
 								<TextField
 									variant="outlined"
 									margin="normal"
 									required
 									fullWidth
+									key={item.id}
 									id={item.id}
 									label={item.label}
 									name={item.name}
 									autoFocus={item.autofocus}
 									type={item.type}
+									inputRef={r => (ref.current[i] = r)}									
 								/>
 							);
 						})}
