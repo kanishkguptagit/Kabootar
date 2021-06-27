@@ -6,7 +6,7 @@ import Mail, { IMail } from '../models/Mail.model';
 const router = Router();
 
 router.post('/add', async (req, res, next) => {
-	const { to, subject, body, name, isScheduled } = req.body;
+	const { to, subject, body, name, isScheduled, scheduled } = req.body;
 	if (!(to && subject && body && Array.isArray(to))) {
 		return next(new Error('to, subject, body are required fields'));
 	}
@@ -17,6 +17,8 @@ router.post('/add', async (req, res, next) => {
 		subject,
 		body,
 		owner: user._id,
+		isScheduled: isScheduled ?? false,
+		scheduled: scheduled ?? Date.now(),
 	};
 	const newMail = new Mail(createdMail);
 
@@ -35,13 +37,13 @@ router.post('/add', async (req, res, next) => {
 
 router.get('/history', async (req, res, next) => {
 	const user = await getAuthUser(req, next);
-	const mails = await Mail.find({ owner: user._id, scheduled: { $exists: true } });
+	const mails = await Mail.find({ owner: user._id, isScheduled: true });
 	return res.json({ success: true, result: mails });
 });
 
 router.get('/dashboard', async (req, res, next) => {
 	const user = await getAuthUser(req, next);
-	const mails = await Mail.find({ owner: user._id, scheduled: { $exists: false } });
+	const mails = await Mail.find({ owner: user._id, isScheduled: false });
 	return res.json({ success: true, result: mails });
 });
 
