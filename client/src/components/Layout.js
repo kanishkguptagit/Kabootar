@@ -22,6 +22,7 @@ import Orders from './dashboard/Orders';
 import layoutStyles from '../styles/Layout';
 import RichEditor from "./Editor/Editor";
 import TextFields from "./TextField";
+import Button from "@material-ui/core/Button";
 
 export default function Layout(props) {
   const classes = layoutStyles();
@@ -110,11 +111,24 @@ export default function Layout(props) {
             {/* Editor */}
             { editor && <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <TextFields label={'To'} autoFocus={true}/>
-                <TextFields label={'Subject'} />
-                <TextFields label={'Cc'} />
-                <TextFields label={'Bcc'} />
-                <RichEditor />
+                <form>
+                  <TextFields label={'To'} autoFocus={true}/>
+                  <TextFields label={'Subject'} />
+                  <TextFields label={'Cc'} />
+                  <TextFields label={'Bcc'} />
+                  <div className={classes.editor}>
+                      <RichEditor />
+                  </div>
+                  <div className={classes.sendButton}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="medium"
+                        style={{ textTransform: 'none' }}>
+                      Send Mail
+                    </Button>
+                  </div>
+                </form>
               </Paper>
             </Grid>}
           </Grid>          

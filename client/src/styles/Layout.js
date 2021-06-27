@@ -79,6 +79,14 @@ const layoutStyles = makeStyles((theme) => ({
     fixedHeight: {
       height: 240,
     },
+    editor: {
+        padding: "0% 0%",
+    },
+    sendButton: {
+        display: "flex",
+        justifyContent: "flex-end",
+        padding: "20px",
+    }
   }));
 
 export default layoutStyles;
