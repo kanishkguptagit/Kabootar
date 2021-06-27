@@ -1,12 +1,14 @@
 import mongoose, { Document, Schema, Types } from 'mongoose';
 
-export interface IMail extends Document {
+export interface IMail {
 	name?: string;
 	owner: Types.ObjectId;
 	recipents: Array<string>;
 	subject: string;
 	body: string;
 }
+
+interface IMailBase extends IMail, Document {}
 
 const MailSchema = new Schema({
 	name: { type: String, required: false, trim: true },
@@ -16,4 +18,4 @@ const MailSchema = new Schema({
 	body: { type: String, required: true },
 });
 
-export default mongoose.model<IMail>('Mail', MailSchema);
+export default mongoose.model<IMailBase>('Mail', MailSchema);

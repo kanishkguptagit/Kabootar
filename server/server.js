@@ -3,7 +3,7 @@ const cors = require('cors');
 const { expressApp } = require('nodemailer-mail-tracking');
 
 const { mailTrackOptions } = require('./lib/mailer');
-const { UserRoutes } = require('./routes');
+const { UserRoutes, MailRoutes } = require('./routes');
 const { errorMiddleware } = require('./middleware');
 
 require('dotenv').config();
@@ -18,6 +18,7 @@ app.use(express.json());
 
 app.use('/mail-track', expressApp(mailTrackOptions));
 app.use('/users', UserRoutes);
+app.use('/mails', MailRoutes);
 
 app.use(errorMiddleware);
 

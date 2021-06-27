@@ -1,9 +1,9 @@
-import { Request } from 'express';
+import { NextFunction, Request } from 'express';
 
 import Users, { IUser } from '../models/User.models';
 import { getPayloadFromJWT } from './jwt';
 
-export default async function getAuthUser(req: Request): Promise<IUser | null> {
+async function _getAuthUser(req: Request) {
 	const authHeader = req.headers.authorization;
 	if (!authHeader) {
 		return null;
@@ -17,7 +17,23 @@ export default async function getAuthUser(req: Request): Promise<IUser | null> {
 		return null;
 	}
 
-	const foundUser = await Users.findOne({ _id: payload.userId });
+	const foundUser = (await Users.findOne({ _id: payload.userId }, { password: 0 })) as IUser;
 
 	return foundUser;
+}
+
+export default async function getAuthUser(
+	req: Request,
+	next: NextFunction,
+	throwError: boolean = true
+): Promise<IUser> {
+	const authUser = await _getAuthUser(req);
+	console.log('the auth user is', authUser);
+
+	if (!authUser && throwError) {
+		console.log('catuf')
+		return next(new Error('User not logged in')) as any;
+	}
+
+	return authUser as IUser;
 }

@@ -2,7 +2,6 @@ import { Router } from 'express';
 
 import { createJWT } from '../lib/jwt';
 import { Users } from '../models';
-import getAuthUser from '../lib/auth';
 
 const router = Router();
 
