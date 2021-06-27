@@ -6,9 +6,12 @@ export interface IMail {
 	recipents: Array<string>;
 	subject: string;
 	body: string;
+	scheduled?: Date;
 }
 
-interface IMailBase extends IMail, Document {}
+interface IMailBase extends Omit<IMail, 'scheduled'>, Document {
+	scheduled: Date | null;
+}
 
 const MailSchema = new Schema({
 	name: { type: String, required: false, trim: true },
@@ -16,6 +19,7 @@ const MailSchema = new Schema({
 	recipents: [String],
 	subject: { type: String, required: true },
 	body: { type: String, required: true },
+	scheduled: { type: Date, required: false, index: true },
 });
 
 export default mongoose.model<IMailBase>('Mail', MailSchema);
