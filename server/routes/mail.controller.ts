@@ -18,11 +18,9 @@ router.post('/add', async (req, res, next) => {
 		body,
 		owner: user._id,
 	};
-	console.log('saving new mail');
 	const newMail = new Mail(createdMail);
 
 	const savedMail = await newMail.save();
-	console.log('mail was saved');
 	if (!savedMail) {
 		return res.status(500).json({
 			success: false,
