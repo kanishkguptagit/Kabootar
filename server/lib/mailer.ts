@@ -1,6 +1,9 @@
+import chalk from 'chalk';
 import nodemailer from 'nodemailer';
-import { sendMail } from 'nodemailer-mail-tracking';
 import { MailTrackOptions } from 'nodemailer-mail-tracking/src/types';
+// @ts-ignore
+import awsTransport from 'nodemailer-ses-transport';
+import { IMail } from '../models/Mail.model';
 
 export const mailTrackOptions: MailTrackOptions = {
 	baseUrl: 'https://fe06c22bc3ef.ngrok.io/mail-track',
@@ -15,27 +18,47 @@ export const mailTrackOptions: MailTrackOptions = {
 		console.log('link clicked', data);
 	},
 };
+interface IMailContent {
+	to: string[];
+	subject: string;
+	html: string;
+}
 
-export async function run() {
-	const testAccount = await nodemailer.createTestAccount();
-	const transporter = nodemailer.createTransport({
-		host: 'smtp.ethereal.email',
-		port: 587,
-		secure: false, // true for 465, false for other ports
-		auth: {
-			user: testAccount.user, // generated ethereal user
-			pass: testAccount.pass, // generated ethereal password
-		},
+async function sendMail(mailContent: IMailContent) {
+	const transporter = nodemailer.createTransport(
+		awsTransport({
+			accessKeyId: process.env.AWS_ACCESS_KEY,
+			secretAccessKey: process.env.AWS_SECRET_KEY,
+			region: 'us-east-2',
+		})
+	);
+
+	mailContent.to.forEach(async t => {
+		console.log('sending to', t);
+		const info = await transporter.sendMail({
+			from: 'instinctzuper@gmail.com',
+			to: t,
+			subject: mailContent.subject,
+			html: mailContent.html,
+		});
+
+		console.log(info, chalk.green.bgWhite('email was sent'));
+		// ses needs a 60 second gap
+		await new Promise(resolve => setTimeout(resolve, 60 * 1000));
 	});
+}
 
-	const info = await sendMail(mailTrackOptions, transporter, {
-		from: 'BlueBird', // sender address
-		to: 'bar@example.com, baz@example.com', // list of receivers
-		subject: 'tick ', // Subject line
-		text: 'the main mars', // plain text body
-		messageId: 'fast-diet',
-		html: '<strong><em>himmat</em></strong>', // html body
-	});
-
-	console.log('the url is', nodemailer.getTestMessageUrl(info[0].result));
+export async function sendMailToRecipents(mail: IMail) {
+	try {
+		console.log('the mail was', mail);
+		if (!mail.isScheduled) {
+			await sendMail({
+				to: mail.recipents,
+				subject: mail.subject,
+				html: mail.body,
+			});
+		}
+	} catch (e) {
+		console.log(chalk.red.bgWhite('failed', e));
+	}
 }
