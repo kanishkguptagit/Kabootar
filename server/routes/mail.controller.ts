@@ -33,4 +33,16 @@ router.post('/add', async (req, res, next) => {
 	});
 });
 
+router.get('/history', async (req, res, next) => {
+	const user = await getAuthUser(req, next);
+	const mails = await Mail.find({ owner: user._id, scheduled: { $exists: true } });
+	return res.json({ success: true, result: mails });
+});
+
+router.get('/dashboard', async (req, res, next) => {
+	const user = await getAuthUser(req, next);
+	const mails = await Mail.find({ owner: user._id, scheduled: { $exists: false } });
+	return res.json({ success: true, result: mails });
+});
+
 export default router;

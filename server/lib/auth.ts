@@ -28,7 +28,6 @@ export default async function getAuthUser(
 	throwError: boolean = true
 ): Promise<IUser> {
 	const authUser = await _getAuthUser(req);
-	console.log('the auth user is', authUser);
 
 	if (!authUser && throwError) {
 		console.log('catuf')
