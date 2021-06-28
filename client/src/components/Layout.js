@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router';
 import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -21,15 +21,18 @@ import { mainListItems, secondaryListItems } from './dashboard/listItems';
 import Deposits from './dashboard/Deposits';
 import Orders from './dashboard/Orders';
 import layoutStyles from '../styles/Layout';
-import RichEditor from './Editor/Editor';
+import DraftEditorApp from './draft/DraftEditor';
 import TextFields from './TextField';
 import AuthContext from '../store/auth-context';
-import { EditorState } from 'draft-js';
 
 export default function Layout(props) {
 	const classes = layoutStyles();
 	const ctx = useContext(AuthContext);
 	const history = useHistory();
+
+	const[editorContentValue, setEditorContentValue] = useState('');
+	const[toField, setToField] = useState('');
+	const[subjectField, setSubjectField] = useState('');
 
 	const chart = props.chart ?? false;
 	const block = props.block ?? false;
@@ -44,23 +47,29 @@ export default function Layout(props) {
 		setOpen(false);
 	};
 	const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
 	const logoutHandler = () => {
 		ctx.logout();
 		history.replace('/');
 	};
 
-	const editorState = EditorState.createEmpty();
-	const [formState, setFormState] = useState({
-		to: '',
-		subject: '',
-	});
+	const toChangeHandler = (event) => {
+		setToField(event.target.value);
+	}
 
-	const submitForm = event => {
-		console.log('now submitting');
+	const subjectChangeHandler = (event) => {
+		setSubjectField(event.target.value);
+	}
+
+	const submitForm = event => {		
 		event.preventDefault();
-		const { to, subject } = formState;
-		console.log('submitting', { to, subject, body: editorState.value });
+
+		props.getEnteredValues(toField, subjectField, editorContentValue);
 	};
+
+	const editorContentHandler = (mailContent) => {
+		setEditorContentValue(mailContent);
+	}
 
 	return (
 		<div className={classes.root}>
@@ -144,36 +153,23 @@ export default function Layout(props) {
 						{editor && (
 							<Grid item xs={12}>
 								<Paper className={classes.paper}>
-									<form>
+									<form onSubmit={submitForm}>
 										<TextFields
 											label={'To'}
 											autoFocus={true}
-											onChange={e =>
-												setFormState(prev => ({
-													...prev,
-													to: e.target.value,
-												}))
-											}
-											value={formState.to}
+											onChange={toChangeHandler}
 										/>
 										<TextFields
 											label={'Subject'}
-											value={formState.subject}
-											onChange={e =>
-												setFormState(prev => ({
-													...prev,
-													subject: e.target.value,
-												}))
-											}
+											onChange={subjectChangeHandler}
 										/>
-										<div className={classes.editor}>
-											<RichEditor editorState={editorState} />
-										</div>
+										<DraftEditorApp editorContent={editorContentHandler} />
 										<div className={classes.sendButton}>
 											<Button
 												variant="contained"
 												color="primary"
 												size="medium"
+												type="submit"
 												style={{ textTransform: 'none' }}
 												onClick={submitForm}>
 												Send Mail

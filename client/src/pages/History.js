@@ -33,7 +33,8 @@ function History() {
 		};
 
 		fetchData();
-	}, []);
+	}, [ctx.token]);
+	
 	return <Layout editor={false} list={loadedData} title={'History'} />;
 }
 
