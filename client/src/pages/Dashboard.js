@@ -26,7 +26,7 @@ function Dashboard() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const data = await fetch('http://localhost:5000/mails/dashboard', {
+			const data = await fetch('https://kabootar-mail.herokuapp.com/mails/dashboard', {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',

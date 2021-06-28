@@ -17,7 +17,7 @@ function History() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const data = await fetch('http://localhost:5000/mails/history', {
+			const data = await fetch('https://kabootar-mail.herokuapp.com/mails/history', {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ function History() {
 
 		fetchData();
 	}, [ctx.token]);
-	
+
 	return <Layout editor={false} list={loadedData} title={'History'} />;
 }
 

@@ -11,7 +11,7 @@ function Create() {
 	const getEnteredValues = async (to, subject, body) => {
 		const toArray = to?.split(',').map(t => t.trim());
 
-		const data = await fetch('http://localhost:5000/mails/add', {
+		const data = await fetch('https://kabootar-mail.herokuapp.com/mails/add', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
