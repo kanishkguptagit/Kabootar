@@ -5,6 +5,7 @@ import { MailTrackOptions } from 'nodemailer-mail-tracking/src/types';
 import awsTransport from 'nodemailer-ses-transport';
 import { IMail } from '../models/Mail.model';
 import aws from 'aws-sdk';
+import Scheduler from './scheduler';
 
 export const mailTrackOptions: MailTrackOptions = {
 	baseUrl: 'https://fe06c22bc3ef.ngrok.io/mail-track',
@@ -25,7 +26,7 @@ interface IMailContent {
 	html: string;
 }
 
-async function sendMail(mailContent: IMailContent) {
+export async function sendMail(mailContent: IMailContent) {
 	const transporter = nodemailer.createTransport(
 		awsTransport({
 			accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -37,7 +38,7 @@ async function sendMail(mailContent: IMailContent) {
 	mailContent.to.forEach(async t => {
 		console.log(chalk.yellow.bgWhite('sending email to'), t);
 		const info = await transporter.sendMail({
-			from: 'instinctzuper@gmail.com',
+			from: 'kabootar@tmail.ws',
 			to: t,
 			subject: mailContent.subject,
 			html: mailContent.html,
@@ -51,7 +52,6 @@ async function sendMail(mailContent: IMailContent) {
 
 export async function sendMailToRecipents(mail: IMail) {
 	try {
-		console.log('the mail was', mail);
 		if (!mail.isScheduled) {
 			await sendMail({
 				to: mail.recipents,
@@ -60,7 +60,23 @@ export async function sendMailToRecipents(mail: IMail) {
 			});
 		}
 	} catch (e) {
-		console.log(chalk.red.bgWhite('failed', e));
+		console.log(chalk.red.bgWhite('immediate mail send failed', e));
+	}
+}
+
+export async function sendScheduledMail(mail: IMail) {
+	try {
+		console.log(chalk.blueBright.whiteBright('scheduling a mail for'), mail);
+		mail.recipents.forEach(recipent => {
+			const newDate = mail.scheduled as Date;
+			newDate.setMinutes(newDate.getMinutes() + 1);
+			new Scheduler().createScheduledEmail(mail.scheduled as Date, {
+				...mail,
+				recipents: [recipent],
+			});
+		});
+	} catch (e) {
+		console.log(chalk.red.bgWhite('scheduling the mail failed', e));
 	}
 }
 
