@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import getAuthUser from '../lib/auth';
 import { sendMailToRecipents, sendScheduledMail } from '../lib/mailer';
+import { getScheduledDate } from '../lib/utils';
 import Mail, { IMail } from '../models/Mail.model';
 
 const router = Router();
@@ -12,6 +13,9 @@ router.post('/add', async (req, res, next) => {
 		return next(new Error('to, subject, body are required fields'));
 	}
 	const user = await getAuthUser(req, next);
+
+	const sanitizedScheduledDate = getScheduledDate(scheduled);
+
 	const createdMail: IMail = {
 		name,
 		recipents: to,
@@ -19,7 +23,7 @@ router.post('/add', async (req, res, next) => {
 		body,
 		owner: user._id,
 		isScheduled: isScheduled ?? false,
-		scheduled: scheduled ?? Date.now(),
+		scheduled: sanitizedScheduledDate,
 	};
 	const newMail = new Mail(createdMail);
 
