@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import jwt from 'jsonwebtoken';
 
-import Users, { IUser } from '../models/User.models';
+import { IUser } from '../models/User.models';
 
 export function createJWT(
 	email: IUser['email'],
