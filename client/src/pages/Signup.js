@@ -33,16 +33,15 @@ const INPUT = [
 ];
 
 function Signup() {
-
 	const history = useHistory();
 
-	const signupHandler = async (inputs) => {
+	const signupHandler = async inputs => {
 		const fname = inputs[0].value;
 		const lname = inputs[1].value;
 		const email = inputs[2].value;
 		const password = inputs[3].value;
 
-		const response = await fetch('http://localhost:5000/users/signup',{
+		const response = await fetch('https://kabootar-mail.herokuapp.com/users/signup', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -52,8 +51,8 @@ function Signup() {
 				lastName: lname,
 				email: email,
 				password: password,
-			})
-		})
+			}),
+		});
 
 		const data = await response.json();
 
@@ -61,8 +60,7 @@ function Signup() {
 		console.log(data);
 
 		history.push('/');
-		
-	}
+	};
 
 	return <Accounts items={INPUT} action={'sign up'} register={signupHandler} />;
 }
