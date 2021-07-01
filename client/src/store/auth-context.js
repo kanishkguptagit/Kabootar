@@ -4,36 +4,38 @@ const AuthContext = React.createContext({
     token: '',
     userId: '',
     isLoggedIn: false,
-    login: (token,id) => {},
+    login: (recievedToken, recievedId) => {},
     logout: () => {},
 });
 
 export const AuthContextProvider = (props) => {
 
-    const tokenData = localStorage.getItem('token') ?? '';
-    const idData = localStorage.getItem('userId') ?? '';
+    const tokenData = localStorage.getItem('token') ?? null;
+    const idData = localStorage.getItem('userId') ?? null;
     
     const [token, setToken] = useState(tokenData);
     const [userId, setUserId] = useState(idData);
 
-    let userIsLoggedIn = false;
+    // let userIsLoggedIn = false;
 
-    if(tokenData){
-        userIsLoggedIn = true;
-    }
+    // if(token){
+    //     userIsLoggedIn = true;
+    // }
 
-    const loginHandler = (token, id) => {
-        setToken(token);
-        setUserId(id);
-        localStorage.setItem('token', token);
-        localStorage.setItem('userId', id);
+    const userIsLoggedIn = !!token;
+
+    const loginHandler = (recievedToken, recievedId) => {
+        setToken(recievedToken);
+        setUserId(recievedId);
+        localStorage.setItem('token', recievedToken);
+        localStorage.setItem('userId', recievedId);        
     }
 
     const logoutHandler = () => {
         setToken(null);
         setUserId(null);
         localStorage.removeItem("token");
-        localStorage.removeItem("userId");
+        localStorage.removeItem("userId");        
     }
 
     const contextValue = {
