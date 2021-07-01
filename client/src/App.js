@@ -1,15 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useContext, Suspense, lazy } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
 
 import AuthContext from './store/auth-context';
-import Signin from './pages/Signin';
-import Signup from './pages/Signup';
 import NavBar from './components/NavBar';
-import Dashboard from './pages/Dashboard';
-import Landing from './pages/Landing';
-import History from './pages/History';
-import Create from "./pages/Create";
+import LoadingSpinner from './components/Spinner/LoadingSpinner';
+import './App.css';
+// import Signin from './pages/Signin';
+// import Signup from './pages/Signup';
+// import Dashboard from './pages/Dashboard';
+// import Landing from './pages/Landing';
+// import History from './pages/History';
+// import Create from "./pages/Create";
+
+const Signin = lazy(()=>import('./pages/Signin'));
+const Signup = lazy(()=>import('./pages/Signup'));
+const Dashboard = lazy(()=>import('./pages/Dashboard'));
+const Landing = lazy(()=>import('./pages/Landing'));
+const History = lazy(()=>import('./pages/History'));
+const Create = lazy(()=>import('./pages/Create'));
 
 function App() {
 
@@ -17,8 +26,8 @@ function App() {
 
 	return (
 		<div className="App">
-			<CssBaseline />
-			<main>
+			<CssBaseline />			
+			<Suspense fallback={<div className='centered'><LoadingSpinner/></div>}>
 				<Switch>
 					<Route path="/" exact>
 						<NavBar />
@@ -48,8 +57,8 @@ function App() {
 						<NavBar />
 						<p>404 Not Found</p>
 					</Route>
-				</Switch>
-			</main>
+				</Switch>	
+			</Suspense>		
 		</div>
 	);
 }

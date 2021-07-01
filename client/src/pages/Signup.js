@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import Accounts from '../components/Accounts';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 const INPUT = [
 	{
@@ -34,6 +35,7 @@ const INPUT = [
 
 function Signup() {
 	const history = useHistory();
+	const [isLoading, setIsLoading] = useState(false);
 
 	const signupHandler = async inputs => {
 		const fname = inputs[0].value;
@@ -41,6 +43,7 @@ function Signup() {
 		const email = inputs[2].value;
 		const password = inputs[3].value;
 
+		setIsLoading(true);
 		const response = await fetch('https://kabootar-mail.herokuapp.com/users/signup', {
 			method: 'POST',
 			headers: {
@@ -56,13 +59,12 @@ function Signup() {
 
 		const data = await response.json();
 
-		console.log(response);
-		console.log(data);
+		setIsLoading(false);
 
 		history.push('/');
 	};
 
-	return <Accounts items={INPUT} action={'sign up'} register={signupHandler} />;
+	return <Accounts items={INPUT} action={'sign up'} register={signupHandler} loading={isLoading} />;
 }
 
 export default Signup;

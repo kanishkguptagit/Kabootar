@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import accountsStyles from '../styles/Accounts';
+import LoadingSpinner from '../components/Spinner/LoadingSpinner';
 
 export default function Accounts(props) {
 	const classes = accountsStyles();
@@ -56,7 +57,10 @@ export default function Accounts(props) {
 							);
 						})}
 
-						<Button
+						{props.loading && <LoadingSpinner />}
+
+						{ !props.loading && <div>
+						<Button 
 							type="submit"
 							fullWidth
 							variant="contained"
@@ -85,6 +89,8 @@ export default function Accounts(props) {
 								</Link>
 							</div>
 						)}
+
+						</div>}
 					</form>
 				</div>
 			</Grid>
