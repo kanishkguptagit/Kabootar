@@ -58,10 +58,15 @@ function Signup() {
 		});
 
 		const data = await response.json();
-
 		setIsLoading(false);
 
-		history.push('/');
+		if(data.sucess){
+			history.push('/');
+		}
+		else{
+			alert(data.result);
+		}
+
 	};
 
 	return <Accounts items={INPUT} action={'sign up'} register={signupHandler} loading={isLoading} />;
