@@ -44,9 +44,15 @@ function Signin() {
 
 		const data = await response.json();
 		setIsLoading(false);
+
+		if(data.sucess){
+			ctx.login(data.result.accessToken, data.result.id);
+			history.replace('/dashboard');
+		}
+		else{
+			alert(data.result);
+		}
 		
-		ctx.login(data.result.accessToken, data.result.id);
-		history.replace('/dashboard');
 	};
 
 	return <Accounts items={INPUT} action={'sign in'} login={signinHandler} loading={isLoading} />;
