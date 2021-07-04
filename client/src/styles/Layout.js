@@ -86,6 +86,13 @@ const layoutStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "flex-end",
         padding: "20px",
+    },
+    select:{
+      display: "flex",
+      justifyContent:"center",
+      textAlign:"center",
+      padding: "25px 0px",
+      width: "100%"
     }
   }));
 
