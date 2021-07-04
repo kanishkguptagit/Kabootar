@@ -3,7 +3,7 @@ import { Router } from 'express';
 import getAuthUser from '../lib/auth';
 import { sendMailToRecipents, sendScheduledMail } from '../lib/mailer';
 import { getScheduledDate } from '../lib/utils';
-import Mail, { IMail } from '../models/Mail.model';
+import Mail, { IMail, ICreateMail } from '../models/Mail.model';
 
 const router = Router();
 
@@ -16,7 +16,7 @@ router.post('/add', async (req, res, next) => {
 
 	const sanitizedScheduledDate = getScheduledDate(scheduled);
 
-	const createdMail: IMail = {
+	const createdMail: ICreateMail = {
 		name,
 		recipents: to,
 		subject,

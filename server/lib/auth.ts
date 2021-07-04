@@ -30,7 +30,6 @@ export default async function getAuthUser(
 	const authUser = await _getAuthUser(req);
 
 	if (!authUser && throwError) {
-		console.log('catuf')
 		return next(new Error('User not logged in')) as any;
 	}
 
