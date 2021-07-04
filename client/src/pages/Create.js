@@ -4,12 +4,35 @@ import { Snackbar, Chip } from '@material-ui/core';
 import Layout from '../components/Layout';
 import AuthContext from '../store/auth-context';
 
+const getScheduled = (recurringSchedule, onceSchedule) => {
+	if (recurringSchedule.toLowerCase() !== 'none') {
+		return { isScheduled: true, scheduled: recurringSchedule.toLowerCase() };
+	} else if (onceSchedule) {
+		return {
+			isScheduled: true,
+			scheduled: new Date(onceSchedule).toISOString(),
+		};
+	}
+	return {
+		isScheduled: false,
+	};
+};
+
 function Create() {
 	const [message, setMessage] = useState('');
 	const ctx = useContext(AuthContext);
 
-	const getEnteredValues = async (to, subject, body, schedule) => {
+	const getEnteredValues = async (to, subject, body, recurringSchedule, onceSchedule) => {
 		const toArray = to?.split(',').map(t => t.trim());
+
+		console.log(
+			JSON.stringify({
+				to: toArray,
+				subject,
+				body,
+				...getScheduled(recurringSchedule, onceSchedule),
+			})
+		);
 
 		const data = await fetch('https://kabootar-mail.herokuapp.com/mails/add', {
 			method: 'POST',
@@ -21,12 +44,9 @@ function Create() {
 				to: toArray,
 				subject,
 				body,
-				// isScheduled:true,
-				// scheduled: new Date().toISOString()
+				...getScheduled(recurringSchedule, onceSchedule),
 			}),
 		}).then(res => res.json());
-
-		console.log('the data was', data);
 
 		if (data && data.success) {
 			setMessage('Your mail will be delived by us!');

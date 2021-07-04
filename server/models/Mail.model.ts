@@ -1,6 +1,7 @@
 import mongoose, { Document, Schema, Types } from 'mongoose';
 
 export interface IMail {
+	_id:Types.ObjectId;
 	name?: string;
 	owner: Types.ObjectId;
 	recipents: Array<string>;
@@ -10,7 +11,9 @@ export interface IMail {
 	isScheduled?: boolean;
 }
 
-interface IMailBase extends Omit<IMail, 'scheduled'>, Document {
+export interface ICreateMail extends Omit<IMail,'_id'>{}
+
+interface IMailBase extends Omit<ICreateMail, 'scheduled'>, Document {
 	scheduled: Date | null;
 }
 

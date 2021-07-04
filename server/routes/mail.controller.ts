@@ -3,7 +3,7 @@ import { Router } from 'express';
 import getAuthUser from '../lib/auth';
 import { sendMailToRecipents, sendScheduledMail } from '../lib/mailer';
 import { getScheduledDate } from '../lib/utils';
-import Mail, { IMail } from '../models/Mail.model';
+import Mail, { IMail, ICreateMail } from '../models/Mail.model';
 
 const router = Router();
 
@@ -16,7 +16,7 @@ router.post('/add', async (req, res, next) => {
 
 	const sanitizedScheduledDate = getScheduledDate(scheduled);
 
-	const createdMail: IMail = {
+	const createdMail: ICreateMail = {
 		name,
 		recipents: to,
 		subject,
@@ -53,13 +53,16 @@ router.post('/add', async (req, res, next) => {
 
 router.get('/history', async (req, res, next) => {
 	const user = await getAuthUser(req, next);
-	const mails = await Mail.find({ owner: user._id, isScheduled: true });
+	const mails = await Mail.find({ owner: user._id, isScheduled: true }).sort({ _id: -1 });
 	return res.json({ success: true, result: mails });
 });
 
 router.get('/dashboard', async (req, res, next) => {
 	const user = await getAuthUser(req, next);
-	const mails = await Mail.find({ owner: user._id, isScheduled: false });
+	if (!user) {
+		return;
+	}
+	const mails = await Mail.find({ owner: user._id, isScheduled: false }).sort({ _id: -1 });
 	return res.json({ success: true, result: mails });
 });
 

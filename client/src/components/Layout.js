@@ -17,7 +17,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Button from '@material-ui/core/Button';
 import { Select } from '@material-ui/core';
 import { MenuItem } from '@material-ui/core';
-import { InputLabel } from '@material-ui/core';
+import { InputLabel, TextField } from '@material-ui/core';
 
 import { mainListItems, secondaryListItems } from './dashboard/listItems';
 // import Chart from '../components/dashboard/Chart';
@@ -38,6 +38,7 @@ export default function Layout(props) {
 	const [toField, setToField] = useState('');
 	const [subjectField, setSubjectField] = useState('');
 	const [selectVar, setSelectVar] = useState('none');
+	const [dateTimeValue, setDateTimeValue] = useState('');
 
 	const chart = props.chart ?? false;
 	const block = props.block ?? false;
@@ -68,12 +69,12 @@ export default function Layout(props) {
 
 	const selectChangeHandler = event => {
 		setSelectVar(event.target.value);
-	}
+	};
 
 	const submitForm = event => {
 		event.preventDefault();
 
-		props.getEnteredValues(toField, subjectField, editorContentValue, selectVar);
+		props.getEnteredValues(toField, subjectField, editorContentValue, selectVar, dateTimeValue);
 	};
 
 	const editorContentHandler = mailContent => {
@@ -136,7 +137,9 @@ export default function Layout(props) {
 						{/* Chart */}
 						{chart && (
 							<Grid item xs={12} md={8} lg={9}>
-								<Paper className={fixedHeightPaper}><Chart /></Paper>
+								<Paper className={fixedHeightPaper}>
+									<Chart />
+								</Paper>
 							</Grid>
 						)}
 
@@ -164,15 +167,12 @@ export default function Layout(props) {
 								<Paper className={classes.paper}>
 									<form onSubmit={submitForm}>
 										<div className={classes.select}>
-											<InputLabel id="schedule">
-												Schedule
-											</InputLabel>
+											<InputLabel id="schedule">Recurring Schedule</InputLabel>
 											<Select
 												labelId="schedule"
 												id="schedule"
-												  value={selectVar}
-												  onChange={selectChangeHandler}
-											>
+												value={selectVar}
+												onChange={selectChangeHandler}>
 												<MenuItem value="">
 													<em>None</em>
 												</MenuItem>
@@ -181,6 +181,18 @@ export default function Layout(props) {
 												<MenuItem value={'one month'}>One Month</MenuItem>
 												<MenuItem value={'one year'}>One Year</MenuItem>
 											</Select>
+										</div>
+										<div className={classes.select}>
+											<TextField
+												label="Once Schedule"
+												type="datetime-local"
+												className={classes.dateTimeField}
+												InputLabelProps={{
+													shrink: true,
+												}}
+												value={dateTimeValue}
+												onChange={e => setDateTimeValue(e.target.value)}
+											/>
 										</div>
 										<TextFields
 											label={'To'}

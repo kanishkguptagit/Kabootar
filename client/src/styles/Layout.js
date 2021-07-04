@@ -6,6 +6,11 @@ const layoutStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
     },
+    dateTimeField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width: 200,
+    },
     toolbar: {
       paddingRight: 24, // keep right padding when drawer closed
     },
