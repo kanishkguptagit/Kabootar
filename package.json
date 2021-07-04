@@ -1,6 +1,7 @@
 {
   "name": "root",
   "private": true,
+  "version": "v1.2.0",
   "scripts": {
     "boots": "lerna bootstrap",
     "postinstall": "npm run boots",
