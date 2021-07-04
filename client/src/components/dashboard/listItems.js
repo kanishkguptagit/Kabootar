@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink,Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -15,30 +15,30 @@ import classes from '../../styles/listItems.module.css';
 
 export const mainListItems = (
 	<div>
-		<ListItem button>
-			<ListItemIcon>
-				<DashboardIcon />
-			</ListItemIcon>
-			<NavLink to="/dashboard" className={classes.navlink}>
+		<NavLink to="/dashboard" className={classes.navlink} activeStyle={{color:"#3f5acc"}}>
+			<ListItem button>
+				<ListItemIcon>
+					<DashboardIcon />
+				</ListItemIcon>
 				<ListItemText primary="Dashboard" />
-			</NavLink>
-		</ListItem>
-		<ListItem button>
-			<ListItemIcon>
-				<CreateIcon />
-			</ListItemIcon>
-			<Link to="/create" className={classes.navlink}>
+			</ListItem>
+		</NavLink>
+		<NavLink to="/create" className={classes.navlink} activeStyle={{color:"#3f5acc"}}>
+			<ListItem button>
+				<ListItemIcon>
+					<CreateIcon />
+				</ListItemIcon>
 				<ListItemText primary="Compose" />
-			</Link>
-		</ListItem>
-		<ListItem button>
-			<ListItemIcon>
-				<BarChartIcon />
-			</ListItemIcon>
-			<NavLink to="/history" className={classes.navlink}>
+			</ListItem>
+		</NavLink>
+		<NavLink to="/history" className={classes.navlink} activeStyle={{color:"#3f5acc"}}>
+			<ListItem button>
+				<ListItemIcon>
+					<BarChartIcon />
+				</ListItemIcon>
 				<ListItemText primary="History" />
-			</NavLink>
-		</ListItem>
+			</ListItem>
+		</NavLink>
 	</div>
 );
 

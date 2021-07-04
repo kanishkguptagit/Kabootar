@@ -8,7 +8,7 @@ function Create() {
 	const [message, setMessage] = useState('');
 	const ctx = useContext(AuthContext);
 
-	const getEnteredValues = async (to, subject, body) => {
+	const getEnteredValues = async (to, subject, body, schedule) => {
 		const toArray = to?.split(',').map(t => t.trim());
 
 		const data = await fetch('https://kabootar-mail.herokuapp.com/mails/add', {

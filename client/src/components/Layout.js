@@ -15,6 +15,9 @@ import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Button from '@material-ui/core/Button';
+import { Select } from '@material-ui/core';
+import { MenuItem } from '@material-ui/core';
+import { InputLabel } from '@material-ui/core';
 
 import { mainListItems, secondaryListItems } from './dashboard/listItems';
 // import Chart from '../components/dashboard/Chart';
@@ -24,15 +27,17 @@ import layoutStyles from '../styles/Layout';
 import DraftEditorApp from './draft/DraftEditor';
 import TextFields from './TextField';
 import AuthContext from '../store/auth-context';
+import Chart from './dashboard/Chart';
 
 export default function Layout(props) {
 	const classes = layoutStyles();
 	const ctx = useContext(AuthContext);
 	const history = useHistory();
 
-	const[editorContentValue, setEditorContentValue] = useState('');
-	const[toField, setToField] = useState('');
-	const[subjectField, setSubjectField] = useState('');
+	const [editorContentValue, setEditorContentValue] = useState('');
+	const [toField, setToField] = useState('');
+	const [subjectField, setSubjectField] = useState('');
+	const [selectVar, setSelectVar] = useState('none');
 
 	const chart = props.chart ?? false;
 	const block = props.block ?? false;
@@ -53,23 +58,27 @@ export default function Layout(props) {
 		history.replace('/');
 	};
 
-	const toChangeHandler = (event) => {
+	const toChangeHandler = event => {
 		setToField(event.target.value);
-	}
-
-	const subjectChangeHandler = (event) => {
-		setSubjectField(event.target.value);
-	}
-
-	const submitForm = event => {		
-		event.preventDefault();
-
-		props.getEnteredValues(toField, subjectField, editorContentValue);
 	};
 
-	const editorContentHandler = (mailContent) => {
-		setEditorContentValue(mailContent);
+	const subjectChangeHandler = event => {
+		setSubjectField(event.target.value);
+	};
+
+	const selectChangeHandler = event => {
+		setSelectVar(event.target.value);
 	}
+
+	const submitForm = event => {
+		event.preventDefault();
+
+		props.getEnteredValues(toField, subjectField, editorContentValue, selectVar);
+	};
+
+	const editorContentHandler = mailContent => {
+		setEditorContentValue(mailContent);
+	};
 
 	return (
 		<div className={classes.root}>
@@ -127,7 +136,7 @@ export default function Layout(props) {
 						{/* Chart */}
 						{chart && (
 							<Grid item xs={12} md={8} lg={9}>
-								<Paper className={fixedHeightPaper}>{/* <Chart /> */}</Paper>
+								<Paper className={fixedHeightPaper}><Chart /></Paper>
 							</Grid>
 						)}
 
@@ -154,6 +163,25 @@ export default function Layout(props) {
 							<Grid item xs={12}>
 								<Paper className={classes.paper}>
 									<form onSubmit={submitForm}>
+										<div className={classes.select}>
+											<InputLabel id="schedule">
+												Schedule
+											</InputLabel>
+											<Select
+												labelId="schedule"
+												id="schedule"
+												  value={selectVar}
+												  onChange={selectChangeHandler}
+											>
+												<MenuItem value="">
+													<em>None</em>
+												</MenuItem>
+												<MenuItem value={'one day'}>One Day</MenuItem>
+												<MenuItem value={'one week'}>One Week</MenuItem>
+												<MenuItem value={'one month'}>One Month</MenuItem>
+												<MenuItem value={'one year'}>One Year</MenuItem>
+											</Select>
+										</div>
 										<TextFields
 											label={'To'}
 											autoFocus={true}
