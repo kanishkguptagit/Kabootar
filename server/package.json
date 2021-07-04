@@ -1,9 +1,9 @@
 {
 	"name": "server",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"private": true,
 	"scripts": {
-		"start": "ts-node server.js",
+		"start": "node build/server.js",
 		"dev": "nodemon --config nodemon.json",
 		"build": "tsc"
 	},
