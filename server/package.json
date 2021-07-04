@@ -1,6 +1,6 @@
 {
 	"name": "server",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"private": true,
 	"scripts": {
 		"start": "ts-node server.js",
@@ -19,7 +19,8 @@
 		"mongoose": "^5.12.15",
 		"nodemailer": "^6.6.2",
 		"nodemailer-mail-tracking": "^0.1.7",
-		"nodemailer-ses-transport": "^1.5.1"
+		"nodemailer-ses-transport": "^1.5.1",
+		"ts-node": "^10.0.0"
 	},
 	"main": "server.js",
 	"license": "MIT",
@@ -31,7 +32,6 @@
 		"@types/nodemailer": "^6.4.2",
 		"mongodb-client-encryption": "^1.2.5",
 		"nodemon": "^2.0.7",
-		"ts-node": "^10.0.0",
 		"typescript": "^4.3.4"
 	},
 	"engines": {
