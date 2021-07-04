@@ -22,17 +22,30 @@ router.post('/signup', (req, res) => {
 		throw new Error('The email, password and the firstname fields are required');
 	}
 	const newUser = new Users({ email, firstName, lastName, password });
-	newUser.save().then(user => {
-		const accessToken = createJWT(user.email, user._id);
-		sendConfirmationEmail(user.email);
-		return res.status(201).json({
-			sucess: true,
-			result: {
-				accessToken,
-				id: user._id,
-			},
+	newUser
+		.save()
+		.then(user => {
+			const accessToken = createJWT(user.email, user._id);
+			sendConfirmationEmail(user.email);
+			return res.status(201).json({
+				sucess: true,
+				result: {
+					accessToken,
+					id: user._id,
+				},
+			});
+		})
+		.catch(err => {
+			if (err?.code === 11000) {
+				return res
+					.status(400)
+					.json({ success: false, result: 'This email id already exists.' });
+			}
+			return res.status(500).json({
+				success: false,
+				result: 'Database error.\n Entry could not be saved.',
+			});
 		});
-	});
 });
 
 router.post('/signin', async (req, res, next) => {
