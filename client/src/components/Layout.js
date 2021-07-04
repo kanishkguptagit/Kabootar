@@ -167,7 +167,7 @@ export default function Layout(props) {
 								<Paper className={classes.paper}>
 									<form onSubmit={submitForm}>
 										<div className={classes.select}>
-											<InputLabel id="schedule">Schedule</InputLabel>
+											<InputLabel id="schedule">Recurring Schedule</InputLabel>
 											<Select
 												labelId="schedule"
 												id="schedule"
@@ -184,7 +184,7 @@ export default function Layout(props) {
 										</div>
 										<div className={classes.select}>
 											<TextField
-												label="Scheduled Date"
+												label="Once Schedule"
 												type="datetime-local"
 												className={classes.dateTimeField}
 												InputLabelProps={{

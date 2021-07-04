@@ -7,10 +7,14 @@ import AuthContext from '../store/auth-context';
 const getScheduled = (recurringSchedule, onceSchedule) => {
 	if (recurringSchedule.toLowerCase() !== 'none') {
 		return { isScheduled: true, scheduled: recurringSchedule.toLowerCase() };
+	} else if (onceSchedule) {
+		return {
+			isScheduled: true,
+			scheduled: new Date(onceSchedule).toISOString(),
+		};
 	}
 	return {
-		isScheduled: true,
-		scheduled: new Date(onceSchedule).toISOString(),
+		isScheduled: false,
 	};
 };
 
