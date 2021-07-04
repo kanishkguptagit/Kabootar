@@ -17,8 +17,7 @@ const block = {
 };
 
 const capitalize = s => {
-	if(s)
-		return s[0].toUpperCase() + s.slice(1);
+	if (s) return s[0].toUpperCase() + s.slice(1);
 };
 
 function Dashboard() {
@@ -41,7 +40,12 @@ function Dashboard() {
 				},
 			}).then(r => r.json());
 
-			const results = (data.result || []).map(res =>
+			if (!data || !data.result || !Array.isArray(data.result)) {
+				setLoadedData({ enable: false, items: [] });
+				return;
+			}
+
+			const results = data.result.map(res =>
 				createData(res._id, res.scheduled, res.recipents?.toString(), res.subject)
 			);
 
