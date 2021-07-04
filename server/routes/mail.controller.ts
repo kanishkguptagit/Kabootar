@@ -53,13 +53,16 @@ router.post('/add', async (req, res, next) => {
 
 router.get('/history', async (req, res, next) => {
 	const user = await getAuthUser(req, next);
-	const mails = await Mail.find({ owner: user._id, isScheduled: true });
+	const mails = await Mail.find({ owner: user._id, isScheduled: true }).sort({ _id: -1 });
 	return res.json({ success: true, result: mails });
 });
 
 router.get('/dashboard', async (req, res, next) => {
 	const user = await getAuthUser(req, next);
-	const mails = await Mail.find({ owner: user._id, isScheduled: false });
+	if (!user) {
+		return;
+	}
+	const mails = await Mail.find({ owner: user._id, isScheduled: false }).sort({ _id: -1 });
 	return res.json({ success: true, result: mails });
 });
 
