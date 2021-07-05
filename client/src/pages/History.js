@@ -26,7 +26,7 @@ function History() {
 			}).then(r => r.json());
 
 			const results = (data.result || []).map(res =>
-				createData(res._id, res.scheduled, res.recipents?.toString(), res.subject)
+				createData(res._id,'', res.scheduled, res.recipents?.toString(), res.subject)
 			);
 
 			setLoadedData({ enable: true, items: results });
