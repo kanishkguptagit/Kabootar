@@ -82,10 +82,10 @@ function App() {
   
 ## Screenshots
 
-![Landing Page](https://ibb.co/44RP96S)
-![Dashboard](https://ibb.co/B2JhLQP)
-![History](https://ibb.co/Z62PDb3)
-![Compose Page](https://ibb.co/ss4GgLd)
+![Landing Page](https://i.ibb.co/TPMmpV0/landing.png)
+![Dashboard](https://i.ibb.co/23rzqC6/dashboard.png)
+![History](https://i.ibb.co/99ZL5dJ/History.png)
+![Compose Page](https://i.ibb.co/ygC1NLc/compose.png)
 
   
 ## Optimizations
