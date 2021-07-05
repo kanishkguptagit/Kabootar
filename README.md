@@ -4,7 +4,7 @@
     
 # Kabootar 🕊️
 
-Automatically send and track emails.
+Automatically send and track recurring emails securely. Simple and Minimalistic.
 
 
 ## Deployment
@@ -82,12 +82,15 @@ function App() {
   
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![Landing Page](https://ibb.co/44RP96S)
+![Dashboard](https://ibb.co/B2JhLQP)
+![History](https://ibb.co/Z62PDb3)
+![Compose Page](https://ibb.co/ss4GgLd)
 
   
 ## Optimizations
 
-What optimizations did you make in your code? E.g. refactors, performance improvements, accessibility
+Refactored to MVC structure. Made the code cleaner and easier to debug. UI was optimised to be as simple as intuitive as possible.
 
 
 ## App can be found at
