@@ -1,6 +1,6 @@
 {
 	"name": "server",
-	"version": "1.2.0",
+	"version": "1.4.0",
 	"private": true,
 	"scripts": {
 		"start": "node build/server.js",
@@ -21,6 +21,18 @@
 		"nodemailer-mail-tracking": "^0.1.7",
 		"nodemailer-ses-transport": "^1.5.1",
 		"ts-node": "^10.0.0"
+	},
+	"devDependencies": {
+		"@types/cors": "^2.8.10",
+		"@types/express": "^4.17.12",
+		"@types/jsonwebtoken": "^8.5.2",
+		"@types/node": "^15.12.4",
+		"@types/nodemailer": "^6.4.2",
+		"lerna": "^4.0.0",
+		"mongodb-client-encryption": "^1.2.5",
+		"nodemon": "^2.0.7",
+		"prettier": "^2.3.1",
+		"typescript": "^4.3.4"
 	},
 	"main": "server.js",
 	"license": "MIT",
