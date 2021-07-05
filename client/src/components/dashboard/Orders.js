@@ -24,7 +24,8 @@ export default function Orders(props) {
         <TableBody>
           {props.item.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{row.schedule}</TableCell>
+              {/* <TableCell>{row.scheduled}</TableCell>               */}
+              <TableCell>{row.schedule}</TableCell>              
               <TableCell>{row.recipient}</TableCell>
               <TableCell>{row.subject}</TableCell>
             </TableRow>

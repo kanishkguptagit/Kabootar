@@ -24,7 +24,7 @@ function App() {
 			<Suspense fallback={<div className='centered'><LoadingSpinner/></div>}>
 				<Switch>
 					<Route path="/" exact>
-						{/* <NavBar /> */}
+						<NavBar />
 						<Landing />
 					</Route>
 					<Route path="/signin" exact>
