@@ -9,6 +9,20 @@ Automatically send and track recurring emails securely. Simple and Minimalistic.
 
 ## Deployment
 
+To use this in your localhost
+
+(Frontend)
+```bash
+  npm install
+  npm start
+```
+
+(Backend)
+```bash
+  npm install
+  npm run dev
+```
+
 To deploy this project run
 
 ```bash
@@ -62,11 +76,22 @@ Install my-project with npm
     
 ## Features
 - Lightweight and fast
-- Light/dark mode toggle
-- Live previews
-- Fullscreen mode
-- Cross platform
-- Secure
+- Made using mern stack
+- Seamless performance possible due to Reactjs
+- Simple and appealing UI
+- Smooth and responsive experience
+- Various font decoration features while composing a mail
+- Mails can be scheduled to be sent in future
+- Recurring mails possible
+- View scheduled mail and history of mails sent
+- Backend in node (Typescript) for scalibility purpose
+- Persistent logins
+- Highly secured endpoints
+- Used amazon's mailing service for enhanced speed
+- Required recievers consent so as to avoid spamming
+- Used MongoDB for data security
+- Backend deployed in heroku
+- Frontend hosted in netlify
 
   
 ## Usage/Examples

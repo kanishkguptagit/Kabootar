@@ -21,7 +21,7 @@ function Landing() {
 			<div className={`${classes.image} ${classes.centered}`}>
 				<img src="/logos/icon.png" alt="Logo" />
 			</div>
-			<div className={`${classes.heading} ${classes.centered}`}>kabootar</div>
+			<div className={`${classes.heading} ${classes.centered}`}>Kabootar</div>
 			<div className={classes.centered}>
                 <Link to={continueButton}>
 				<Button
@@ -29,7 +29,7 @@ function Landing() {
 					color="primary"
 					size="large"
 					style={{ textTransform: 'none' }}>
-					Continue to kabootar
+					Continue to Kabootar
 				</Button>
                 </Link>
 			</div>

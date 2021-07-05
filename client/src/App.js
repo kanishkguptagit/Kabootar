@@ -6,12 +6,6 @@ import AuthContext from './store/auth-context';
 import NavBar from './components/NavBar';
 import LoadingSpinner from './components/Spinner/LoadingSpinner';
 import './App.css';
-// import Signin from './pages/Signin';
-// import Signup from './pages/Signup';
-// import Dashboard from './pages/Dashboard';
-// import Landing from './pages/Landing';
-// import History from './pages/History';
-// import Create from "./pages/Create";
 
 const Signin = lazy(()=>import('./pages/Signin'));
 const Signup = lazy(()=>import('./pages/Signup'));
@@ -30,7 +24,7 @@ function App() {
 			<Suspense fallback={<div className='centered'><LoadingSpinner/></div>}>
 				<Switch>
 					<Route path="/" exact>
-						<NavBar />
+						{/* <NavBar /> */}
 						<Landing />
 					</Route>
 					<Route path="/signin" exact>
