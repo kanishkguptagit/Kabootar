@@ -4,6 +4,7 @@ import getAuthUser from '../lib/auth';
 import { createAndSendMail } from '../lib/mailer';
 import { getScheduledDate } from '../lib/utils';
 import Mail, { IMail, ICreateMail } from '../models/Mail.model';
+import { getAnalyticsForUser } from '../lib/analytics';
 
 const router = Router();
 
@@ -59,6 +60,18 @@ router.get('/dashboard', async (req, res, next) => {
 	}
 	const mails = await Mail.find({ owner: user._id, isScheduled: true }).sort({ _id: -1 });
 	return res.json({ success: true, result: mails });
+});
+
+router.get('/analytics', async (req, res, next) => {
+	const user = await getAuthUser(req, next);
+	if (!user) {
+		return res.json({ success: false, result: 'User not found' });
+	}
+	// mail links clicked
+	// mails opened
+	// total mails sent
+	const ans = await getAnalyticsForUser(user._id);
+	return res.send(ans);
 });
 
 export default router;

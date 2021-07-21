@@ -16,4 +16,5 @@ const MailTrackSchema = new Schema({
 	wasOpened: { type: Boolean, default: false, index: true },
 	linkClicks: { type: Number, default: 0 },
 });
+
 export default mongoose.model<IMailTrackBase>('MailTrack', MailTrackSchema);

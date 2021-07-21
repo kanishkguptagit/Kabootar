@@ -17,9 +17,9 @@ async function _getAuthUser(req: Request) {
 		return null;
 	}
 
-	const foundUser = (await Users.findOne({ _id: payload.userId }, { password: 0 })) as IUser;
+	const foundUser = await Users.findOne({ _id: payload.userId }, { password: 0 });
 
-	return foundUser;
+	return foundUser?.toObject();
 }
 
 export default async function getAuthUser(
@@ -33,5 +33,5 @@ export default async function getAuthUser(
 		return next(new Error('User not logged in')) as any;
 	}
 
-	return authUser as IUser;
+	return authUser as any;
 }
