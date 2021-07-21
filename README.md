@@ -92,6 +92,7 @@ Install my-project with npm
 - Used MongoDB for data security
 - Backend deployed in heroku
 - Frontend hosted in netlify
+- Mails are recovered even after server failure to avoid any inconvenience caused to our clients and their business
 
   
 ## Usage/Examples
