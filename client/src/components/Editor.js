@@ -1,25 +1,23 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { InputLabel, TextField } from '@material-ui/core';
-import { Select } from '@material-ui/core';
-import { MenuItem } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
 import TextFields from './TextField';
 import Button from '@material-ui/core/Button';
 import layoutStyles from '../styles/Layout';
 import DraftEditorApp from './draft/DraftEditor';
-
+import RecurringScheduleSelector from './schedule-selector/recurring';
 
 export default function Editor(props) {
 	const classes = layoutStyles();
 
-    const [editorContentValue, setEditorContentValue] = useState('');
+	const [editorContentValue, setEditorContentValue] = useState('');
 	const [toField, setToField] = useState('');
 	const [subjectField, setSubjectField] = useState('');
-	const [selectVar, setSelectVar] = useState('none');
+	const [recurringValue, setRecurringValue] = useState('');
 	const [dateTimeValue, setDateTimeValue] = useState('');
 
-    const toChangeHandler = event => {
+	const toChangeHandler = event => {
 		setToField(event.target.value);
 	};
 
@@ -27,14 +25,10 @@ export default function Editor(props) {
 		setSubjectField(event.target.value);
 	};
 
-	const selectChangeHandler = event => {
-		setSelectVar(event.target.value);
-	};
-
 	const submitForm = event => {
 		event.preventDefault();
 
-		props.getEnteredValues(toField, subjectField, editorContentValue, selectVar, dateTimeValue);
+		props.getEnteredValues(toField, subjectField, editorContentValue, recurringValue, dateTimeValue);
 	};
 
 	const editorContentHandler = mailContent => {
@@ -45,22 +39,11 @@ export default function Editor(props) {
 		<Grid item xs={12}>
 			<Paper className={classes.paper}>
 				<form onSubmit={submitForm}>
-					<div className={classes.select}>
-						<InputLabel id="schedule">Recurring Schedule</InputLabel>
-						<Select
-							labelId="schedule"
-							id="schedule"
-							value={selectVar}
-							onChange={selectChangeHandler}>
-							<MenuItem value="">
-								<em>None</em>
-							</MenuItem>
-							<MenuItem value={'one day'}>One Day</MenuItem>
-							<MenuItem value={'one week'}>One Week</MenuItem>
-							<MenuItem value={'one month'}>One Month</MenuItem>
-							<MenuItem value={'one year'}>One Year</MenuItem>
-						</Select>
-					</div>
+					<RecurringScheduleSelector
+						recurringValue={recurringValue}
+						setRecurringValue={setRecurringValue}
+					/>
+
 					<div className={classes.select}>
 						<TextField
 							label="Once Schedule"
