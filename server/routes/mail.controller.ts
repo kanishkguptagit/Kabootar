@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import getAuthUser from '../lib/auth';
-import { sendMailToRecipents, sendScheduledMail } from '../lib/mailer';
+import { createAndSendMail } from '../lib/mailer';
 import { getScheduledDate } from '../lib/utils';
 import Mail, { IMail, ICreateMail } from '../models/Mail.model';
 
@@ -35,15 +35,7 @@ router.post('/add', async (req, res, next) => {
 	}
 
 	const savedMailObject = savedMail.toObject();
-	if (
-		savedMail.isScheduled &&
-		savedMail.scheduled instanceof Date &&
-		!isNaN(savedMail.scheduled?.valueOf())
-	) {
-		sendScheduledMail(savedMailObject as IMail);
-	} else {
-		sendMailToRecipents(savedMailObject as IMail);
-	}
+	createAndSendMail(savedMailObject as IMail);
 
 	return res.status(200).json({
 		success: true,
