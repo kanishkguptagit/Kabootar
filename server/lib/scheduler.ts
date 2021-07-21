@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import mongoose from 'mongoose';
 
 import Mail, { IMail } from '../models/Mail.model';
-import { sendMail } from './mailer';
+import { sendMail } from './mailer/sendMailCore';
 
 enum jobNames {
 	sendScheduledMail = 'send-scheduled-mail',
