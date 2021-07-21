@@ -2,6 +2,7 @@ import { Fragment, useContext, useState } from 'react';
 import { Snackbar, Chip } from '@material-ui/core';
 
 import Layout from '../components/Layout';
+import Editor from '../components/Editor';
 import AuthContext from '../store/auth-context';
 
 const getScheduled = (recurringSchedule, onceSchedule) => {
@@ -56,8 +57,10 @@ function Create() {
 	};
 
 	return (
-		<Fragment>
-			<Layout editor={true} title={'Create'} getEnteredValues={getEnteredValues} />
+		<Fragment>			
+			<Layout title={'Compose'}>
+				<Editor getEnteredValues={getEnteredValues} />
+			</Layout>
 			<Snackbar
 				open={message.length > 0}
 				autoHideDuration={4000}
