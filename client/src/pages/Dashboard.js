@@ -1,14 +1,10 @@
 import { useEffect, useContext, useState } from 'react';
-import clsx from 'clsx';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 
-import Chart from '../components/dashboard/Chart';
-import Deposits from '../components/dashboard/Deposits';
-import Orders from '../components/dashboard/Orders';
 import Layout from '../components/Layout';
 import AuthContext from '../store/auth-context';
-import layoutStyles from '../styles/Layout';
+import Graph from '../components/Graph';
+import BlockDetail from '../components/BlockDetail';
+import MailList from '../components/MailList';
 
 function createData(id, schedule, recipient, subject) {
 	return { id, schedule, recipient, subject };
@@ -19,10 +15,7 @@ const capitalize = s => {
 };
 
 function Dashboard() {
-	const classes = layoutStyles();
 	const ctx = useContext(AuthContext);
-
-	const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
 	const [loadedData, setLoadedData] = useState({
 		enable: true,
@@ -71,21 +64,9 @@ function Dashboard() {
 
 	return (
 		<Layout title={name}>
-			<Grid item xs={12} md={8} lg={9}>
-				<Paper className={fixedHeightPaper}>
-					<Chart />
-				</Paper>
-			</Grid>
-			<Grid item xs={12} md={4} lg={3}>
-				<Paper className={fixedHeightPaper}>
-					<Deposits />
-				</Paper>
-			</Grid>
-			<Grid item xs={12}>
-				<Paper className={classes.paper}>
-					<Orders item={loadedData.items} />
-				</Paper>
-			</Grid>
+			<Graph />
+			<BlockDetail />
+			<MailList items={loadedData.items} />
 		</Layout>
 	);
 }

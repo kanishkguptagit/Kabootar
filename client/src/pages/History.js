@@ -1,18 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 
-import Orders from '../components/dashboard/Orders';
 import Layout from '../components/Layout';
 import AuthContext from '../store/auth-context';
-import layoutStyles from '../styles/Layout';
+import MailList from '../components/MailList';
 
 function createData(id, date, schedule, recipient, subject) {
 	return { id, date, schedule, recipient, subject };
 }
 
 function History() {
-	const classes = layoutStyles();
 	const ctx = useContext(AuthContext);
 
 	const [loadedData, setLoadedData] = useState({
@@ -42,11 +38,7 @@ function History() {
 
 	return (
 		<Layout title={'History'}>
-			<Grid item xs={12}>
-				<Paper className={classes.paper}>
-					<Orders item={loadedData.items} />
-				</Paper>
-			</Grid>
+			<MailList items={loadedData.items} />
 		</Layout>
 	);
 }
