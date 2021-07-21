@@ -2,19 +2,13 @@ import { useEffect, useContext, useState } from 'react';
 
 import Layout from '../components/Layout';
 import AuthContext from '../store/auth-context';
+import Graph from '../components/Graph';
+import BlockDetail from '../components/BlockDetail';
+import MailList from '../components/MailList';
 
 function createData(id, schedule, recipient, subject) {
 	return { id, schedule, recipient, subject };
 }
-
-const chart = {
-	enable: true,
-};
-
-const block = {
-	enable: true,
-	details: null,
-};
 
 const capitalize = s => {
 	if (s) return s[0].toUpperCase() + s.slice(1);
@@ -68,7 +62,13 @@ function Dashboard() {
 		fetchName();
 	}, [ctx.token, setLoadedData, ctx.userId, setName]);
 
-	return <Layout editor={false} chart={chart} block={block} list={loadedData} title={name} />;
+	return (
+		<Layout title={name}>
+			<Graph />
+			<BlockDetail />
+			<MailList items={loadedData.items} />
+		</Layout>
+	);
 }
 
 export default Dashboard;

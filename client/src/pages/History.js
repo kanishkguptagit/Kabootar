@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import Layout from '../components/Layout';
 import AuthContext from '../store/auth-context';
+import MailList from '../components/MailList';
 
 function createData(id, date, schedule, recipient, subject) {
 	return { id, date, schedule, recipient, subject };
@@ -26,7 +27,7 @@ function History() {
 			}).then(r => r.json());
 
 			const results = (data.result || []).map(res =>
-				createData(res._id,'', res.scheduled, res.recipents?.toString(), res.subject)
+				createData(res._id, '', res.scheduled, res.recipents?.toString(), res.subject)
 			);
 
 			setLoadedData({ enable: true, items: results });
@@ -35,7 +36,11 @@ function History() {
 		fetchData();
 	}, [ctx.token]);
 
-	return <Layout editor={false} list={loadedData} title={'History'} />;
+	return (
+		<Layout title={'History'}>
+			<MailList items={loadedData.items} />
+		</Layout>
+	);
 }
 
 export default History;
