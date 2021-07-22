@@ -6,8 +6,8 @@ import MailList from '../components/MailList';
 import Modal from '../ui/Modal';
 import Analytics from '../components/Analytics';
 
-function createData(id, date, schedule, recipient, subject) {
-	return { id, date, schedule, recipient, subject };
+function createData(id, date, schedule, recipient, subject, recipientSummary) {
+	return { id, date, schedule, recipient, subject,recipientSummary };
 }
 
 function History() {
@@ -40,7 +40,7 @@ function History() {
 			}).then(r => r.json());
 
 			const results = (data.result || []).map(res =>
-				createData(res._id, '', res.scheduled, res.recipents?.toString(), res.subject)
+				createData(res._id, '', res.scheduled, res.recipents?.toString(), res.subject, res.recipents[0])
 			);
 
 			setLoadedData({ enable: true, items: results });

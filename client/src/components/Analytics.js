@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
 import BarGraphPoint from './BarGraphPoint';
 import classes from '../styles/analytics.module.css';
+import LoadingSpinner from '../components/Spinner/LoadingSpinner';
 
 export default function Analytics({ mailId, ctx }) {
-	const [state, setState] = useState({ sent: 0, opened: 0, linksClicked: 0 });
+	const [sent, setSent] = useState();
+	const [opened, setOpened] = useState();
+	const [linksClicked, setLinksClicked] = useState();
+	const [barData, setBarData] = useState([]);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const url = process.env.REACT_APP_BACKEND + '/mails/analytics/' + mailId;
+			setLoading(true);
+			const url = 'https://96f673b95468.ngrok.io/mails/analytics/' + mailId;
 			const data = await fetch(url, {
 				method: 'GET',
 				headers: {
@@ -17,24 +23,42 @@ export default function Analytics({ mailId, ctx }) {
 				},
 			}).then(r => r.json());
 
-			console.log(data, 'after fetched');
+			setSent(data.sent);
+			setOpened(data.opened);
+			setLinksClicked(data.linksClicked);
+
+			const bar = [
+				{ name: 'Total Mails', mails: sent },
+				{ name: 'Opened', mails: opened },
+				{ name: 'Clicked', mails: linksClicked },
+			];
+
+			setBarData(bar);
+
+			setLoading(false);
 		};
 
 		fetchData();
-	}, [ctx.token, mailId]);
+	}, [ctx.token, mailId, linksClicked, opened, sent]);
 
 	return (
 		<>
-			<div className={classes.center_content}>
-				<BarGraphPoint />
-			</div>
-			<div className={classes.center_content}>
-				<ul className={classes.list_items}>
-					<li>Total Recipients = {state.sent}</li>
-					<li>Total Opened = {state.opened}</li>
-					<li>Total Clicked = {state.linksClicked}</li>
-				</ul>
-			</div>
+			{!loading && (
+				<Fragment>
+					<div className={classes.center_content}>
+						<BarGraphPoint data={barData} />
+					</div>
+					<div className={classes.center_content}>
+						<ul className={classes.list_items}>
+							<li>Total Recipients = {sent}</li>
+							<li>Total Opened = {opened}</li>
+							<li>Total Clicked = {linksClicked}</li>
+						</ul>
+					</div>
+				</Fragment>
+			)}
+
+			{loading && <LoadingSpinner />}
 		</>
 	);
 }
