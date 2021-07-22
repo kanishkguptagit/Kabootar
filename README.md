@@ -4,7 +4,7 @@
     
 # Kabootar 🕊️
 
-Automatically send and track recurring emails securely. Simple and Minimalistic.
+Automatically send and track recurring emails securely. Simple and Minimalist.
 
 
 ## Deployment
