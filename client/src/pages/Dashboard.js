@@ -7,6 +7,10 @@ import BlockDetail from '../components/BlockDetail';
 import MailList from '../components/MailList';
 
 function createData(id, schedule, recipient, subject) {
+	const scheduleDate = new Date(schedule);
+	const month = scheduleDate.toDateString();
+	const time = scheduleDate.toLocaleTimeString();
+	schedule = month+' - '+time;
 	return { id, schedule, recipient, subject };
 }
 

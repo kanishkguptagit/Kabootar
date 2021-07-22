@@ -7,6 +7,10 @@ import Modal from '../ui/Modal';
 import Analytics from '../components/Analytics';
 
 function createData(id, date, schedule, recipient, subject, recipientSummary) {
+	const scheduleDate = new Date(schedule);
+	const month = scheduleDate.toDateString();
+	const time = scheduleDate.toLocaleTimeString();
+	schedule = month+' - '+time;
 	return { id, date, schedule, recipient, subject,recipientSummary };
 }
 
