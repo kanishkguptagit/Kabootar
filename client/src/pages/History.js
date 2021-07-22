@@ -13,23 +13,24 @@ function createData(id, date, schedule, recipient, subject) {
 function History() {
 	const ctx = useContext(AuthContext);
 
-	const [openModal,setOpenModal] = useState(false);
+	const [openModal, setOpenModal] = useState(false);
+	const [mailId, setMailId] = useState('');
 
 	const [loadedData, setLoadedData] = useState({
 		enable: true,
 		items: [],
 	});
 
-	const modalHandler = (id) => {
+	const modalHandler = mailId => {
+		setMailId(mailId);
 		setOpenModal(prevState => {
 			return !prevState;
-		})
-		console.log(id);
-	}
+		});
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const url = process.env.REACT_APP_BACKEND+'/mails/history';			
+			const url = process.env.REACT_APP_BACKEND + '/mails/history';
 			const data = await fetch(url, {
 				method: 'GET',
 				headers: {
@@ -50,7 +51,11 @@ function History() {
 
 	return (
 		<Layout title={'History'}>
-			{ openModal && <Modal onClose={modalHandler}><Analytics /></Modal> }
+			{openModal && (
+				<Modal onClose={modalHandler}>
+					<Analytics mailId={mailId} ctx={ctx} />
+				</Modal>
+			)}
 			<MailList items={loadedData.items} history={true} modalHandler={modalHandler} />
 		</Layout>
 	);
