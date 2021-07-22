@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import AuthContext from '../store/auth-context';
 import MailList from '../components/MailList';
-import { Button } from '@material-ui/core';
 import Modal from '../ui/Modal';
 import Analytics from '../components/Analytics';
 
@@ -21,10 +20,11 @@ function History() {
 		items: [],
 	});
 
-	const modalHandler = () => {
+	const modalHandler = (id) => {
 		setOpenModal(prevState => {
 			return !prevState;
 		})
+		console.log(id);
 	}
 
 	useEffect(() => {
@@ -50,16 +50,7 @@ function History() {
 	return (
 		<Layout title={'History'}>
 			{ openModal && <Modal onClose={modalHandler}><Analytics /></Modal> }
-			<MailList items={loadedData.items}>
-				<Button
-					onClick={modalHandler}
-					size="x-small"
-					variant="outlined"
-					color="primary"
-					style={{ textTransform: 'none', maxWidth:'90px', maxHeight:'35px' }}>
-					analytics
-				</Button>
-			</MailList>
+			<MailList items={loadedData.items} history={true} modalHandler={modalHandler} />
 		</Layout>
 	);
 }

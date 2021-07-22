@@ -7,10 +7,12 @@ import layoutStyles from '../styles/Layout';
 export default function MailList(props) {
 	const classes = layoutStyles();
 
+	const history = props.history ?? false;
+
 	return (
 		<Grid item xs={12}>
 			<Paper className={classes.paper}>
-				<Orders item={props.items}>{props.children}</Orders>
+				<Orders item={props.items} history={history} modalHandler={props.modalHandler} />
 			</Paper>
 		</Grid>
 	);
