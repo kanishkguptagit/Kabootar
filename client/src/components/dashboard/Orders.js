@@ -23,15 +23,14 @@ export default function Orders(props) {
 				<TableBody>
 					{props.item.map(row => (
 						<TableRow key={row.id}>
-							<TableCell>{row.schedule}</TableCell>
-							{/* <TableCell>{row.recipient}</TableCell> */}
+							<TableCell>{row.schedule}</TableCell>							
 							<TableCell>
 								<Accordion>
-									<AccordionSummary>{row.recipientSummary}</AccordionSummary>
+									<AccordionSummary>{row.recipientSummary} ...</AccordionSummary>
 									<AccordionDetails>
 										<div>
 											{row.recipient.map(recipent => (
-												<li>{recipent}</li>
+												<li style={{listStyleType:'none'}}>{recipent}</li>
 											))}
 										</div>
 									</AccordionDetails>
