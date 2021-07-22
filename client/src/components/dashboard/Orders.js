@@ -28,8 +28,8 @@ export default function Orders(props) {
 							<TableCell>{row.subject}</TableCell>
 							{props.history && (
 								<TableCell>
-									<Button
-										onClick={props.modalHandler.bind(null,row.id)}
+									<Button										
+										onClick={()=>{props.modalHandler(row.id)}}
 										size="x-small"
 										variant="outlined"
 										color="primary"

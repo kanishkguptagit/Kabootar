@@ -35,7 +35,7 @@ function Create() {
 			})
 		);
 
-		const data = await fetch('https://kabootar-mail.herokuapp.com/mails/add', {
+		const data = await fetch(process.env.REACT_APP_BACKEND+'/mails/add', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

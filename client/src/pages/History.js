@@ -29,7 +29,8 @@ function History() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const data = await fetch('https://kabootar-mail.herokuapp.com/mails/history', {
+			const url = process.env.REACT_APP_BACKEND+'/mails/history';			
+			const data = await fetch(url, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
