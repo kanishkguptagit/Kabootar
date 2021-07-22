@@ -14,18 +14,17 @@ router.get('/url/:encodedJWT/*', (req, res) => {
 	const decodedData = decodeData(req.params.encodedJWT);
 
 	if (decodedData) {
-		MailTrack.findOneAndUpdate(
-			{ _id: decodedData.mailTrackId },
-			{ $inc: { clickedTimes: 1 } }
-		).then(result => {
-			console.log(
-				chalk.bgWhiteBright.green(
-					result?._id,
-					' was CLICKED by recipent ',
-					decodedData.recipent
-				)
-			);
-		});
+		MailTrack.updateOne({ _id: decodedData.mailTrackId }, { $inc: { clickedTimes: 1 } })
+			.lean()
+			.then(result => {
+				console.log(
+					chalk.bgWhiteBright.green(
+						decodedData.mailTrackId,
+						' was CLICKED by recipent ',
+						decodedData.recipent
+					)
+				);
+			});
 	}
 });
 
@@ -38,18 +37,20 @@ router.get('/open/:encodedJWT', (req, res) => {
 	const decodedData = decodeData(req.params.encodedJWT);
 
 	if (decodedData) {
-		MailTrack.findOneAndUpdate(
+		MailTrack.updateOne(
 			{ _id: decodedData.mailTrackId },
 			{ $addToSet: { openedTimes: decodedData.recipent } }
-		).then(result => {
-			console.log(
-				chalk.bgWhiteBright.green(
-					result?._id,
-					' was OPENED by recipent ',
-					decodedData.recipent
-				)
-			);
-		});
+		)
+			.lean()
+			.then(result => {
+				console.log(
+					chalk.bgWhiteBright.green(
+						decodedData.mailTrackId,
+						' was OPENED by recipent ',
+						decodedData.recipent
+					)
+				);
+			});
 	}
 });
 

@@ -2,7 +2,7 @@ import { IMailTrack } from '../../models/MailTrack.model';
 import { encodeData } from './jwt';
 
 const linkRE = /(<a\s+(?:[^>]*?\s+)?href=")([^"]*)(")/gi;
-const BASE_URL = process.env.BASE_URL ?? 'https://793f42aa483c.ngrok.io';
+const BASE_URL = process.env.BASE_URL ?? 'https://96f673b95468.ngrok.io';
 
 export function patchLinks(html: string, encodedJWT: string): string {
 	return html.replace(

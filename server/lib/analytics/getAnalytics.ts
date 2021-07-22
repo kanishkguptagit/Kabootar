@@ -34,6 +34,7 @@ export async function getAnalyticsForSingleMail(mailId?: string): Promise<ISingl
 	}
 
 	const foundMailTracks = await MailTracks.find({ _id: { $in: foundMail.mailTracks } }).lean();
+
 	foundMailTracks.forEach(foundMailTrack => {
 		sent += foundMailTrack.totalSentTimes.valueOf();
 		opened += foundMailTrack.openedTimes.length;

@@ -12,7 +12,7 @@ export async function createMailTrack(mail: IMail): Promise<IMailTrack['_id']> {
 
 	const mailTrack = newMailTrack.toObject();
 
-	Mails.findOneAndUpdate(
+	await Mails.updateOne(
 		{ _id: mail._id },
 		{
 			$addToSet: {
