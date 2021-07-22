@@ -5,12 +5,13 @@ import awsTransport from 'nodemailer-ses-transport';
 import aws from 'aws-sdk';
 
 interface IMailContent {
-	to: string[];
+	to: string;
 	subject: string;
 	html: string;
 }
 
-export async function sendMail(mailContent: IMailContent) {
+/**send a single mail to a single recipent */
+export async function sendMail({ to, subject, html }: IMailContent) {
 	const transporter = nodemailer.createTransport(
 		awsTransport({
 			accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -19,19 +20,17 @@ export async function sendMail(mailContent: IMailContent) {
 		})
 	);
 
-	mailContent.to.forEach(async t => {
-		console.log(chalk.yellow.bgWhite('sending email to'), t);
-		const info = await transporter.sendMail({
-			from: 'kabootar@tmail.ws',
-			to: t,
-			subject: mailContent.subject,
-			html: mailContent.html,
-		});
-
-		console.log(info, chalk.green.bgWhite('email was sent'));
-		// ses needs a 60 second gap
-		// await new Promise(resolve => setTimeout(resolve, 60 * 1000));
+	console.log(chalk.yellow.bgWhite('sending email to'), to);
+	const info = await transporter.sendMail({
+		from: 'kabootar@tmail.ws',
+		to,
+		subject,
+		html,
 	});
+
+	console.log(info, chalk.green.bgWhite('email was sent'));
+	// ses needs a 60 second gap
+	// await new Promise(resolve => setTimeout(resolve, 60 * 1000));
 }
 
 export function sendConfirmationEmail(email: string) {

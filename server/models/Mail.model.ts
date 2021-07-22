@@ -9,12 +9,12 @@ export interface IMail {
 	body: string;
 	scheduled?: String;
 	isScheduled?: boolean;
-	mailTracks?: Types.ObjectId[];
+	mailTracks: Types.ObjectId[];
 }
 
-export interface ICreateMail extends Omit<IMail, '_id'> {}
+export interface ICreateMail extends Omit<IMail, '_id' | 'mailTracks'> {}
 
-interface IMailBase extends Omit<ICreateMail, 'scheduled'>, Document {}
+interface IMailBase extends Omit<IMail, '_id'>, Document {}
 
 const MailSchema = new Schema({
 	name: { type: String, required: false, trim: true },
@@ -24,7 +24,7 @@ const MailSchema = new Schema({
 	body: { type: String, required: true },
 	scheduled: { type: Date, required: false, default: new Date().toISOString() },
 	isScheduled: { type: Boolean, required: false, default: false, index: true },
-	mailTracks: { type: Schema.Types.ObjectId, required: false, default: [] },
+	mailTracks: { type: [Schema.Types.ObjectId], required: false, default: [] },
 });
 
 export default mongoose.model<IMailBase>('Mail', MailSchema);
