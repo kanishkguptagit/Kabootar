@@ -5,6 +5,7 @@ import AuthContext from '../store/auth-context';
 import MailList from '../components/MailList';
 import { Button } from '@material-ui/core';
 import Modal from '../ui/Modal';
+import Analytics from '../components/Analytics';
 
 function createData(id, date, schedule, recipient, subject) {
 	return { id, date, schedule, recipient, subject };
@@ -48,7 +49,7 @@ function History() {
 
 	return (
 		<Layout title={'History'}>
-			{ openModal && <Modal onClose={modalHandler} /> }
+			{ openModal && <Modal onClose={modalHandler}><Analytics /></Modal> }
 			<MailList items={loadedData.items}>
 				<Button
 					onClick={modalHandler}

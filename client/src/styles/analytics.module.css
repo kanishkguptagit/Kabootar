@@ -1,0 +1,8 @@
+.list_content {
+    display: flex;
+    justify-content: center;
+}
+
+.list_items {
+    list-style-type: none;
+}
