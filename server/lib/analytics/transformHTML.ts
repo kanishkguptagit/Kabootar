@@ -4,8 +4,6 @@ import { encodeData } from './jwt';
 const linkRE = /(<a\s+(?:[^>]*?\s+)?href=")([^"]*)(")/gi;
 const BASE_URL = process.env.BASE_URL ?? 'https://793f42aa483c.ngrok.io';
 
-console.log('the base url is', BASE_URL);
-
 export function patchLinks(html: string, encodedJWT: string): string {
 	return html.replace(
 		linkRE,

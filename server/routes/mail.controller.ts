@@ -49,7 +49,7 @@ router.get('/history', async (req, res, next) => {
 	if (!user) {
 		return res.json({ success: false, result: 'User not found' });
 	}
-	const mails = await Mail.find({ owner: user._id, isScheduled: false }).sort({ _id: -1 });
+	const mails = await Mail.find({ owner: user._id, isScheduled: false }).sort({ _id: -1 }).lean();
 	return res.json({ success: true, result: mails });
 });
 
@@ -58,7 +58,7 @@ router.get('/dashboard', async (req, res, next) => {
 	if (!user) {
 		return res.json({ success: false, result: 'User not found' });
 	}
-	const mails = await Mail.find({ owner: user._id, isScheduled: true }).sort({ _id: -1 });
+	const mails = await Mail.find({ owner: user._id, isScheduled: true }).sort({ _id: -1 }).lean();
 	return res.json({ success: true, result: mails });
 });
 
@@ -67,9 +67,6 @@ router.get('/analytics/:mailId', async (req, res, next) => {
 	if (!user) {
 		return res.json({ success: false, result: 'User not found' });
 	}
-	// mail links clicked
-	// mails opened
-	// total mails sent
 	const singleMailAnalytics = await getAnalyticsForSingleMail(req.params.mailId);
 	return res.send(singleMailAnalytics);
 });

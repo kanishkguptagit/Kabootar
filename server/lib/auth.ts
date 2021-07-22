@@ -17,9 +17,9 @@ async function _getAuthUser(req: Request) {
 		return null;
 	}
 
-	const foundUser = await Users.findOne({ _id: payload.userId }, { password: 0 });
+	const foundUser = await Users.findOne({ _id: payload.userId }, { password: 0 }).lean();
 
-	return foundUser?.toObject();
+	return foundUser;
 }
 
 export default async function getAuthUser(
