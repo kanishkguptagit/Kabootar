@@ -9,30 +9,30 @@ import {
   Tooltip,
 } from "recharts";
 
-const data = [
-  {
-    name: "Total Mail",
+// const data = [
+//   {
+//     name: "Total Mail",
     
-    mails: 20
-  },
-  {
-    name: "Opened",
+//     mails: 20
+//   },
+//   {
+//     name: "Opened",
     
-    mails: 15
-  },
-  {
-    name: "Clicked",
+//     mails: 15
+//   },
+//   {
+//     name: "Clicked",
     
-    mails: 10
-  }
-];
+//     mails: 10
+//   }
+// ];
 
-export default function BarGraphPoint() {
+export default function BarGraphPoint(props) {
   return (
     <BarChart
       width={500}
       height={300}
-      data={data}
+      data={props.data}
       margin={{
         top: 5,
         right: 30,

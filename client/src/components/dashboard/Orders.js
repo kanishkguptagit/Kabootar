@@ -4,6 +4,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { Accordion, AccordionDetails, AccordionSummary } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import Title from './Title';
 
@@ -24,7 +25,17 @@ export default function Orders(props) {
 					{props.item.map(row => (
 						<TableRow key={row.id}>
 							<TableCell>{row.schedule}</TableCell>
-							<TableCell>{row.recipient}</TableCell>
+							{/* <TableCell>{row.recipient}</TableCell> */}
+							<TableCell>
+								<Accordion>
+									<AccordionSummary>
+										{row.recipientSummary}
+									</AccordionSummary>
+									<AccordionDetails>
+										{row.recipient}
+									</AccordionDetails>
+								</Accordion>
+							</TableCell>
 							<TableCell>{row.subject}</TableCell>
 							{props.history && (
 								<TableCell>
