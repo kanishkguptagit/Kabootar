@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import AuthContext from '../store/auth-context';
 import MailList from '../components/MailList';
 import { Button } from '@material-ui/core';
+import Modal from '../ui/Modal';
 
 function createData(id, date, schedule, recipient, subject) {
 	return { id, date, schedule, recipient, subject };
@@ -12,10 +13,18 @@ function createData(id, date, schedule, recipient, subject) {
 function History() {
 	const ctx = useContext(AuthContext);
 
+	const [openModal,setOpenModal] = useState(false);
+
 	const [loadedData, setLoadedData] = useState({
 		enable: true,
 		items: [],
 	});
+
+	const modalHandler = () => {
+		setOpenModal(prevState => {
+			return !prevState;
+		})
+	}
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -39,8 +48,10 @@ function History() {
 
 	return (
 		<Layout title={'History'}>
+			{ openModal && <Modal onClose={modalHandler} /> }
 			<MailList items={loadedData.items}>
 				<Button
+					onClick={modalHandler}
 					size="x-small"
 					variant="outlined"
 					color="primary"
