@@ -9,7 +9,6 @@ import { Button } from '@material-ui/core';
 import Title from './Title';
 
 export default function Orders(props) {
-
 	return (
 		<React.Fragment>
 			<Title>Mails</Title>
@@ -28,19 +27,23 @@ export default function Orders(props) {
 							{/* <TableCell>{row.recipient}</TableCell> */}
 							<TableCell>
 								<Accordion>
-									<AccordionSummary>
-										{row.recipientSummary}
-									</AccordionSummary>
+									<AccordionSummary>{row.recipientSummary}</AccordionSummary>
 									<AccordionDetails>
-										{row.recipient}
+										<div>
+											{row.recipient.map(recipent => (
+												<li>{recipent}</li>
+											))}
+										</div>
 									</AccordionDetails>
 								</Accordion>
 							</TableCell>
 							<TableCell>{row.subject}</TableCell>
 							{props.history && (
 								<TableCell>
-									<Button										
-										onClick={()=>{props.modalHandler(row.id)}}
+									<Button
+										onClick={() => {
+											props.modalHandler(row.id);
+										}}
 										size="x-small"
 										variant="outlined"
 										color="primary"
