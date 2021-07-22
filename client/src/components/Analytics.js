@@ -14,7 +14,7 @@ export default function Analytics({ mailId, ctx }) {
 	useEffect(() => {
 		const fetchData = async () => {
 			setLoading(true);
-			const url = 'https://96f673b95468.ngrok.io/mails/analytics/' + mailId;
+			const url = process.env.REACT_APP_BACKEND + '/mails/analytics/' + mailId;
 			const data = await fetch(url, {
 				method: 'GET',
 				headers: {
