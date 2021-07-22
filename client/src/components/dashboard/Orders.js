@@ -1,5 +1,4 @@
 import React from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -9,7 +8,6 @@ import Title from './Title';
 
 
 export default function Orders(props) {
-  // const classes = useStyles();
   return (
     <React.Fragment>
       <Title>Mails</Title>
@@ -24,10 +22,10 @@ export default function Orders(props) {
         <TableBody>
           {props.item.map((row) => (
             <TableRow key={row.id}>
-              {/* <TableCell>{row.scheduled}</TableCell>               */}
               <TableCell>{row.schedule}</TableCell>              
               <TableCell>{row.recipient}</TableCell>
               <TableCell>{row.subject}</TableCell>
+              <TableCell>{props.children}</TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import AuthContext from '../store/auth-context';
 import MailList from '../components/MailList';
+import { Button } from '@material-ui/core';
 
 function createData(id, date, schedule, recipient, subject) {
 	return { id, date, schedule, recipient, subject };
@@ -38,7 +39,15 @@ function History() {
 
 	return (
 		<Layout title={'History'}>
-			<MailList items={loadedData.items} />
+			<MailList items={loadedData.items}>
+				<Button
+					size="x-small"
+					variant="outlined"
+					color="primary"
+					style={{ textTransform: 'none', maxWidth:'90px', maxHeight:'35px' }}>
+					analytics
+				</Button>
+			</MailList>
 		</Layout>
 	);
 }
