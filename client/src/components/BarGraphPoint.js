@@ -13,17 +13,17 @@ const data = [
   {
     name: "Total Mail",
     
-    pv: 20
+    mails: 20
   },
   {
     name: "Opened",
     
-    pv: 15
+    mails: 15
   },
   {
     name: "Clicked",
     
-    pv: 10
+    mails: 10
   }
 ];
 
@@ -45,7 +45,7 @@ export default function BarGraphPoint() {
       <YAxis />
       <Tooltip />
       {/* <Legend /> */}
-      <Bar dataKey="pv" fill="#8884d8" />
+      <Bar dataKey="mails" fill="#8884d8" />
       {/* <Bar dataKey="uv" fill="#82ca9d" /> */}
     </BarChart>
   );

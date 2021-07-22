@@ -1,15 +1,13 @@
 import React, { Fragment } from 'react';
 
-import BarGraph from './BarGraph';
 import BarGraphPoint from './BarGraphPoint';
 import classes from '../styles/analytics.module.css';
 
 export default function Analytics() {
 	return (
 		<Fragment>
-			{/* <BarGraph /> */}
 			<div className={classes.center_content}>
-				<BarGraphPoint /><br />
+				<BarGraphPoint />
 			</div>
 			<div className={classes.center_content}>
 				<ul className={classes.list_items}>
