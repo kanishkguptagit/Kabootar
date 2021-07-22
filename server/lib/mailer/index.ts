@@ -22,14 +22,8 @@ async function sendMailToRecipents(mail: IMail) {
 function sendScheduledMail(mail: IMail) {
 	try {
 		console.log(chalk.blueBright.whiteBright('scheduling a mail for'), mail);
-		mail.recipents.forEach(recipent => {
-			const newDate = mail.scheduled as Date;
-			newDate.setMinutes(newDate.getMinutes() + 1);
-			new Scheduler().createScheduledEmail(mail.scheduled as Date, {
-				...mail,
-				recipents: [recipent],
-			});
-		});
+		const dateObject = new Date(mail.scheduled?.valueOf() as string);
+		new Scheduler().createScheduledEmail(dateObject, mail);
 	} catch (e) {
 		console.log(chalk.red.bgWhite('scheduling the mail failed', e));
 	}
@@ -49,11 +43,7 @@ export function createAndSendMail(mail: IMail) {
 	);
 	const tranformedMail: IMail = { ...mail, body: tranformedHTML };
 
-	if (
-		tranformedMail.isScheduled &&
-		tranformedMail.scheduled instanceof Date &&
-		!isNaN(tranformedMail.scheduled?.valueOf())
-	) {
+	if (tranformedMail.isScheduled) {
 		sendScheduledMail(tranformedMail);
 	} else {
 		sendMailToRecipents(tranformedMail);

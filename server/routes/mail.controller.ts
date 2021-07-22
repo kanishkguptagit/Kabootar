@@ -15,7 +15,7 @@ router.post('/add', async (req, res, next) => {
 	}
 	const user = await getAuthUser(req, next);
 
-	const sanitizedScheduledDate = getScheduledDate(scheduled);
+	const sanitizedScheduledDateString = getScheduledDate(scheduled);
 
 	const createdMail: ICreateMail = {
 		name,
@@ -24,7 +24,7 @@ router.post('/add', async (req, res, next) => {
 		body,
 		owner: user._id,
 		isScheduled: isScheduled ?? false,
-		scheduled: sanitizedScheduledDate,
+		scheduled: sanitizedScheduledDateString,
 	};
 	const newMail = new Mail(createdMail);
 
