@@ -3,6 +3,8 @@ import { useContext, useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import AuthContext from '../store/auth-context';
 import MailList from '../components/MailList';
+import Modal from '../ui/Modal';
+import Analytics from '../components/Analytics';
 
 function createData(id, date, schedule, recipient, subject) {
 	return { id, date, schedule, recipient, subject };
@@ -11,10 +13,19 @@ function createData(id, date, schedule, recipient, subject) {
 function History() {
 	const ctx = useContext(AuthContext);
 
+	const [openModal,setOpenModal] = useState(false);
+
 	const [loadedData, setLoadedData] = useState({
 		enable: true,
 		items: [],
 	});
+
+	const modalHandler = (id) => {
+		setOpenModal(prevState => {
+			return !prevState;
+		})
+		console.log(id);
+	}
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -38,7 +49,8 @@ function History() {
 
 	return (
 		<Layout title={'History'}>
-			<MailList items={loadedData.items} />
+			{ openModal && <Modal onClose={modalHandler}><Analytics /></Modal> }
+			<MailList items={loadedData.items} history={true} modalHandler={modalHandler} />
 		</Layout>
 	);
 }
