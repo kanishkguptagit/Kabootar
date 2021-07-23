@@ -38,13 +38,13 @@ jobs:
           HEROKU_WEBHOOK_API_KEY: ecb54363-4b0a-48f4-8b98-dca3777afe73
           HEROKU_WEBHOOK_APP_NAME: kabootar-mail
           HEROKU_WEBHOOK_EMAIL: gamersinstinct7@gmail.com
+          HD_NODE_ENV: 'production'
 
       - name: build client
         run: npm run build
         working-directory: client
         env:
           REACT_APP_BACKEND: https://kabootar-mail.herokuapp.com
-          HD_NODE_ENV: 'production'
 
       - name: deploy to netlify
         uses: nwtgck/actions-netlify@v1.2
