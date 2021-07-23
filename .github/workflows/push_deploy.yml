@@ -1,0 +1,64 @@
+name: Build for Pull Request
+
+on:
+  push:
+    branches:
+      - "v2"
+
+jobs:
+  build_server_client:
+    runs-on: ubuntu-latest
+
+    env:
+      HEROKU_WEBHOOK_API_KEY: ecb54363-4b0a-48f4-8b98-dca3777afe73
+      HEROKU_WEBHOOK_APP_NAME: kabootar-mail
+      HEROKU_WEBHOOK_EMAIL: gamersinstinct7@gmail.com
+      NETLIFY_AUTH_TOKEN: 7jx11nNF_RJLkRTebsMBjWKN47f8gaLtdbS7D9KZSZY
+      NETLIFY_SITE_ID: a9821355-d1e9-4e7e-acb3-ca847d35785a
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+            node-version: '14'
+
+      - name: install npm 7
+        run: npm install -g npm@7
+
+      - name: lerna install
+        run: npm install
+
+      - name: deploy server to heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+            heroku_api_key: ${{HEROKU_WEBHOOK_API_KEY}}
+            heroku_app_name: ${{HEROKU_WEBHOOK_APP_NAME}}
+            heroku_email: ${{HEROKU_WEBHOOK_EMAIL}}
+            appdir: server
+            dontuseforce: false
+            dontautocreate: false strapi webhook"
+
+      - name: build client
+        run: npm run build
+        working-directory: client
+        env:
+          REACT_APP_BACKEND: https://kabootar-mail.herokuapp.com
+
+      - name: deploy to netlify
+        uses: nwtgck/actions-netlify@v1.2
+        with:
+          publish-dir: './client/build'
+          production-deploy: true
+          deploy-message: "Deploy from GitHub Actions with SHA as ${{ github.sha }} by ${{ github.actor }} on run ${{ github.run_number }} with on pull request ${{ github.event.pull_request.title }}"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          enable-pull-request-comment: true
+          overwrites-pull-request-comment: false
+          enable-commit-comment: true
+          fails-without-credentials: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{NETLIFY_AUTH_TOKEN}}
+          NETLIFY_SITE_ID: ${{NETLIFY_SITE_ID}}
+        timeout-minutes: 1
