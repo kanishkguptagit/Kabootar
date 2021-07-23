@@ -35,9 +35,9 @@ jobs:
       - name: deploy server to heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
-            heroku_api_key: ${{HEROKU_WEBHOOK_API_KEY}}
-            heroku_app_name: ${{HEROKU_WEBHOOK_APP_NAME}}
-            heroku_email: ${{HEROKU_WEBHOOK_EMAIL}}
+            heroku_api_key: ${{env.HEROKU_WEBHOOK_API_KEY}}
+            heroku_app_name: ${{env.HEROKU_WEBHOOK_APP_NAME}}
+            heroku_email: ${{env.HEROKU_WEBHOOK_EMAIL}}
             appdir: server
             dontuseforce: false
             dontautocreate: false strapi webhook"
@@ -60,6 +60,6 @@ jobs:
           enable-commit-comment: true
           fails-without-credentials: true
         env:
-          NETLIFY_AUTH_TOKEN: ${{NETLIFY_AUTH_TOKEN}}
-          NETLIFY_SITE_ID: ${{NETLIFY_SITE_ID}}
+          NETLIFY_AUTH_TOKEN: ${{env.NETLIFY_AUTH_TOKEN}}
+          NETLIFY_SITE_ID: ${{env.NETLIFY_SITE_ID}}
         timeout-minutes: 1
