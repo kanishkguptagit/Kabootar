@@ -1,10 +1,11 @@
-import { useEffect, useContext, useState } from 'react';
+import { Fragment, useEffect, useContext, useState } from 'react';
 
 import Layout from '../components/Layout';
 import AuthContext from '../store/auth-context';
 import Graph from '../components/Graph';
 import BlockDetail from '../components/BlockDetail';
 import MailList from '../components/MailList';
+import LoadingSpinner from '../components/Spinner/LoadingSpinner';
 
 function createData(id, schedule, recipient, subject) {
 	const scheduleDate = new Date(schedule);
@@ -26,10 +27,15 @@ function Dashboard() {
 		items: [],
 	});
 
-	const [name, setName] = useState('Dashboard');
+	const [name, setName] = useState('');
+
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		const fetchData = async () => {
+
+			setLoading(true);
+
 			const data = await fetch(process.env.REACT_APP_BACKEND+'/mails/dashboard', {
 				method: 'GET',
 				headers: {
@@ -60,17 +66,23 @@ function Dashboard() {
 				capitalize(data.result.firstName) + ' ' + capitalize(data.result.lastName);
 
 			setName(capName);
+
+			setLoading(false);
 		};
 
 		fetchData();
 		fetchName();
+
 	}, [ctx.token, setLoadedData, ctx.userId, setName]);
 
 	return (
 		<Layout title={name}>
+			{!loading && <Fragment>
 			<Graph />
 			<BlockDetail />
 			<MailList items={loadedData.items} />
+			</Fragment>}
+			{loading && <div className="centered"><LoadingSpinner /></div>}
 		</Layout>
 	);
 }
