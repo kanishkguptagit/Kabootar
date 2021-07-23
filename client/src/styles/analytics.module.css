@@ -3,6 +3,10 @@
     justify-content: center;
 }
 
+.bar_graph {
+    padding-top: 3%;
+}
+
 .list_items {
     list-style-type: none;
 }
