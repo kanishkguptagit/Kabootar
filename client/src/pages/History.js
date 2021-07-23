@@ -5,13 +5,14 @@ import AuthContext from '../store/auth-context';
 import MailList from '../components/MailList';
 import Modal from '../ui/Modal';
 import Analytics from '../components/Analytics';
+import LoadingSpinner from '../components/Spinner/LoadingSpinner';
 
 function createData(id, date, schedule, recipient, subject, recipientSummary) {
 	const scheduleDate = new Date(schedule);
 	const month = scheduleDate.toDateString();
 	const time = scheduleDate.toLocaleTimeString();
-	schedule = month+' - '+time;
-	return { id, date, schedule, recipient, subject,recipientSummary };
+	schedule = month + ' - ' + time;
+	return { id, date, schedule, recipient, subject, recipientSummary };
 }
 
 function History() {
@@ -25,6 +26,8 @@ function History() {
 		items: [],
 	});
 
+	const [loading, setLoading] = useState(false);
+
 	const modalHandler = mailId => {
 		setMailId(mailId);
 		setOpenModal(prevState => {
@@ -34,6 +37,7 @@ function History() {
 
 	useEffect(() => {
 		const fetchData = async () => {
+			setLoading(true);
 			const url = process.env.REACT_APP_BACKEND + '/mails/history';
 			const data = await fetch(url, {
 				method: 'GET',
@@ -44,10 +48,18 @@ function History() {
 			}).then(r => r.json());
 
 			const results = (data.result || []).map(res =>
-				createData(res._id, '', res.scheduled, res.recipents.slice(1,res.recipents.length), res.subject, res.recipents[0])
+				createData(
+					res._id,
+					'',
+					res.scheduled,
+					res.recipents.slice(1, res.recipents.length),
+					res.subject,
+					res.recipents[0]
+				)
 			);
 
 			setLoadedData({ enable: true, items: results });
+			setLoading(false);
 		};
 
 		fetchData();
@@ -60,7 +72,10 @@ function History() {
 					<Analytics mailId={mailId} ctx={ctx} />
 				</Modal>
 			)}
-			<MailList items={loadedData.items} history={true} modalHandler={modalHandler} />
+			{!loading && (
+				<MailList items={loadedData.items} history={true} modalHandler={modalHandler} />
+			)}
+			{loading && <div className="centered"><LoadingSpinner /></div>}
 		</Layout>
 	);
 }
