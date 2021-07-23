@@ -48,6 +48,7 @@ function History() {
 			);
 
 			setLoadedData({ enable: true, items: results });
+			setLoading(false);
 		};
 
 		fetchData();
