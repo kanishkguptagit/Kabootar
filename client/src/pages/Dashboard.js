@@ -1,18 +1,20 @@
-import { Fragment, useEffect, useContext, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 
 import Layout from '../components/Layout';
 import AuthContext from '../store/auth-context';
+import MailList from '../components/MailList';
+import Modal from '../ui/Modal';
+import Analytics from '../components/Analytics';
+import LoadingSpinner from '../components/Spinner/LoadingSpinner';
 import Graph from '../components/Graph';
 import BlockDetail from '../components/BlockDetail';
-import MailList from '../components/MailList';
-import LoadingSpinner from '../components/Spinner/LoadingSpinner';
 
-function createData(id, schedule, recipient, subject) {
+function createData(id, date, schedule, recipient, subject, recipientSummary) {
 	const scheduleDate = new Date(schedule);
 	const month = scheduleDate.toDateString();
 	const time = scheduleDate.toLocaleTimeString();
-	schedule = month+' - '+time;
-	return { id, schedule, recipient, subject };
+	schedule = month + ' - ' + time;
+	return { id, date, schedule, recipient, subject, recipientSummary };
 }
 
 const capitalize = s => {
@@ -21,6 +23,9 @@ const capitalize = s => {
 
 function Dashboard() {
 	const ctx = useContext(AuthContext);
+
+	const [openModal, setOpenModal] = useState(false);
+	const [mailId, setMailId] = useState('');
 
 	const [loadedData, setLoadedData] = useState({
 		enable: true,
@@ -31,12 +36,18 @@ function Dashboard() {
 
 	const [loading, setLoading] = useState(false);
 
+	const modalHandler = mailId => {
+		setMailId(mailId);
+		setOpenModal(prevState => {
+			return !prevState;
+		});
+	};
+
 	useEffect(() => {
 		const fetchData = async () => {
-
 			setLoading(true);
-
-			const data = await fetch(process.env.REACT_APP_BACKEND+'/mails/dashboard', {
+			const url = process.env.REACT_APP_BACKEND + '/mails/history';
+			const data = await fetch(url, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -44,20 +55,23 @@ function Dashboard() {
 				},
 			}).then(r => r.json());
 
-			if (!data || !data.result || !Array.isArray(data.result)) {
-				setLoadedData({ enable: false, items: [] });
-				return;
-			}
-
-			const results = data.result.map(res =>
-				createData(res._id, res.scheduled, res.recipents?.toString(), res.subject)
+			const results = (data.result || []).map(res =>
+				createData(
+					res._id,
+					'',
+					res.scheduled,
+					res.recipents.slice(1, res.recipents.length),
+					res.subject,
+					res.recipents[0]
+				)
 			);
 
 			setLoadedData({ enable: true, items: results });
+			setLoading(false);
 		};
 
 		const fetchName = async () => {
-			const url = process.env.REACT_APP_BACKEND+'/users/' + ctx.userId;
+			const url = process.env.REACT_APP_BACKEND + '/users/' + ctx.userId;
 			const response = await fetch(url);
 
 			const data = await response.json();
@@ -72,17 +86,27 @@ function Dashboard() {
 
 		fetchData();
 		fetchName();
-
-	}, [ctx.token, setLoadedData, ctx.userId, setName]);
+	}, [ctx.token, setName, ctx.userId]);
 
 	return (
 		<Layout title={name}>
-			{!loading && <Fragment>
-			<Graph />
-			<BlockDetail />
-			<MailList items={loadedData.items} />
-			</Fragment>}
-			{loading && <div className="centered"><LoadingSpinner /></div>}
+			{openModal && (
+				<Modal onClose={modalHandler}>
+					<Analytics mailId={mailId} ctx={ctx} />
+				</Modal>
+			)}
+			{!loading && (
+				<Fragment>
+					<Graph />
+					<BlockDetail />
+					<MailList items={loadedData.items} history={true} modalHandler={modalHandler} />
+				</Fragment>
+			)}
+			{loading && (
+				<div className="centered">
+					<LoadingSpinner />
+				</div>
+			)}
 		</Layout>
 	);
 }

@@ -1,25 +1,20 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useContext, useState } from 'react';
 
 import Layout from '../components/Layout';
 import AuthContext from '../store/auth-context';
 import MailList from '../components/MailList';
-import Modal from '../ui/Modal';
-import Analytics from '../components/Analytics';
 import LoadingSpinner from '../components/Spinner/LoadingSpinner';
 
-function createData(id, date, schedule, recipient, subject, recipientSummary) {
+function createData(id, schedule, recipient, subject) {
 	const scheduleDate = new Date(schedule);
 	const month = scheduleDate.toDateString();
 	const time = scheduleDate.toLocaleTimeString();
 	schedule = month + ' - ' + time;
-	return { id, date, schedule, recipient, subject, recipientSummary };
+	return { id, schedule, recipient, subject };
 }
 
 function History() {
 	const ctx = useContext(AuthContext);
-
-	const [openModal, setOpenModal] = useState(false);
-	const [mailId, setMailId] = useState('');
 
 	const [loadedData, setLoadedData] = useState({
 		enable: true,
@@ -28,34 +23,28 @@ function History() {
 
 	const [loading, setLoading] = useState(false);
 
-	const modalHandler = mailId => {
-		setMailId(mailId);
-		setOpenModal(prevState => {
-			return !prevState;
-		});
-	};
-
 	useEffect(() => {
 		const fetchData = async () => {
 			setLoading(true);
-			const url = process.env.REACT_APP_BACKEND + '/mails/history';
-			const data = await fetch(url, {
+
+			const response = await fetch(process.env.REACT_APP_BACKEND + '/mails/dashboard', {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
 					Authorization: 'Bearer ' + ctx.token,
 				},
-			}).then(r => r.json());
+			});
+			// .then(r => r.json()).catch(err=>console.log(err));
 
-			const results = (data.result || []).map(res =>
-				createData(
-					res._id,
-					'',
-					res.scheduled,
-					res.recipents.slice(1, res.recipents.length),
-					res.subject,
-					res.recipents[0]
-				)
+			const data = await response.json();
+
+			if (!data || !data.result || !Array.isArray(data.result)) {
+				setLoadedData({ enable: false, items: [] });
+				return;
+			}
+
+			const results = data.result.map(res =>
+				createData(res._id, res.scheduled, res.recipents?.toString(), res.subject)
 			);
 
 			setLoadedData({ enable: true, items: results });
@@ -63,19 +52,16 @@ function History() {
 		};
 
 		fetchData();
-	}, [ctx.token]);
+	}, [ctx.token, setLoadedData]);
 
 	return (
-		<Layout title={'History'}>
-			{openModal && (
-				<Modal onClose={modalHandler}>
-					<Analytics mailId={mailId} ctx={ctx} />
-				</Modal>
+		<Layout title="History">
+			{!loading && <MailList items={loadedData.items} />}
+			{loading && (
+				<div className="centered">
+					<LoadingSpinner />
+				</div>
 			)}
-			{!loading && (
-				<MailList items={loadedData.items} history={true} modalHandler={modalHandler} />
-			)}
-			{loading && <div className="centered"><LoadingSpinner /></div>}
 		</Layout>
 	);
 }
