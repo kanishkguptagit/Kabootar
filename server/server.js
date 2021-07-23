@@ -10,8 +10,6 @@ if (process.env.NODE_ENV?.toLowerCase() === 'production') {
 	require('dotenv').config();
 }
 
-console.log('the envs are ', process.env)
-
 require('./startup');
 
 const app = express();

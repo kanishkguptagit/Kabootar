@@ -10,13 +10,6 @@ jobs:
   build_server_client:
     runs-on: ubuntu-latest
 
-    env:
-      HEROKU_WEBHOOK_API_KEY: ecb54363-4b0a-48f4-8b98-dca3777afe73
-      HEROKU_WEBHOOK_APP_NAME: kabootar-mail
-      HEROKU_WEBHOOK_EMAIL: gamersinstinct7@gmail.com
-      NETLIFY_AUTH_TOKEN: 7jx11nNF_RJLkRTebsMBjWKN47f8gaLtdbS7D9KZSZY
-      NETLIFY_SITE_ID: a9821355-d1e9-4e7e-acb3-ca847d35785a
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -41,12 +34,17 @@ jobs:
             appdir: server
             dontuseforce: false
             dontautocreate: false strapi webhook"
+        env:
+          HEROKU_WEBHOOK_API_KEY: ecb54363-4b0a-48f4-8b98-dca3777afe73
+          HEROKU_WEBHOOK_APP_NAME: kabootar-mail
+          HEROKU_WEBHOOK_EMAIL: gamersinstinct7@gmail.com
 
       - name: build client
         run: npm run build
         working-directory: client
         env:
           REACT_APP_BACKEND: https://kabootar-mail.herokuapp.com
+          HD_NODE_ENV: 'production'
 
       - name: deploy to netlify
         uses: nwtgck/actions-netlify@v1.2
@@ -60,6 +58,6 @@ jobs:
           enable-commit-comment: true
           fails-without-credentials: true
         env:
-          NETLIFY_AUTH_TOKEN: ${{env.NETLIFY_AUTH_TOKEN}}
-          NETLIFY_SITE_ID: ${{env.NETLIFY_SITE_ID}}
+          NETLIFY_AUTH_TOKEN: 7jx11nNF_RJLkRTebsMBjWKN47f8gaLtdbS7D9KZSZY
+          NETLIFY_SITE_ID: a9821355-d1e9-4e7e-acb3-ca847d35785a
         timeout-minutes: 1
