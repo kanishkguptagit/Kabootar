@@ -1,9 +1,10 @@
 import { Router } from 'express';
 
 import getAuthUser from '../lib/auth';
-import { sendMailToRecipents, sendScheduledMail } from '../lib/mailer';
+import { createAndSendMail } from '../lib/mailer';
 import { getScheduledDate } from '../lib/utils';
 import Mail, { IMail, ICreateMail } from '../models/Mail.model';
+import { getAnalyticsForSingleMail } from '../lib/analytics';
 
 const router = Router();
 
@@ -14,7 +15,7 @@ router.post('/add', async (req, res, next) => {
 	}
 	const user = await getAuthUser(req, next);
 
-	const sanitizedScheduledDate = getScheduledDate(scheduled);
+	const sanitizedScheduledDateString = getScheduledDate(scheduled);
 
 	const createdMail: ICreateMail = {
 		name,
@@ -23,7 +24,7 @@ router.post('/add', async (req, res, next) => {
 		body,
 		owner: user._id,
 		isScheduled: isScheduled ?? false,
-		scheduled: sanitizedScheduledDate,
+		scheduled: sanitizedScheduledDateString,
 	};
 	const newMail = new Mail(createdMail);
 
@@ -35,15 +36,7 @@ router.post('/add', async (req, res, next) => {
 	}
 
 	const savedMailObject = savedMail.toObject();
-	if (
-		savedMail.isScheduled &&
-		savedMail.scheduled instanceof Date &&
-		!isNaN(savedMail.scheduled?.valueOf())
-	) {
-		sendScheduledMail(savedMailObject as IMail);
-	} else {
-		sendMailToRecipents(savedMailObject as IMail);
-	}
+	createAndSendMail(savedMailObject as IMail);
 
 	return res.status(200).json({
 		success: true,
@@ -56,7 +49,7 @@ router.get('/history', async (req, res, next) => {
 	if (!user) {
 		return res.json({ success: false, result: 'User not found' });
 	}
-	const mails = await Mail.find({ owner: user._id, isScheduled: false }).sort({ _id: -1 });
+	const mails = await Mail.find({ owner: user._id, isScheduled: false }).sort({ _id: -1 }).lean();
 	return res.json({ success: true, result: mails });
 });
 
@@ -65,8 +58,17 @@ router.get('/dashboard', async (req, res, next) => {
 	if (!user) {
 		return res.json({ success: false, result: 'User not found' });
 	}
-	const mails = await Mail.find({ owner: user._id, isScheduled: true }).sort({ _id: -1 });
+	const mails = await Mail.find({ owner: user._id, isScheduled: true }).sort({ _id: -1 }).lean();
 	return res.json({ success: true, result: mails });
+});
+
+router.get('/analytics/:mailId', async (req, res, next) => {
+	const user = await getAuthUser(req, next);
+	if (!user) {
+		return res.json({ success: false, result: 'User not found' });
+	}
+	const singleMailAnalytics = await getAnalyticsForSingleMail(req.params.mailId);
+	return res.send(singleMailAnalytics);
 });
 
 export default router;

@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import mongoose from 'mongoose';
 
 import Mail, { IMail } from '../models/Mail.model';
-import { sendMail } from './mailer';
+import { sendMailToRecipents } from './mailer';
 
 enum jobNames {
 	sendScheduledMail = 'send-scheduled-mail',
@@ -28,7 +28,7 @@ export default class Scheduler {
 			const { mail }: { mail: IMail } = job.attrs.data;
 
 			console.log(chalk.white.bgBlue('sending a scheduled mail to'), mail);
-			sendMail({ to: mail.recipents, subject: mail.subject, html: mail.body });
+			sendMailToRecipents(mail);
 
 			await Mail.updateOne({ _id: mail._id }, { isScheduled: false });
 		});

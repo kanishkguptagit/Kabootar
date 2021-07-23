@@ -31,7 +31,7 @@ function Signin() {
 		const password = inputs[1].value;
 
 		setIsLoading(true);
-		const response = await fetch('https://kabootar-mail.herokuapp.com/users/signin', {
+		const response = await fetch(process.env.REACT_APP_BACKEND+'/users/signin', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

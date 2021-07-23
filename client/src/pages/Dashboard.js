@@ -7,6 +7,10 @@ import BlockDetail from '../components/BlockDetail';
 import MailList from '../components/MailList';
 
 function createData(id, schedule, recipient, subject) {
+	const scheduleDate = new Date(schedule);
+	const month = scheduleDate.toDateString();
+	const time = scheduleDate.toLocaleTimeString();
+	schedule = month+' - '+time;
 	return { id, schedule, recipient, subject };
 }
 
@@ -26,7 +30,7 @@ function Dashboard() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const data = await fetch('https://kabootar-mail.herokuapp.com/mails/dashboard', {
+			const data = await fetch(process.env.REACT_APP_BACKEND+'/mails/dashboard', {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -47,7 +51,7 @@ function Dashboard() {
 		};
 
 		const fetchName = async () => {
-			const url = 'https://kabootar-mail.herokuapp.com/users/' + ctx.userId;
+			const url = process.env.REACT_APP_BACKEND+'/users/' + ctx.userId;
 			const response = await fetch(url);
 
 			const data = await response.json();

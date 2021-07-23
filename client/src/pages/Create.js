@@ -6,9 +6,10 @@ import Editor from '../components/Editor';
 import AuthContext from '../store/auth-context';
 
 const getScheduled = (recurringSchedule, onceSchedule) => {
-	if (recurringSchedule.toLowerCase() !== 'none') {
-		return { isScheduled: true, scheduled: recurringSchedule.toLowerCase() };
-	} else if (onceSchedule) {
+	// if (recurringSchedule.toLowerCase() !== 'none') {
+	// 	return { isScheduled: true, scheduled: recurringSchedule.toLowerCase() };
+	// }
+	if (onceSchedule) {
 		return {
 			isScheduled: true,
 			scheduled: new Date(onceSchedule).toISOString(),
@@ -35,7 +36,7 @@ function Create() {
 			})
 		);
 
-		const data = await fetch('https://kabootar-mail.herokuapp.com/mails/add', {
+		const data = await fetch(process.env.REACT_APP_BACKEND + '/mails/add', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -57,7 +58,7 @@ function Create() {
 	};
 
 	return (
-		<Fragment>			
+		<Fragment>
 			<Layout title={'Compose'}>
 				<Editor getEnteredValues={getEnteredValues} />
 			</Layout>

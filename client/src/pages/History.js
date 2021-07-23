@@ -3,22 +3,39 @@ import { useContext, useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import AuthContext from '../store/auth-context';
 import MailList from '../components/MailList';
+import Modal from '../ui/Modal';
+import Analytics from '../components/Analytics';
 
-function createData(id, date, schedule, recipient, subject) {
-	return { id, date, schedule, recipient, subject };
+function createData(id, date, schedule, recipient, subject, recipientSummary) {
+	const scheduleDate = new Date(schedule);
+	const month = scheduleDate.toDateString();
+	const time = scheduleDate.toLocaleTimeString();
+	schedule = month+' - '+time;
+	return { id, date, schedule, recipient, subject,recipientSummary };
 }
 
 function History() {
 	const ctx = useContext(AuthContext);
+
+	const [openModal, setOpenModal] = useState(false);
+	const [mailId, setMailId] = useState('');
 
 	const [loadedData, setLoadedData] = useState({
 		enable: true,
 		items: [],
 	});
 
+	const modalHandler = mailId => {
+		setMailId(mailId);
+		setOpenModal(prevState => {
+			return !prevState;
+		});
+	};
+
 	useEffect(() => {
 		const fetchData = async () => {
-			const data = await fetch('https://kabootar-mail.herokuapp.com/mails/history', {
+			const url = process.env.REACT_APP_BACKEND + '/mails/history';
+			const data = await fetch(url, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -27,7 +44,7 @@ function History() {
 			}).then(r => r.json());
 
 			const results = (data.result || []).map(res =>
-				createData(res._id, '', res.scheduled, res.recipents?.toString(), res.subject)
+				createData(res._id, '', res.scheduled, res.recipents.slice(1,res.recipents.length), res.subject, res.recipents[0])
 			);
 
 			setLoadedData({ enable: true, items: results });
@@ -38,7 +55,12 @@ function History() {
 
 	return (
 		<Layout title={'History'}>
-			<MailList items={loadedData.items} />
+			{openModal && (
+				<Modal onClose={modalHandler}>
+					<Analytics mailId={mailId} ctx={ctx} />
+				</Modal>
+			)}
+			<MailList items={loadedData.items} history={true} modalHandler={modalHandler} />
 		</Layout>
 	);
 }
