@@ -5,8 +5,10 @@
 	"scripts": {
 		"start": "node build/server.js",
 		"dev": "nodemon --config nodemon.json",
+		"prebuild": "npm run decrypt",
 		"build": "tsc",
-		"encrypt": "cp .env.production tools/ && node tools/encrypt.js"
+		"encrypt": "cp .env.production tools/ && node tools/encrypt.js",
+		"decrypt": "node tools/decrypt.js"
 	},
 	"dependencies": {
 		"agenda": "^4.1.3",
