@@ -21,7 +21,7 @@ jobs:
         run: npm install -g npm@7
 
       - name: install server
-        run: npm install
+        run: npm install --force
         working-directory: server
 
       - name: build server
