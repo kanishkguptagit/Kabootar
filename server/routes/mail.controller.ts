@@ -5,6 +5,7 @@ import { createAndSendMail } from '../lib/mailer';
 import { getScheduledDate } from '../lib/utils';
 import Mail, { IMail, ICreateMail } from '../models/Mail.model';
 import { getAnalyticsForSingleMail } from '../lib/analytics';
+import { getAnalyticsForSingleUser } from '../lib/analytics/getAnalytics';
 
 const router = Router();
 
@@ -22,7 +23,7 @@ router.post('/add', async (req, res, next) => {
 		recipents: to,
 		subject,
 		body,
-		owner: user._id,
+		owner: user._id as any,
 		isScheduled: isScheduled ?? false,
 		scheduled: sanitizedScheduledDateString,
 	};
@@ -60,6 +61,15 @@ router.get('/dashboard', async (req, res, next) => {
 	}
 	const mails = await Mail.find({ owner: user._id, isScheduled: true }).sort({ _id: -1 }).lean();
 	return res.json({ success: true, result: mails });
+});
+
+router.get('/analytics/user', async (req, res, next) => {
+	const user = await getAuthUser(req, next);
+	if (!user) {
+		return res.json({ success: false, result: 'User not found' });
+	}
+	const singleUserAnalytics = await getAnalyticsForSingleUser(user._id);
+	return res.json(singleUserAnalytics);
 });
 
 router.get('/analytics/:mailId', async (req, res, next) => {

@@ -8,6 +8,10 @@ interface ISingleMailAnalytics {
 	datesSent: string[];
 }
 
+interface ISingleUserAnalytics {
+	totalMails: number;
+}
+
 export async function getAnalyticsForSingleMail(mailId?: string): Promise<ISingleMailAnalytics> {
 	let sent = 0;
 	let opened = 0;
@@ -50,34 +54,13 @@ export async function getAnalyticsForSingleMail(mailId?: string): Promise<ISingl
 	};
 }
 
-// export async function getAnalyticsForUser(userId: IUser['_id']): Promise<IAnalytics> {
-// 	const mails = (await Mails.find({ owner: userId }, { _id: 1 })) as Pick<IMail, '_id'>[];
-// 	if (!mails || !Array.isArray(mails) || mails.length === 0) {
-// 		return { mailsSent: 0, mailsOpened: 0, linksClicked: 0 };
-// 	}
+export async function getAnalyticsForSingleUser(userId?: string): Promise<ISingleUserAnalytics> {
+	const foundMails = await Mails.find({ owner: userId }).lean();
 
-// 	const mailTracks = (await MailTracks.find(
-// 		{
-// 			mailId: {
-// 				$in: mails.map(({ _id }) => _id.toHexString()),
-// 			},
-// 		},
-// 		{ mailId: 0 }
-// 	).lean()) as Omit<IMailTrack, 'mailId'>[];
+	let totalMails: number = 0;
+	foundMails?.forEach(foundMail => {
+		totalMails += foundMail.recipents.length;
+	});
 
-// 	// aggregation like $sum is not working in mongodb free tier
-// 	const mailsSent = mailTracks.length;
-
-// 	let mailsOpened = 0;
-// 	let mailsLinksClicked = 0;
-
-// 	mailTracks.forEach(({ wasOpened, linkClicks }) => {
-// 		mailsOpened += wasOpened ? 1 : 0;
-// 		mailsLinksClicked += linkClicks.valueOf();
-// 	});
-
-// 	return { mailsSent, mailsOpened, mailsLinksClicked };
-// }
-
-// // TODO
-// export function getAnalyticsForCampaign() {}
+	return { totalMails };
+}
