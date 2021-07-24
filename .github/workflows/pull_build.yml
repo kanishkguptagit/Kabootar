@@ -22,12 +22,13 @@ jobs:
 
       - name: lerna install
         run: npm install
+        env:
+          NODE_ENV: 'development'
+          CI: 'false'
 
       - name: build server
         run: npm run build
         working-directory: server
-        env:
-          ATLAS_URI: mongodb+srv://lordneon:mongodb123@cluster0.ciluy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 
       - name: build client
         run: npm run build
