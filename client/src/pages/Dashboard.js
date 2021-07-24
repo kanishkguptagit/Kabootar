@@ -35,6 +35,8 @@ function Dashboard() {
 	const [name, setName] = useState('');
 
 	const [loading, setLoading] = useState(false);
+	const [graphLoading, setGraphLoading] = useState(false);
+	const [graphData, setGraphData] = useState({totalMails:0, graph:[]});
 
 	const modalHandler = mailId => {
 		setMailId(mailId);
@@ -88,6 +90,34 @@ function Dashboard() {
 		fetchName();
 	}, [ctx.token, setName, ctx.userId]);
 
+	useEffect(()=>{
+
+		const fetchData = async () =>{
+
+			setGraphLoading(true);
+
+			const url = process.env.REACT_APP_BACKEND + '/mails/analytics/user';
+			const result = await fetch(url,{
+				method: 'GET',
+				headers: {
+					'Content-Type':'application/json',
+					Authorization: 'Bearer '+ctx.token
+				}
+			})
+
+			const data = await result.json();
+
+			console.log(data);
+
+			setGraphData({totalMails:data.totalMails, graph:data.graph});
+
+			setGraphLoading(false);
+		}
+
+		fetchData();
+
+	},[setGraphLoading, ctx.token])
+
 	return (
 		<Layout title={name}>
 			{openModal && (
@@ -97,8 +127,8 @@ function Dashboard() {
 			)}
 			{!loading && (
 				<Fragment>
-					<Graph />
-					<BlockDetail />
+					<Graph items={graphData.graph} loading={graphLoading} />
+					<BlockDetail items={graphData.totalMails} />
 					<MailList items={loadedData.items} history={true} modalHandler={modalHandler} />
 				</Fragment>
 			)}

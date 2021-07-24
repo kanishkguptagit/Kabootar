@@ -13,16 +13,16 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Deposits() {
+export default function Deposits(props) {
   const classes = useStyles();
   return (
     <React.Fragment>
       <Title>Total Mails</Title>
       <Typography component="p" variant="h4">
-        100
+        {props.items}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
-        on 15 March, 2019
+        on {props.date}
       </Typography>      
     </React.Fragment>
   );
