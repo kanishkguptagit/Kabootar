@@ -21,7 +21,7 @@ jobs:
         run: npm install -g npm@7
 
       - name: install server
-        run: npm install --force
+        run: npm install
         working-directory: server
 
       - name: build server
@@ -31,7 +31,7 @@ jobs:
           NODE_ENV: 'production'
 
       - name: install client
-        run: npm install
+        run: npm install --force
         working-directory: client
 
       - name: build client
