@@ -22,16 +22,14 @@ jobs:
 
       - name: lerna install
         run: npm install
-        env:
-          NODE_ENV: 'development'
-          CI: 'false'
+        working-directory: server
 
       - name: build server
         run: npm run build
         working-directory: server
 
-      - name: build client
-        run: npm run build
-        working-directory: client
-        env:
-          REACT_APP_BACKEND: https://kabootar-mail.herokuapp.com
+      # - name: build client
+      #   run: npm run build
+      #   working-directory: client
+      #   env:
+          # REACT_APP_BACKEND: https://kabootar-mail.herokuapp.com
