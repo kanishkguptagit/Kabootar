@@ -7,8 +7,7 @@ const layoutStyles = makeStyles((theme) => ({
       display: 'flex',
     },
     dateTimeField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
+      marginLeft: theme.spacing(50),
       width: 200,
     },
     toolbar: {

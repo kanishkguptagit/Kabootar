@@ -28,7 +28,13 @@ export default function Editor(props) {
 	const submitForm = event => {
 		event.preventDefault();
 
-		props.getEnteredValues(toField, subjectField, editorContentValue, recurringValue, dateTimeValue);
+		props.getEnteredValues(
+			toField,
+			subjectField,
+			editorContentValue,
+			recurringValue,
+			dateTimeValue
+		);
 	};
 
 	const editorContentHandler = mailContent => {
@@ -39,12 +45,11 @@ export default function Editor(props) {
 		<Grid item xs={12}>
 			<Paper className={classes.paper}>
 				<form onSubmit={submitForm}>
-					<RecurringScheduleSelector
-						recurringValue={recurringValue}
-						setRecurringValue={setRecurringValue}
-					/>
-
-					<div className={classes.select}>
+					<div>
+						<RecurringScheduleSelector
+							recurringValue={recurringValue}
+							setRecurringValue={setRecurringValue}
+						/>
 						<TextField
 							label="Once Schedule"
 							type="datetime-local"
