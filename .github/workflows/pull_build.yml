@@ -27,6 +27,8 @@ jobs:
       - name: build server
         run: npm run build
         working-directory: server
+        env:
+          NODE_ENV: 'production'
 
       # - name: build client
       #   run: npm run build
