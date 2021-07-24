@@ -1,17 +1,6 @@
 import Mails from '../../models/Mail.model';
 import MailTracks from '../../models/MailTrack.model';
 
-interface ISingleMailAnalytics {
-	sent: number;
-	opened: number;
-	linksClicked: number;
-	datesSent: string[];
-}
-
-interface ISingleUserAnalytics {
-	totalMails: number;
-}
-
 export async function getAnalyticsForSingleMail(mailId?: string): Promise<ISingleMailAnalytics> {
 	let sent = 0;
 	let opened = 0;
@@ -27,7 +16,7 @@ export async function getAnalyticsForSingleMail(mailId?: string): Promise<ISingl
 		};
 	}
 
-	const foundMail = await Mails.findOne({ _id: mailId }).lean();
+	const foundMail = await Mails.findOne({ _id: mailId }, { mailTracks: 1 }).lean();
 	if (!foundMail) {
 		return {
 			sent,
@@ -55,12 +44,41 @@ export async function getAnalyticsForSingleMail(mailId?: string): Promise<ISingl
 }
 
 export async function getAnalyticsForSingleUser(userId?: string): Promise<ISingleUserAnalytics> {
-	const foundMails = await Mails.find({ owner: userId }).lean();
+	const foundMails = await Mails.find({ owner: userId }, { scheduled: 1, recipents: 1 })
+		.sort({ scheduled: 'desc' })
+		.lean();
 
 	let totalMails: number = 0;
-	foundMails?.forEach(foundMail => {
-		totalMails += foundMail.recipents.length;
+	const graph: IGraphData[] = [{ sent: 0, date: '' }];
+
+	foundMails?.forEach(({ recipents, scheduled }) => {
+		const recipentsSent = recipents.length;
+		totalMails += recipentsSent;
+		if (graph[graph.length - 1].date + '' == scheduled) {
+			// merge the same dates
+			graph[graph.length - 1].sent += recipentsSent;
+		} else {
+			graph.push({ sent: recipentsSent, date: scheduled ? scheduled + '' : '' });
+		}
 	});
 
-	return { totalMails };
+	graph.shift();
+
+	return { totalMails, graph };
+}
+
+interface ISingleMailAnalytics {
+	sent: number;
+	opened: number;
+	linksClicked: number;
+	datesSent: string[];
+}
+
+interface IGraphData {
+	sent: number; // x-axis
+	date: string; // y-axis
+}
+interface ISingleUserAnalytics {
+	totalMails: number;
+	graph: IGraphData[];
 }
