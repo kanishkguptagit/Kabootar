@@ -55,7 +55,7 @@ function History() {
 	}, [ctx.token, setLoadedData]);
 
 	return (
-		<Layout title="Scheduled">
+		<Layout title="Ongoing">
 			{!loading && <MailList items={loadedData.items} />}
 			{loading && (
 				<div className="centered">
