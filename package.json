@@ -16,7 +16,7 @@
     "prettier": "^2.3.1"
   },
   "dependencies": {
-    "kabootar": "file:client",
+    "client": "file:client",
     "server": "file:server"
   }
 }
