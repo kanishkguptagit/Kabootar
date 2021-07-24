@@ -1,13 +1,6 @@
 import Mails from '../../models/Mail.model';
 import MailTracks from '../../models/MailTrack.model';
 
-interface ISingleMailAnalytics {
-	sent: number;
-	opened: number;
-	linksClicked: number;
-	datesSent: string[];
-}
-
 export async function getAnalyticsForSingleMail(mailId?: string): Promise<ISingleMailAnalytics> {
 	let sent = 0;
 	let opened = 0;
@@ -23,7 +16,7 @@ export async function getAnalyticsForSingleMail(mailId?: string): Promise<ISingl
 		};
 	}
 
-	const foundMail = await Mails.findOne({ _id: mailId }).lean();
+	const foundMail = await Mails.findOne({ _id: mailId }, { mailTracks: 1 }).lean();
 	if (!foundMail) {
 		return {
 			sent,
@@ -50,34 +43,47 @@ export async function getAnalyticsForSingleMail(mailId?: string): Promise<ISingl
 	};
 }
 
-// export async function getAnalyticsForUser(userId: IUser['_id']): Promise<IAnalytics> {
-// 	const mails = (await Mails.find({ owner: userId }, { _id: 1 })) as Pick<IMail, '_id'>[];
-// 	if (!mails || !Array.isArray(mails) || mails.length === 0) {
-// 		return { mailsSent: 0, mailsOpened: 0, linksClicked: 0 };
-// 	}
+export async function getAnalyticsForSingleUser(userId?: string): Promise<ISingleUserAnalytics> {
+	const foundMails = await Mails.find({ owner: userId }, { scheduled: 1, recipents: 1 })
+		.sort({ scheduled: 'desc' })
+		.lean();
 
-// 	const mailTracks = (await MailTracks.find(
-// 		{
-// 			mailId: {
-// 				$in: mails.map(({ _id }) => _id.toHexString()),
-// 			},
-// 		},
-// 		{ mailId: 0 }
-// 	).lean()) as Omit<IMailTrack, 'mailId'>[];
+	let totalMails: number = 0;
+	const graph: IGraphData[] = [];
 
-// 	// aggregation like $sum is not working in mongodb free tier
-// 	const mailsSent = mailTracks.length;
+	foundMails?.forEach(({ recipents, scheduled }) => {
+		if (!scheduled) {
+			return;
+		}
+		const recipentsSent = recipents.length;
+		totalMails += recipentsSent;
+		const scheduledDateString = new Date(scheduled as any).toDateString();
+		if (
+			graph.length > 0 &&
+			new Date(graph[graph.length - 1].date).toDateString() == scheduledDateString
+		) {
+			// merge the same dates
+			graph[graph.length - 1].sent += recipentsSent;
+		} else {
+			graph.push({ sent: recipentsSent, date: scheduledDateString });
+		}
+	});
 
-// 	let mailsOpened = 0;
-// 	let mailsLinksClicked = 0;
+	return { totalMails, graph };
+}
 
-// 	mailTracks.forEach(({ wasOpened, linkClicks }) => {
-// 		mailsOpened += wasOpened ? 1 : 0;
-// 		mailsLinksClicked += linkClicks.valueOf();
-// 	});
+interface ISingleMailAnalytics {
+	sent: number;
+	opened: number;
+	linksClicked: number;
+	datesSent: string[];
+}
 
-// 	return { mailsSent, mailsOpened, mailsLinksClicked };
-// }
-
-// // TODO
-// export function getAnalyticsForCampaign() {}
+interface IGraphData {
+	sent: number; // x-axis
+	date: string; // y-axis
+}
+interface ISingleUserAnalytics {
+	totalMails: number;
+	graph: IGraphData[];
+}

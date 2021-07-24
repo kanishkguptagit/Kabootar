@@ -4,7 +4,11 @@ const cors = require('cors');
 const { UserRoutes, MailRoutes, MailTrackRoutes } = require('./routes');
 const { errorMiddleware } = require('./middleware');
 
-require('dotenv').config();
+if (process.env.NODE_ENV?.toLowerCase() === 'production') {
+	require('dotenv').config({ path: './.env.production' });
+} else {
+	require('dotenv').config();
+}
 
 require('./startup');
 

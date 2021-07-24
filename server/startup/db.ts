@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import mongoose from 'mongoose';
 import chalk from 'chalk';
 
@@ -14,7 +16,6 @@ function connectToDB(): void {
 		useNewUrlParser: true,
 		useCreateIndex: true,
 		useUnifiedTopology: true,
-		useFindAndModify: false,
 	});
 
 	mongoose.connection.once('open', () => {

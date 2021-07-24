@@ -1,6 +1,6 @@
-export function getScheduledDate(dateString: string | undefined): string {
+export function getScheduledDate(dateString: string | undefined, isScheduled: boolean): string {
 	try {
-		if (!dateString) {
+		if (!isScheduled || !dateString) {
 			return new Date().toISOString();
 		}
 		const createdDate = new Date(dateString);

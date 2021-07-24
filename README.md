@@ -1,4 +1,7 @@
 
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
+
+
 ![Logo](https://i.ibb.co/5n2XNcj/icon.png)
 
     
@@ -92,6 +95,7 @@ Install my-project with npm
 - Used MongoDB for data security
 - Backend deployed in heroku
 - Frontend hosted in netlify
+- Mails are recovered even after server failure to avoid any inconvenience caused to our clients and their business
 
   
 ## Usage/Examples
