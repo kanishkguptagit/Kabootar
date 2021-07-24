@@ -15,22 +15,30 @@ export default function Orders(props) {
 			<Table size="small">
 				<TableHead>
 					<TableRow>
-						<TableCell>Scheduled</TableCell>
-						<TableCell>To</TableCell>
-						<TableCell>Subject</TableCell>
+						<TableCell>
+							<strong>Scheduled</strong>
+						</TableCell>
+						<TableCell>
+							<strong>To</strong>
+						</TableCell>
+						<TableCell>
+							<strong>Subject</strong>
+						</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
 					{props.item.map(row => (
 						<TableRow key={row.id}>
-							<TableCell>{row.schedule}</TableCell>							
+							<TableCell>{row.schedule}</TableCell>
 							<TableCell>
 								<Accordion>
 									<AccordionSummary>{row.recipientSummary} ...</AccordionSummary>
 									<AccordionDetails>
 										<div>
 											{row.recipient.map(recipent => (
-												<li style={{listStyleType:'none'}}>{recipent}</li>
+												<li style={{ listStyleType: 'none' }}>
+													{recipent}
+												</li>
 											))}
 										</div>
 									</AccordionDetails>
@@ -51,7 +59,7 @@ export default function Orders(props) {
 											maxWidth: '90px',
 											maxHeight: '35px',
 										}}>
-										analytics
+										Analytics
 									</Button>
 								</TableCell>
 							)}
