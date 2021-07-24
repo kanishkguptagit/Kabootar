@@ -36,7 +36,7 @@ export const mainListItems = (
 				<ListItemIcon>
 					<BarChartIcon />
 				</ListItemIcon>
-				<ListItemText primary="History" />
+				<ListItemText primary="Scheduled" />
 			</ListItem>
 		</NavLink>
 	</div>
