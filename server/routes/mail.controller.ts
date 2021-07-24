@@ -6,6 +6,7 @@ import { getScheduledDate } from '../lib/utils';
 import Mail, { IMail, ICreateMail } from '../models/Mail.model';
 import { getAnalyticsForSingleMail } from '../lib/analytics';
 import { getAnalyticsForSingleUser } from '../lib/analytics/getAnalytics';
+import { cancelMail } from '../lib/scheduler';
 
 const router = Router();
 
@@ -79,6 +80,15 @@ router.get('/analytics/:mailId', async (req, res, next) => {
 	}
 	const singleMailAnalytics = await getAnalyticsForSingleMail(req.params.mailId);
 	return res.send(singleMailAnalytics);
+});
+
+router.delete('/cancel/:mailId', async (req, res, next) => {
+	const user = await getAuthUser(req, next);
+	if (!user) {
+		return res.json({ success: false, result: 'User not found' });
+	}
+
+	return res.json({ cancelled: await cancelMail(req.params.mailId) });
 });
 
 export default router;
