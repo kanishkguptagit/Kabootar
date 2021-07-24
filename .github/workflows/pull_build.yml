@@ -30,8 +30,8 @@ jobs:
         env:
           NODE_ENV: 'production'
 
-      # - name: build client
-      #   run: npm run build
-      #   working-directory: client
-      #   env:
-          # REACT_APP_BACKEND: https://kabootar-mail.herokuapp.com
+      - name: build client
+        run: npm run build
+        working-directory: client
+        env:
+          REACT_APP_BACKEND: https://kabootar-mail.herokuapp.com
