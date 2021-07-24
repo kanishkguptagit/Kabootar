@@ -2,7 +2,7 @@ const fs = require('fs');
 const crypto = require('crypto');
 
 function dotEnvEncrypter() {
-	const fileContent = fs.readFileSync('../.env.production', { encoding: 'utf8' });
+	const fileContent = fs.readFileSync('.env.production', { encoding: 'utf8' });
 
 	// encrypt this using crypto
 
@@ -17,7 +17,7 @@ function dotEnvEncrypter() {
 
 	// make the file
 
-	fs.writeFileSync('encode-env', encryptedText, { encoding: 'utf8' });
+	fs.writeFileSync('./tools/encode-env', encryptedText, { encoding: 'utf8' });
 
 	console.log('\x1b[43m', 'encode-env file created', '\x1b[0m \n');
 }
