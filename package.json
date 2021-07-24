@@ -1,7 +1,7 @@
 {
   "name": "root",
   "private": true,
-  "version": "1.3.0",
+  "version": "2.2.1",
   "scripts": {
     "boots": "lerna bootstrap",
     "postinstall": "npm run boots",
@@ -16,7 +16,7 @@
     "prettier": "^2.3.1"
   },
   "dependencies": {
-    "kabootar": "file:client",
+    "client": "file:client",
     "server": "file:server"
   }
 }
