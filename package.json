@@ -3,7 +3,7 @@
   "private": true,
   "version": "2.2.0",
   "scripts": {
-    "boots": "lerna bootstrap",
+    "boots": "npm install --force --prefix client && npm install --prefix server",
     "postinstall": "npm run boots",
     "diff": "lerna diff",
     "clean": "lerna clean -y",
@@ -14,9 +14,5 @@
   "devDependencies": {
     "lerna": "^4.0.0",
     "prettier": "^2.3.1"
-  },
-  "dependencies": {
-    "kabootar": "file:client",
-    "server": "file:server"
   }
 }

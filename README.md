@@ -1,4 +1,7 @@
 
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
+
+
 ![Logo](https://i.ibb.co/5n2XNcj/icon.png)
 
     
