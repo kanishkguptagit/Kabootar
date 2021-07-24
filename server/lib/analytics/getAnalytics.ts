@@ -49,20 +49,25 @@ export async function getAnalyticsForSingleUser(userId?: string): Promise<ISingl
 		.lean();
 
 	let totalMails: number = 0;
-	const graph: IGraphData[] = [{ sent: 0, date: '' }];
+	const graph: IGraphData[] = [];
 
 	foundMails?.forEach(({ recipents, scheduled }) => {
+		if (!scheduled) {
+			return;
+		}
 		const recipentsSent = recipents.length;
 		totalMails += recipentsSent;
-		if (graph[graph.length - 1].date + '' == scheduled) {
+		const scheduledDateString = new Date(scheduled as any).toDateString();
+		if (
+			graph.length > 0 &&
+			new Date(graph[graph.length - 1].date).toDateString() == scheduledDateString
+		) {
 			// merge the same dates
 			graph[graph.length - 1].sent += recipentsSent;
 		} else {
-			graph.push({ sent: recipentsSent, date: scheduled ? scheduled + '' : '' });
+			graph.push({ sent: recipentsSent, date: scheduledDateString });
 		}
 	});
-
-	graph.shift();
 
 	return { totalMails, graph };
 }
