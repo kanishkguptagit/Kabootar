@@ -11,7 +11,7 @@ import { cancelMail } from '../lib/scheduler';
 const router = Router();
 
 router.post('/add', async (req, res, next) => {
-	const { to, subject, body, name, isScheduled, scheduled } = req.body;
+	const { to, subject, body, name, isScheduled, isRecurring, scheduled } = req.body;
 	if (!(to && subject && body && Array.isArray(to))) {
 		return next(new Error('to, subject, body are required fields'));
 	}
@@ -78,8 +78,7 @@ router.get('/analytics/:mailId', async (req, res, next) => {
 	if (!user) {
 		return res.json({ success: false, result: 'User not found' });
 	}
-	const singleMailAnalytics = await getAnalyticsForSingleMail(req.params.mailId);
-	return res.send(singleMailAnalytics);
+	return res.send(await getAnalyticsForSingleMail(req.params.mailId));
 });
 
 router.delete('/cancel/:mailId', async (req, res, next) => {

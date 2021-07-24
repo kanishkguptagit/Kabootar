@@ -42,6 +42,9 @@ export default class Scheduler {
 			const { mail }: { mail: IMail } = job.attrs.data;
 			console.log(chalk.white.bgBlueBright('sending a recurring mail to'), mail);
 			sendMailToRecipents(mail);
+
+			// update the scheduled of the mail to the last date
+			await Mail.updateOne({ _id: mail._id }, { scheduled: new Date().toISOString() });
 		});
 	}
 
