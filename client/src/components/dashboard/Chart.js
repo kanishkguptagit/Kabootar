@@ -20,7 +20,7 @@ const data = [
   createData('24:00', undefined),
 ];
 
-export default function Chart() {
+export default function Chart(props) {
   const theme = useTheme();
 
   return (
@@ -28,7 +28,7 @@ export default function Chart() {
       <Title>Today</Title>
       <ResponsiveContainer>
         <LineChart
-          data={data}
+          data={props.data}
           margin={{
             top: 16,
             right: 16,
@@ -36,17 +36,17 @@ export default function Chart() {
             left: 24,
           }}
         >
-          <XAxis dataKey="time" stroke={theme.palette.text.secondary} />
+          <XAxis dataKey="date" stroke={theme.palette.text.secondary} />
           <YAxis stroke={theme.palette.text.secondary}>
             <Label
               angle={270}
               position="left"
               style={{ textAnchor: 'middle', fill: theme.palette.text.primary }}
             >
-              total mails
+              mails sent
             </Label>
           </YAxis>
-          <Line type="monotone" dataKey="amount" stroke={theme.palette.primary.main} dot={false} />
+          <Line type="monotone" dataKey="sent" stroke={theme.palette.primary.main} dot={true} />
         </LineChart>
       </ResponsiveContainer>
     </React.Fragment>
