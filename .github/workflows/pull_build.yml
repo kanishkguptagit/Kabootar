@@ -20,7 +20,7 @@ jobs:
       - name: install npm 7
         run: npm install -g npm@7
 
-      - name: lerna install
+      - name: install server
         run: npm install
         working-directory: server
 
@@ -29,6 +29,10 @@ jobs:
         working-directory: server
         env:
           NODE_ENV: 'production'
+
+      - name: install client
+        run: npm install
+        working-directory: client
 
       - name: build client
         run: npm run build
