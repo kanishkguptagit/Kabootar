@@ -6,22 +6,17 @@ import Chart from '../components/dashboard/Chart';
 import layoutStyles from '../styles/Layout';
 import LoadingSpinner from '../components/Spinner/LoadingSpinner';
 
+function createData({date, sent}) {
+	return { date:date.slice(4,10), sent };
+}
+
 export default function Graph(props) {
 	const classes = layoutStyles();
 
 	const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-	const graphData = [];
-
-	props.items.map(item => {
-		const newData = {
-			date: item.date.toString().slice(4, 10),
-			sent: item.sent,
-		};		
-		graphData.unshift(newData);
-	});
-
-	console.log(graphData);
+	const graphData = props.items.map(createData);
+	graphData.reverse();
 
 	return (
 		<Grid item xs={12} md={8} lg={9}>
