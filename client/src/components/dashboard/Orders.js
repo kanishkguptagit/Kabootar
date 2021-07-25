@@ -35,11 +35,12 @@ export default function Orders(props) {
 									<AccordionSummary>{row.recipientSummary} ...</AccordionSummary>
 									<AccordionDetails>
 										<div>
-											{row.recipient.map(recipent => (
-												<li style={{ listStyleType: 'none' }}>
-													{recipent}
-												</li>
-											))}
+											{Array.isArray(row.recipent) &&
+												row.recipient.map(recipent => (
+													<li style={{ listStyleType: 'none' }}>
+														{recipent}
+													</li>
+												))}
 										</div>
 									</AccordionDetails>
 								</Accordion>
