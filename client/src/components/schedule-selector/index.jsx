@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme =>
 			fontStyle: 'italic',
 		},
 		spacer: {
-			margin: '0 25.65ch',
+			margin: '0 25.25ch',
 		},
 	})
 );

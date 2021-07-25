@@ -1,6 +1,7 @@
 import Agenda from 'agenda';
 import chalk from 'chalk';
-import mongoose, { Types } from 'mongoose';
+import { ObjectId } from 'mongodb';
+import mongoose from 'mongoose';
 
 import Mail, { IMail } from '../models/Mail.model';
 import { sendMailToRecipents } from './mailer';
@@ -53,20 +54,28 @@ export default class Scheduler {
 		this.agenda.schedule(when, jobNames.sendScheduledMail, { mail });
 	}
 
-	public async cancelRecurringOrScheduledMail(mailId: Types.ObjectId) {
-		return await this.agenda.cancel({
+	public cancelRecurringOrScheduledMail(mailId: ObjectId) {
+		return this.agenda.cancel({
 			'data.mail._id': mailId,
 		});
 	}
 }
 
 export async function cancelMail(mailId: string): Promise<boolean> {
+	if (!mailId) {
+		return false;
+	}
+
 	const cancelledCount = await new Scheduler().cancelRecurringOrScheduledMail(
-		Types.ObjectId(mailId)
+		new ObjectId(mailId)
 	);
 
-	Mail.updateOne({ _id: Types.ObjectId(mailId) }, { isScheduled: false });
-	// also turn isScheduled to false
+	await Mail.updateOne({ _id: new ObjectId(mailId) }, { isScheduled: false });
 
+	if (cancelledCount) {
+		console.log(chalk.redBright.bgWhite('cancelling scheduled/recurring for mailId'), mailId);
+	}
+
+	//@ts-ignore
 	return cancelledCount && cancelledCount > 0 ? true : false;
 }
