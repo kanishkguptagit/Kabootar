@@ -51,7 +51,7 @@ export default function Orders(props) {
 											maxWidth: '90px',
 											maxHeight: '35px',
 										}}>
-										analytics
+										Analytics
 									</Button>
 								</TableCell>
 							)}
