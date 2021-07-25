@@ -4,7 +4,6 @@ import clsx from 'clsx';
 
 import Chart from '../components/dashboard/Chart';
 import layoutStyles from '../styles/Layout';
-import LoadingSpinner from '../components/Spinner/LoadingSpinner';
 
 function createData({date, sent}) {
 	return { date:date.slice(4,10), sent };
@@ -22,8 +21,8 @@ export default function Graph(props) {
 		<Grid item xs={12} md={8} lg={9}>
 			<Paper className={fixedHeightPaper}>
 				{props.loading && (
-					<div className="centered">
-						<LoadingSpinner />
+					<div className="centered">						
+						Analyzing...
 					</div>
 				)}
 				{!props.loading && <Chart data={graphData} />}

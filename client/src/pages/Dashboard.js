@@ -72,7 +72,7 @@ function Dashboard() {
 			setLoading(false);
 		};
 
-		const fetchName = async () => {
+		const fetchName = async () => {			
 			const url = process.env.REACT_APP_BACKEND + '/users/' + ctx.userId;
 			const response = await fetch(url);
 
@@ -81,9 +81,7 @@ function Dashboard() {
 			const capName =
 				capitalize(data.result.firstName) + ' ' + capitalize(data.result.lastName);
 
-			setName(capName);
-
-			setLoading(false);
+			setName(capName);			
 		};
 
 		fetchData();

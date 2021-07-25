@@ -5,12 +5,12 @@ import AuthContext from '../store/auth-context';
 import MailList from '../components/MailList';
 import LoadingSpinner from '../components/Spinner/LoadingSpinner';
 
-function createData(id, schedule, recipient, subject) {
+function createData(id, schedule, recipient, subject, recipientSummary) {
 	const scheduleDate = new Date(schedule);
 	const month = scheduleDate.toDateString();
 	const time = scheduleDate.toLocaleTimeString();
 	schedule = month + ' - ' + time;
-	return { id, schedule, recipient, subject };
+	return { id, schedule, recipient, subject, recipientSummary };
 }
 
 function History() {
@@ -38,13 +38,14 @@ function History() {
 
 			const data = await response.json();
 
-			if (!data || !data.result || !Array.isArray(data.result)) {
-				setLoadedData({ enable: false, items: [] });
-				return;
-			}
-
-			const results = data.result.map(res =>
-				createData(res._id, res.scheduled, res.recipents?.toString(), res.subject)
+			const results = (data.result || []).map(res =>
+				createData(
+					res._id,					
+					res.scheduled,
+					res.recipents.slice(1, res.recipents.length),
+					res.subject,
+					res.recipents[0]
+				)
 			);
 
 			setLoadedData({ enable: true, items: results });
