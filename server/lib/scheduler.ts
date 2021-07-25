@@ -13,7 +13,7 @@ export default class Scheduler {
 	private agenda: Agenda;
 	constructor() {
 		this.agenda = new Agenda({
-			mongo: mongoose.connection.getClient().db(),
+			mongo: mongoose.connection.getClient().db() as any,
 			db: {
 				collection: 'scheduledJobs',
 			} as any,
