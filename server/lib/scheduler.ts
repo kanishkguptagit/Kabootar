@@ -64,5 +64,8 @@ export async function cancelMail(mailId: string): Promise<boolean> {
 		Types.ObjectId(mailId)
 	);
 
+	Mail.updateOne({ _id: Types.ObjectId(mailId) }, { isScheduled: false });
+	// also turn isScheduled to false
+
 	return cancelledCount && cancelledCount > 0 ? true : false;
 }

@@ -70,8 +70,7 @@ router.get('/analytics/user', async (req, res, next) => {
 	if (!user) {
 		return res.json({ success: false, result: 'User not found' });
 	}
-	const singleUserAnalytics = await getAnalyticsForSingleUser(user._id);
-	return res.json(singleUserAnalytics);
+	return res.json(await getAnalyticsForSingleUser(user._id));
 });
 
 router.get('/analytics/:mailId', async (req, res, next) => {
