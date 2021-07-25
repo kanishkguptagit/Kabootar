@@ -8,22 +8,22 @@ import Title from './Title';
 // }
 
 const useStyles = makeStyles({
-  depositContext: {
-    flex: 1,
-  },
+	depositContext: {
+		flex: 1,
+	},
 });
 
 export default function Deposits(props) {
-  const classes = useStyles();
-  return (
-    <React.Fragment>
-      <Title>Total Mails</Title>
-      <Typography component="p" variant="h4">
-        {props.items}
-      </Typography>
-      <Typography color="textSecondary" className={classes.depositContext}>
-        on {props.date}
-      </Typography>      
-    </React.Fragment>
-  );
+	const classes = useStyles();
+	return (
+		<div className={classes.divContainer}>
+			<Title>Total Mails</Title>
+			<Typography component="p" variant="h1">
+				{props.items}
+			</Typography>
+			<Typography color="textSecondary" className={classes.depositContext}>
+				on {props.date}
+			</Typography>
+		</div>
+	);
 }

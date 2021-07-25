@@ -15,8 +15,19 @@ function sendScheduledMail(mail: IMail) {
 	}
 }
 
-export function createAndSendMail(mail: IMail) {
-	if (mail.isScheduled) {
+function sendRecurringMail(mail: IMail, recurringString: string) {
+	try {
+		console.log(chalk.cyan.whiteBright('recurring a mail for'), mail);
+		new Scheduler().createRecurringEmail(recurringString, mail);
+	} catch (e) {
+		console.log(chalk.red.bgWhite('recurring the mail failed', e));
+	}
+}
+
+export function createAndSendMail(mail: IMail, recurring?: IRecurring) {
+	if (recurring && recurring.isRecurring) {
+		sendRecurringMail(mail, recurring.recurringString);
+	} else if (mail.isScheduled) {
 		sendScheduledMail(mail);
 	} else {
 		sendMailToRecipents(mail);
@@ -24,3 +35,8 @@ export function createAndSendMail(mail: IMail) {
 }
 
 export { sendConfirmationEmail, sendMailToRecipents };
+
+interface IRecurring {
+	isRecurring: boolean;
+	recurringString: string;
+}

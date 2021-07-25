@@ -6,16 +6,18 @@ import { getScheduledDate } from '../lib/utils';
 import Mail, { IMail, ICreateMail } from '../models/Mail.model';
 import { getAnalyticsForSingleMail } from '../lib/analytics';
 import { getAnalyticsForSingleUser } from '../lib/analytics/getAnalytics';
+import { cancelMail } from '../lib/scheduler';
 
 const router = Router();
 
 router.post('/add', async (req, res, next) => {
-	const { to, subject, body, name, isScheduled, scheduled } = req.body;
+	const { to, subject, body, name, isScheduled, isRecurring, scheduled } = req.body;
 	if (!(to && subject && body && Array.isArray(to))) {
 		return next(new Error('to, subject, body are required fields'));
 	}
 	const user = await getAuthUser(req, next);
 
+	const recurringString = scheduled;
 	const sanitizedScheduledDateString = getScheduledDate(scheduled, isScheduled);
 
 	const createdMail: ICreateMail = {
@@ -24,7 +26,7 @@ router.post('/add', async (req, res, next) => {
 		subject,
 		body,
 		owner: user._id as any,
-		isScheduled: isScheduled ?? false,
+		isScheduled: isScheduled || isRecurring ? true : false,
 		scheduled: sanitizedScheduledDateString,
 	};
 	const newMail = new Mail(createdMail);
@@ -37,7 +39,7 @@ router.post('/add', async (req, res, next) => {
 	}
 
 	const savedMailObject = savedMail.toObject();
-	createAndSendMail(savedMailObject as IMail);
+	createAndSendMail(savedMailObject as IMail, { isRecurring, recurringString });
 
 	return res.status(200).json({
 		success: true,
@@ -68,8 +70,7 @@ router.get('/analytics/user', async (req, res, next) => {
 	if (!user) {
 		return res.json({ success: false, result: 'User not found' });
 	}
-	const singleUserAnalytics = await getAnalyticsForSingleUser(user._id);
-	return res.json(singleUserAnalytics);
+	return res.json(await getAnalyticsForSingleUser(user._id));
 });
 
 router.get('/analytics/:mailId', async (req, res, next) => {
@@ -77,8 +78,16 @@ router.get('/analytics/:mailId', async (req, res, next) => {
 	if (!user) {
 		return res.json({ success: false, result: 'User not found' });
 	}
-	const singleMailAnalytics = await getAnalyticsForSingleMail(req.params.mailId);
-	return res.send(singleMailAnalytics);
+	return res.send(await getAnalyticsForSingleMail(req.params.mailId));
+});
+
+router.delete('/cancel/:mailId', async (req, res, next) => {
+	const user = await getAuthUser(req, next);
+	if (!user) {
+		return res.json({ success: false, result: 'User not found' });
+	}
+
+	return res.json({ cancelled: await cancelMail(req.params.mailId) });
 });
 
 export default router;

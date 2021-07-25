@@ -6,6 +6,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Accordion, AccordionDetails, AccordionSummary } from '@material-ui/core';
 import { Button } from '@material-ui/core';
+
 import Title from './Title';
 
 export default function Orders(props) {
@@ -15,11 +16,11 @@ export default function Orders(props) {
 			<Table size="small">
 				<TableHead>
 					<TableRow>
-						<TableCell>Scheduled</TableCell>
-						<TableCell>To</TableCell>
-						<TableCell>Subject</TableCell>
-						<TableCell>Analytics</TableCell>
-						<TableCell>{props.column}</TableCell>
+						<TableCell><strong>Scheduled</strong></TableCell>
+						<TableCell><strong>To</strong></TableCell>
+						<TableCell><strong>Subject</strong></TableCell>
+						<TableCell><strong>Analytics</strong></TableCell>
+						<TableCell><strong>{props.column}</strong></TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
@@ -58,8 +59,11 @@ export default function Orders(props) {
 									Analytics
 								</Button>
 							</TableCell>
-							<TableCell>																
-								{ props.children && React.cloneElement(props.children, { onClick: props.childOperation.bind(null,row.id) })}
+							<TableCell>
+								{props.children &&
+									React.cloneElement(props.children, {
+										onClick: props.childOperation.bind(null, row.id),
+									})}
 							</TableCell>
 						</TableRow>
 					))}

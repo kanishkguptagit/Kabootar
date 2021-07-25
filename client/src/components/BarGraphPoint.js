@@ -9,24 +9,6 @@ import {
   Tooltip,
 } from "recharts";
 
-// const data = [
-//   {
-//     name: "Total Mail",
-    
-//     mails: 20
-//   },
-//   {
-//     name: "Opened",
-    
-//     mails: 15
-//   },
-//   {
-//     name: "Clicked",
-    
-//     mails: 10
-//   }
-// ];
-
 export default function BarGraphPoint(props) {
   return (
     <BarChart
@@ -44,9 +26,7 @@ export default function BarGraphPoint(props) {
       <XAxis dataKey="name" />
       <YAxis />
       <Tooltip />
-      {/* <Legend /> */}
       <Bar dataKey="mails" fill="#8884d8" />
-      {/* <Bar dataKey="uv" fill="#82ca9d" /> */}
     </BarChart>
   );
 }

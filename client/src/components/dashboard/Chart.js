@@ -26,7 +26,7 @@ export default function Chart(props) {
               position="left"
               style={{ textAnchor: 'middle', fill: theme.palette.text.primary }}
             >
-              mails sent
+              Mails sent
             </Label>
           </YAxis>
           <Line type="monotone" dataKey="sent" stroke={theme.palette.primary.main} dot={true} />

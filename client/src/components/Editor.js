@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
 import TextFields from './TextField';
 import Button from '@material-ui/core/Button';
 import layoutStyles from '../styles/Layout';
 import DraftEditorApp from './draft/DraftEditor';
-import RecurringScheduleSelector from './schedule-selector/recurring';
+import ScheduleSelector from './schedule-selector';
 
 export default function Editor(props) {
 	const classes = layoutStyles();
@@ -15,7 +14,8 @@ export default function Editor(props) {
 	const [toField, setToField] = useState('');
 	const [subjectField, setSubjectField] = useState('');
 	const [recurringValue, setRecurringValue] = useState('');
-	const [dateTimeValue, setDateTimeValue] = useState('');
+	const [dateTimeValue, setDateTimeValue] = useState(new Date());
+	const [optionSelected, setOptionSelected] = useState(0);
 
 	const toChangeHandler = event => {
 		setToField(event.target.value);
@@ -28,7 +28,14 @@ export default function Editor(props) {
 	const submitForm = event => {
 		event.preventDefault();
 
-		props.getEnteredValues(toField, subjectField, editorContentValue, recurringValue, dateTimeValue);
+		props.getEnteredValues(
+			toField,
+			subjectField,
+			editorContentValue,
+			optionSelected,
+			recurringValue,
+			dateTimeValue
+		);
 	};
 
 	const editorContentHandler = mailContent => {
@@ -39,21 +46,14 @@ export default function Editor(props) {
 		<Grid item xs={12}>
 			<Paper className={classes.paper}>
 				<form onSubmit={submitForm}>
-					<RecurringScheduleSelector
-						recurringValue={recurringValue}
-						setRecurringValue={setRecurringValue}
-					/>
-
-					<div className={classes.select}>
-						<TextField
-							label="Once Schedule"
-							type="datetime-local"
-							className={classes.dateTimeField}
-							InputLabelProps={{
-								shrink: true,
-							}}
-							value={dateTimeValue}
-							onChange={e => setDateTimeValue(e.target.value)}
+					<div>
+						<ScheduleSelector
+							recurringValue={recurringValue}
+							setRecurringValue={setRecurringValue}
+							dateTimeValue={dateTimeValue}
+							setDateTimeValue={setDateTimeValue}
+							optionSelected={optionSelected}
+							setOptionSelected={setOptionSelected}
 						/>
 					</div>
 					<TextFields label={'To'} autoFocus={true} onChange={toChangeHandler} />

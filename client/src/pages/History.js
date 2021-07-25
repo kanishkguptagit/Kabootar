@@ -36,9 +36,22 @@ function History() {
 		});
 	};
 
-	const deleteHandler = id =>{
-		console.log(id); //getting delete id here
-	}
+	const deleteHandler = mailId => {
+		fetch(process.env.REACT_APP_BACKEND + '/mails/cancel/' + mailId, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + ctx.token,
+			},
+		})
+			.then(() =>
+				setLoadedData(prevData => ({
+					enabled: prevData.enable,
+					items: prevData.items.filter(({ id }) => id !== mailId),
+				}))
+			)
+			.catch(e => console.log('while deleting ', e));
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -69,7 +82,7 @@ function History() {
 		};
 
 		fetchData();
-	}, [ctx.token, setLoadedData]);
+	}, [ctx.token, setLoadedData, setLoading]);
 
 	return (
 		<Layout title="Ongoing">
@@ -79,12 +92,16 @@ function History() {
 				</Modal>
 			)}
 			{!loading && (
-				<MailList items={loadedData.items} modalHandler={modalHandler} childOperation={deleteHandler} column="Delete">
+				<MailList
+					items={loadedData.items}
+					modalHandler={modalHandler}
+					childOperation={deleteHandler}
+					column="Delete">
 					<Button
 						onClick={deleteHandler}
 						size="x-small"
 						variant="outlined"
-						color="primary"
+						color="secondary"
 						style={{
 							textTransform: 'none',
 							maxWidth: '90px',
