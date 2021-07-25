@@ -72,7 +72,7 @@ function Dashboard() {
 			setLoading(false);
 		};
 
-		const fetchName = async () => {
+		const fetchName = async () => {			
 			const url = process.env.REACT_APP_BACKEND + '/users/' + ctx.userId;
 			const response = await fetch(url);
 
@@ -81,9 +81,7 @@ function Dashboard() {
 			const capName =
 				capitalize(data.result.firstName) + ' ' + capitalize(data.result.lastName);
 
-			setName(capName);
-
-			setLoading(false);
+			setName(capName);			
 		};
 
 		fetchData();
@@ -105,9 +103,7 @@ function Dashboard() {
 				}
 			})
 
-			const data = await result.json();
-
-			console.log(data);
+			const data = await result.json();			
 
 			setGraphData({totalMails:data.totalMails, graph:data.graph});
 
@@ -129,7 +125,7 @@ function Dashboard() {
 				<Fragment>
 					<Graph items={graphData.graph} loading={graphLoading} />
 					<BlockDetail items={graphData.totalMails} />
-					<MailList items={loadedData.items} history={true} modalHandler={modalHandler} />
+					<MailList items={loadedData.items} modalHandler={modalHandler} />
 				</Fragment>
 			)}
 			{loading && (

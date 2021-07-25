@@ -15,15 +15,11 @@ export default function Orders(props) {
 			<Table size="small">
 				<TableHead>
 					<TableRow>
-						<TableCell>
-							<strong>Scheduled</strong>
-						</TableCell>
-						<TableCell>
-							<strong>To</strong>
-						</TableCell>
-						<TableCell>
-							<strong>Subject</strong>
-						</TableCell>
+						<TableCell>Scheduled</TableCell>
+						<TableCell>To</TableCell>
+						<TableCell>Subject</TableCell>
+						<TableCell>Analytics</TableCell>
+						<TableCell>{props.column}</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
@@ -35,35 +31,39 @@ export default function Orders(props) {
 									<AccordionSummary>{row.recipientSummary} ...</AccordionSummary>
 									<AccordionDetails>
 										<div>
-											{Array.isArray(row.recipent) &&
-												row.recipient.map(recipent => (
-													<li style={{ listStyleType: 'none' }}>
-														{recipent}
-													</li>
-												))}
+											{row.recipient.map(recipent => (
+												<li style={{ listStyleType: 'none' }}>
+													{recipent}
+												</li>
+											))}
 										</div>
 									</AccordionDetails>
 								</Accordion>
 							</TableCell>
 							<TableCell>{row.subject}</TableCell>
-							{props.history && (
-								<TableCell>
-									<Button
-										onClick={() => {
-											props.modalHandler(row.id);
-										}}
-										size="x-small"
-										variant="outlined"
-										color="primary"
-										style={{
-											textTransform: 'none',
-											maxWidth: '90px',
-											maxHeight: '35px',
-										}}>
-										Analytics
-									</Button>
-								</TableCell>
-							)}
+
+							<TableCell>
+								<Button
+									onClick={() => {
+										props.modalHandler(row.id);
+									}}
+									size="x-small"
+									variant="outlined"
+									color="primary"
+									style={{
+										textTransform: 'none',
+										maxWidth: '90px',
+										maxHeight: '35px',
+									}}>
+									Analytics
+								</Button>
+							</TableCell>
+							<TableCell>
+								{props.children &&
+									React.cloneElement(props.children, {
+										onClick: props.childOperation.bind(null, row.id),
+									})}
+							</TableCell>
 						</TableRow>
 					))}
 				</TableBody>
