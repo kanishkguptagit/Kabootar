@@ -1,9 +1,12 @@
 import { useEffect, useContext, useState } from 'react';
+import { Button } from '@material-ui/core';
 
 import Layout from '../components/Layout';
 import AuthContext from '../store/auth-context';
 import MailList from '../components/MailList';
 import LoadingSpinner from '../components/Spinner/LoadingSpinner';
+import Modal from '../ui/Modal';
+import Analytics from '../components/Analytics';
 
 function createData(id, schedule, recipient, subject, recipientSummary) {
 	const scheduleDate = new Date(schedule);
@@ -23,6 +26,20 @@ function History() {
 
 	const [loading, setLoading] = useState(false);
 
+	const [openModal, setOpenModal] = useState(false);
+	const [mailId, setMailId] = useState('');
+
+	const modalHandler = mailId => {
+		setMailId(mailId);
+		setOpenModal(prevState => {
+			return !prevState;
+		});
+	};
+
+	const deleteHandler = id =>{
+		console.log(id); //getting delete id here
+	}
+
 	useEffect(() => {
 		const fetchData = async () => {
 			setLoading(true);
@@ -34,13 +51,12 @@ function History() {
 					Authorization: 'Bearer ' + ctx.token,
 				},
 			});
-			// .then(r => r.json()).catch(err=>console.log(err));
 
 			const data = await response.json();
 
 			const results = (data.result || []).map(res =>
 				createData(
-					res._id,					
+					res._id,
 					res.scheduled,
 					res.recipents.slice(1, res.recipents.length),
 					res.subject,
@@ -57,7 +73,27 @@ function History() {
 
 	return (
 		<Layout title="Ongoing">
-			{!loading && <MailList items={loadedData.items} />}
+			{openModal && (
+				<Modal onClose={modalHandler}>
+					<Analytics mailId={mailId} ctx={ctx} />
+				</Modal>
+			)}
+			{!loading && (
+				<MailList items={loadedData.items} modalHandler={modalHandler} childOperation={deleteHandler} column="Delete">
+					<Button
+						onClick={deleteHandler}
+						size="x-small"
+						variant="outlined"
+						color="primary"
+						style={{
+							textTransform: 'none',
+							maxWidth: '90px',
+							maxHeight: '35px',
+						}}>
+						Delete
+					</Button>
+				</MailList>
+			)}
 			{loading && (
 				<div className="centered">
 					<LoadingSpinner />
