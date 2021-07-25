@@ -44,8 +44,9 @@ export default class Scheduler {
 		});
 	}
 
-	public createRecurringEmail(when: string, mail: IMail) {
-		this.agenda.every(when, jobNames.recurringMail, { mail });
+	public async createRecurringEmail(when: string, mail: IMail) {
+		const newRecurringMail = this.agenda.create(jobNames.recurringMail, { mail });
+		await newRecurringMail.repeatEvery(when).save();
 	}
 
 	public createScheduledEmail(when: Date | string, mail: IMail) {
