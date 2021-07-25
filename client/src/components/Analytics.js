@@ -46,6 +46,7 @@ export default function Analytics(props) {
 		<>
 			{!loading && (
 				<Fragment>
+					<div className={`${classes.heading} ${classes.center_content}`}>Analytics</div>
 					<div className={`${classes.center_content} ${classes.bar_graph}`}>
 						<BarGraphPoint data={barData} />
 					</div>

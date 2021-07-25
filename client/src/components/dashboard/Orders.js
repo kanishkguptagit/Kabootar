@@ -18,43 +18,49 @@ export default function Orders(props) {
 						<TableCell>Scheduled</TableCell>
 						<TableCell>To</TableCell>
 						<TableCell>Subject</TableCell>
+						<TableCell>Analytics</TableCell>
+						<TableCell>{props.column}</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
 					{props.item.map(row => (
 						<TableRow key={row.id}>
-							<TableCell>{row.schedule}</TableCell>							
+							<TableCell>{row.schedule}</TableCell>
 							<TableCell>
 								<Accordion>
 									<AccordionSummary>{row.recipientSummary} ...</AccordionSummary>
 									<AccordionDetails>
 										<div>
 											{row.recipient.map(recipent => (
-												<li style={{listStyleType:'none'}}>{recipent}</li>
+												<li style={{ listStyleType: 'none' }}>
+													{recipent}
+												</li>
 											))}
 										</div>
 									</AccordionDetails>
 								</Accordion>
 							</TableCell>
 							<TableCell>{row.subject}</TableCell>
-							{props.history && (
-								<TableCell>
-									<Button
-										onClick={() => {
-											props.modalHandler(row.id);
-										}}
-										size="x-small"
-										variant="outlined"
-										color="primary"
-										style={{
-											textTransform: 'none',
-											maxWidth: '90px',
-											maxHeight: '35px',
-										}}>
-										analytics
-									</Button>
-								</TableCell>
-							)}
+
+							<TableCell>
+								<Button
+									onClick={() => {
+										props.modalHandler(row.id);
+									}}
+									size="x-small"
+									variant="outlined"
+									color="primary"
+									style={{
+										textTransform: 'none',
+										maxWidth: '90px',
+										maxHeight: '35px',
+									}}>
+									Analytics
+								</Button>
+							</TableCell>
+							<TableCell>																
+								{ props.children && React.cloneElement(props.children, { onClick: props.childOperation.bind(null,row.id) })}
+							</TableCell>
 						</TableRow>
 					))}
 				</TableBody>

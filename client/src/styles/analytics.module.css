@@ -10,3 +10,13 @@
 .list_items {
     list-style-type: none;
 }
+
+.heading {
+    color: #3f5acc ;
+    font-size: large;
+}
+
+.details {
+    display: flex;
+    justify-content: center;
+}
