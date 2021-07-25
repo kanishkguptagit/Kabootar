@@ -17,6 +17,7 @@ router.post('/add', async (req, res, next) => {
 	}
 	const user = await getAuthUser(req, next);
 
+	const recurringString = scheduled;
 	const sanitizedScheduledDateString = getScheduledDate(scheduled, isScheduled);
 
 	const createdMail: ICreateMail = {
@@ -25,7 +26,7 @@ router.post('/add', async (req, res, next) => {
 		subject,
 		body,
 		owner: user._id as any,
-		isScheduled: isScheduled ?? false,
+		isScheduled: isScheduled || isRecurring ? true : false,
 		scheduled: sanitizedScheduledDateString,
 	};
 	const newMail = new Mail(createdMail);
@@ -38,7 +39,7 @@ router.post('/add', async (req, res, next) => {
 	}
 
 	const savedMailObject = savedMail.toObject();
-	createAndSendMail(savedMailObject as IMail);
+	createAndSendMail(savedMailObject as IMail, { isRecurring, recurringString });
 
 	return res.status(200).json({
 		success: true,

@@ -32,10 +32,6 @@ export default class Scheduler {
 			sendMailToRecipents(mail);
 
 			await Mail.updateOne({ _id: mail._id }, { isScheduled: false });
-
-			// if (job.length > 0) {
-			// 	await this.agenda.cancel({ _id: job.attrs._id }); // reschedule the job for the user
-			// }
 		});
 
 		this.agenda.define(jobNames.recurringMail, async (job: any) => {

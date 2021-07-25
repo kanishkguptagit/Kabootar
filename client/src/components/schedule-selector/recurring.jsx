@@ -58,7 +58,7 @@ export default function RecurringScheduleSelector({ recurringValue, setRecurring
 						onChange={e => setRecurringValue(e)}
 						value={recurringValue}
 						showResultText={true}
-						showResultCron={false}
+						showResultCron={true}
 					/>
 				</div>
 			</Modal>
