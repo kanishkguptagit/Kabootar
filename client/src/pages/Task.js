@@ -6,13 +6,11 @@ import TaskChart from '../components/TaskChart';
 import Layout from '../components/Layout';
 import useStyles from '../styles/Task';
 
-const data = JSON.parse(localStorage.getItem('tasks')) ?? [];
-
 function Task() {
 	const classes = useStyles();
 
 	const [todo, setTodo] = useState('');
-	const [tasks, setTasks] = useState(data);
+	const [tasks, setTasks] = useState(JSON.parse(localStorage.getItem('tasks')) ?? []);
 
 	const todoHandler = event => {
 		setTodo(event.target.value);
