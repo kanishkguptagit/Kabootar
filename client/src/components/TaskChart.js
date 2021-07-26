@@ -6,7 +6,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { Button } from '@material-ui/core';
 
-export default function Orders(props) {
+export default function TaskChart(props) {
 	return (
 		<React.Fragment>
 			<Table size="small">
@@ -23,13 +23,13 @@ export default function Orders(props) {
 				<TableBody>
 					{props.item.map(row => (
 						<TableRow key={row.id}>
-							<TableCell>{row.date}</TableCell>
+							<TableCell>{row.id}</TableCell>
 							<TableCell>{row.task}</TableCell>
 							<TableCell>
 								<Button
-									// onClick={() => {
-									// 	props.modalHandler(row.id);
-									// }}
+									onClick={() => {
+										props.editHandler(row.id);
+									}}
 									size="x-small"
 									variant="outlined"
 									color="primary"
@@ -43,9 +43,9 @@ export default function Orders(props) {
 							</TableCell>
 							<TableCell>
 								<Button
-									// onClick={() => {
-									// 	props.modalHandler(row.id);
-									// }}
+									onClick={() => {
+										props.deleteHandler(row.id);
+									}}
 									size="x-small"
 									variant="outlined"
 									color="secondary"

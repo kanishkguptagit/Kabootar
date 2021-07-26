@@ -1,50 +1,54 @@
-import Layout from '../components/Layout';
+import { useState, useEffect } from 'react';
 import { TextField } from '@material-ui/core';
 import { Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 
 import TaskChart from '../components/TaskChart';
+import Layout from '../components/Layout';
+import useStyles from '../styles/Task';
 
-const DUMMY_DATA = [
-	{
-		id: 't1',
-		date: 'Mon Jul 26 2021 - 1:11:55 PM',
-		task: 'Hello World!! Assignment to complete henceforth',
-	},
-	{
-		id: 't2',
-		date: 'Mon Jul 26 2021 - 1:11:55 PM',
-		task: 'Classes to attend and not to miss hello world!!',
-	},
-];
-
-const useStyles = makeStyles({
-	containerBox: {
-		display: 'flex',
-		justifyContent: 'center',
-		width: '100%',
-		textAlign: 'center',
-        margin: '3%'
-	},
-	text: {
-		flexShrink: 1,
-		marginRight: '1%',
-        width: '100%'
-	},
-	add: {
-		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: 'center',
-		float: 'right',
-	},
-    button: {
-        height: '100%',
-        width: '',
-    }
-});
+const data = JSON.parse(localStorage.getItem('tasks'));
 
 function Task() {
 	const classes = useStyles();
+
+	const [todo, setTodo] = useState('');
+	const [tasks, setTasks] = useState(data);
+
+	const todoHandler = event => {
+		setTodo(event.target.value);
+	};
+
+	const onSubmitHandler = () => {
+		const newDate = new Date();
+		const month = newDate.toDateString();
+		const time = newDate.toLocaleTimeString();
+
+		const newTodo = {
+			id: month+' - '+time,
+			task: todo,
+		};
+		
+		setTasks(prevTasks => {
+			return [newTodo, ...prevTasks];
+		});	
+		
+		setTodo('');
+	};
+
+	const onDeleteHandler = id => {
+		setTasks(prevTasks => {
+			return prevTasks.filter(item => item.id !== id);
+		});
+	};
+
+	const onEditHandler = id => {
+		setTodo(tasks.find(item => item.id === id).task);
+		onDeleteHandler(id);
+	};
+
+	useEffect(()=>{
+		localStorage.setItem('tasks',JSON.stringify(tasks));
+	},[tasks])
 
 	return (
 		<Layout title={'Task'}>
@@ -57,15 +61,23 @@ function Task() {
 						placeholder="Add tasks here"
 						fullWidth
 						variant="outlined"
+						onChange={todoHandler}
+						value={todo}
 					/>
 				</div>
 				<div className={classes.add}>
-					<Button variant="outlined" size="large" color="primary" className={classes.button}>
+					<Button
+						variant="outlined"
+						size="large"
+						color="primary"
+						className={classes.button}
+						disabled={todo.length <= 0}
+						onClick={onSubmitHandler}>
 						Add
 					</Button>
 				</div>
 			</div>
-			<TaskChart item={DUMMY_DATA} />
+			<TaskChart item={tasks} deleteHandler={onDeleteHandler} editHandler={onEditHandler} />
 		</Layout>
 	);
 }
