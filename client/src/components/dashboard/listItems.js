@@ -5,10 +5,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-// import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import CreateIcon from '@material-ui/icons/Create';
-import BarChartIcon from '@material-ui/icons/BarChart';
-// import LayersIcon from '@material-ui/icons/Layers';
+import Schedule from '@material-ui/icons/Schedule';
+import List from '@material-ui/icons/List';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
 import classes from '../../styles/listItems.module.css';
@@ -34,9 +33,17 @@ export const mainListItems = (
 		<NavLink to="/history" className={classes.navlink} activeStyle={{color:"#3f5acc"}}>
 			<ListItem button>
 				<ListItemIcon>
-					<BarChartIcon />
+					<Schedule />
 				</ListItemIcon>
 				<ListItemText primary="Ongoing" />
+			</ListItem>
+		</NavLink>
+		<NavLink to="/task" className={classes.navlink} activeStyle={{color:"#3f5acc"}}>
+			<ListItem button>
+				<ListItemIcon>
+					<List />
+				</ListItemIcon>
+				<ListItemText primary="Task" />
 			</ListItem>
 		</NavLink>
 	</div>

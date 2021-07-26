@@ -13,6 +13,7 @@ const Dashboard = lazy(()=>import('./pages/Dashboard'));
 const Landing = lazy(()=>import('./pages/Landing'));
 const History = lazy(()=>import('./pages/History'));
 const Create = lazy(()=>import('./pages/Create'));
+const Task = lazy(()=>import('./pages/Task'));
 
 function App() {
 
@@ -45,6 +46,10 @@ function App() {
 					</Route>
 					<Route path="/create" exact>						
 						{ ctx.isLoggedIn && <Create />}
+						{ !ctx.isLoggedIn && <Signin />}						
+					</Route>
+					<Route path="/task" exact>						
+						{ ctx.isLoggedIn && <Task />}
 						{ !ctx.isLoggedIn && <Signin />}						
 					</Route>
 					<Route path="*">
