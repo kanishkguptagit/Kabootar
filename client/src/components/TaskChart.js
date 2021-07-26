@@ -1,4 +1,3 @@
-import React from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,7 +7,7 @@ import { Button } from '@material-ui/core';
 
 export default function TaskChart(props) {
 	return (
-		<React.Fragment>
+		<>
 			<Table size="small">
 				<TableHead>
 					<TableRow>
@@ -17,11 +16,11 @@ export default function TaskChart(props) {
 						</TableCell>
 						<TableCell>
 							<strong>Tasks</strong>
-						</TableCell>						
+						</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{props.item.map(row => (
+					{props.item?.map(row => (
 						<TableRow key={row.id}>
 							<TableCell>{row.id}</TableCell>
 							<TableCell>{row.task}</TableCell>
@@ -56,11 +55,11 @@ export default function TaskChart(props) {
 									}}>
 									Delete
 								</Button>
-							</TableCell>							
+							</TableCell>
 						</TableRow>
 					))}
 				</TableBody>
 			</Table>
-		</React.Fragment>
+		</>
 	);
 }

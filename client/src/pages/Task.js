@@ -6,7 +6,7 @@ import TaskChart from '../components/TaskChart';
 import Layout from '../components/Layout';
 import useStyles from '../styles/Task';
 
-const data = JSON.parse(localStorage.getItem('tasks'));
+const data = JSON.parse(localStorage.getItem('tasks')) ?? [];
 
 function Task() {
 	const classes = useStyles();
@@ -24,20 +24,20 @@ function Task() {
 		const time = newDate.toLocaleTimeString();
 
 		const newTodo = {
-			id: month+' - '+time,
+			id: month + ' - ' + time,
 			task: todo,
 		};
-		
-		setTasks(prevTasks => {
-			return [newTodo, ...prevTasks];
-		});	
-		
+
+		setTasks(prevTasks =>
+			prevTasks && Array.isArray(prevTasks) ? [newTodo, ...prevTasks] : [newTodo]
+		);
+
 		setTodo('');
 	};
 
 	const onDeleteHandler = id => {
 		setTasks(prevTasks => {
-			return prevTasks.filter(item => item.id !== id);
+			return prevTasks?.filter(item => item.id !== id);
 		});
 	};
 
@@ -46,9 +46,9 @@ function Task() {
 		onDeleteHandler(id);
 	};
 
-	useEffect(()=>{
-		localStorage.setItem('tasks',JSON.stringify(tasks));
-	},[tasks])
+	useEffect(() => {
+		localStorage.setItem('tasks', JSON.stringify(tasks));
+	}, [tasks]);
 
 	return (
 		<Layout title={'Task'}>
