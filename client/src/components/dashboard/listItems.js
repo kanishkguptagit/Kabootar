@@ -14,7 +14,7 @@ import classes from '../../styles/listItems.module.css';
 
 export const mainListItems = (
 	<div>
-		<NavLink to="/dashboard" className={classes.navlink} activeStyle={{color:"#3f5acc"}}>
+		<NavLink to="/dashboard" className={classes.navlink} activeStyle={{ color: '#3f5acc' }}>
 			<ListItem button>
 				<ListItemIcon>
 					<DashboardIcon />
@@ -22,7 +22,7 @@ export const mainListItems = (
 				<ListItemText primary="Dashboard" />
 			</ListItem>
 		</NavLink>
-		<NavLink to="/create" className={classes.navlink} activeStyle={{color:"#3f5acc"}}>
+		<NavLink to="/create" className={classes.navlink} activeStyle={{ color: '#3f5acc' }}>
 			<ListItem button>
 				<ListItemIcon>
 					<CreateIcon />
@@ -30,7 +30,7 @@ export const mainListItems = (
 				<ListItemText primary="Compose" />
 			</ListItem>
 		</NavLink>
-		<NavLink to="/history" className={classes.navlink} activeStyle={{color:"#3f5acc"}}>
+		<NavLink to="/history" className={classes.navlink} activeStyle={{ color: '#3f5acc' }}>
 			<ListItem button>
 				<ListItemIcon>
 					<Schedule />
@@ -38,7 +38,7 @@ export const mainListItems = (
 				<ListItemText primary="Ongoing" />
 			</ListItem>
 		</NavLink>
-		<NavLink to="/task" className={classes.navlink} activeStyle={{color:"#3f5acc"}}>
+		<NavLink to="/task" className={classes.navlink} activeStyle={{ color: '#3f5acc' }}>
 			<ListItem button>
 				<ListItemIcon>
 					<List />

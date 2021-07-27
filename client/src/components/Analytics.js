@@ -5,7 +5,7 @@ import classes from '../styles/analytics.module.css';
 import LoadingSpinner from '../components/Spinner/LoadingSpinner';
 
 export default function Analytics(props) {
-	const [analytic, setAnalytic] = useState({sent:0, opened:0, clicked:0});
+	const [analytic, setAnalytic] = useState({ sent: 0, opened: 0, clicked: 0 });
 	const [barData, setBarData] = useState([]);
 	const [loading, setLoading] = useState(false);
 
@@ -21,9 +21,7 @@ export default function Analytics(props) {
 				},
 			}).then(r => r.json());
 
-			setAnalytic({sent: data.sent, opened:data.opened, clicked: data.opened});
-
-			
+			setAnalytic({ sent: data.sent, opened: data.opened, clicked: data.opened });
 
 			setLoading(false);
 		};
@@ -31,14 +29,13 @@ export default function Analytics(props) {
 		fetchData();
 	}, [props.ctx.token, props.mailId, analytic.sent, analytic.opened, analytic.clicked]);
 
-
-	useEffect(()=>{
+	useEffect(() => {
 		const bar = [
 			{ name: 'Total Mails', mails: analytic.sent },
 			{ name: 'Opened', mails: analytic.opened },
 			{ name: 'Clicked', mails: analytic.clicked },
 		];
-	
+
 		setBarData(bar);
 	}, [analytic]);
 

@@ -16,11 +16,21 @@ export default function Orders(props) {
 			<Table size="small">
 				<TableHead>
 					<TableRow>
-						<TableCell><strong>Scheduled</strong></TableCell>
-						<TableCell><strong>To</strong></TableCell>
-						<TableCell><strong>Subject</strong></TableCell>
-						<TableCell><strong>Analytics</strong></TableCell>
-						<TableCell><strong>{props.column}</strong></TableCell>
+						<TableCell>
+							<strong>Scheduled</strong>
+						</TableCell>
+						<TableCell>
+							<strong>To</strong>
+						</TableCell>
+						<TableCell>
+							<strong>Subject</strong>
+						</TableCell>
+						<TableCell>
+							<strong>Analytics</strong>
+						</TableCell>
+						<TableCell>
+							<strong>{props.column}</strong>
+						</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>

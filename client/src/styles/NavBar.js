@@ -10,15 +10,14 @@ const NavStyles = makeStyles(theme => ({
 	title: {
 		flexGrow: 1,
 	},
-	links:{
-		padding: "0% 1%",
+	links: {
+		padding: '0% 1%',
 		color: 'white',
-		textDecoration: "none",	
-		'&:hover':{
-			color: "#bbbfbc",
-		},		
+		textDecoration: 'none',
+		'&:hover': {
+			color: '#bbbfbc',
+		},
 	},
-	
 }));
 
 export default NavStyles;

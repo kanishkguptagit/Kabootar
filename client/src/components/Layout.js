@@ -1,4 +1,4 @@
-import React,{useContext} from 'react';
+import React, { useContext } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -13,7 +13,6 @@ import IconButton from '@material-ui/core/IconButton';
 
 import { mainListItems, secondaryListItems } from './dashboard/listItems';
 
-
 //appbar
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
@@ -25,7 +24,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 import AuthContext from '../store/auth-context';
 
-
 import layoutStyles from '../styles/Layout';
 // import DrawerComponent from './DrawerComponent';
 // import AppBarComponent from './AppBarComponent';
@@ -36,7 +34,7 @@ export default function Layout(props) {
 	const ctx = useContext(AuthContext);
 	const history = useHistory();
 
-    const logoutHandler = () => {
+	const logoutHandler = () => {
 		ctx.logout();
 		history.replace('/');
 	};
@@ -87,9 +85,6 @@ export default function Layout(props) {
 				</Toolbar>
 			</AppBar>
 
-
-
-
 			{/* <DrawerComponent handleDrawerClose={handleDrawerClose} open={open}/> */}
 			<Drawer
 				variant="permanent"
@@ -107,8 +102,6 @@ export default function Layout(props) {
 				<Divider />
 				<List>{secondaryListItems}</List>
 			</Drawer>
-
-
 
 			<main className={classes.content}>
 				<div className={classes.appBarSpacer} />

@@ -8,23 +8,23 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 
-
 import AuthContext from '../store/auth-context';
 import layoutStyles from '../styles/Layout';
 
 export default function AppBarComponent(props) {
-
 	const classes = layoutStyles();
 	const ctx = useContext(AuthContext);
 	const history = useHistory();
 
-    const logoutHandler = () => {
+	const logoutHandler = () => {
 		ctx.logout();
 		history.replace('/');
 	};
 
 	return (
-		<AppBar position="absolute" className={clsx(classes.appBar, props.open && classes.appBarShift)}>
+		<AppBar
+			position="absolute"
+			className={clsx(classes.appBar, props.open && classes.appBarShift)}>
 			<Toolbar className={classes.toolbar}>
 				<IconButton
 					edge="start"

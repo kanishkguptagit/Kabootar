@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { mainListItems, secondaryListItems } from './dashboard/listItems';
 import layoutStyles from '../styles/Layout';
 
-export default function DrawerComponent (props) {
+export default function DrawerComponent(props) {
 	const classes = layoutStyles();
 
 	return (
