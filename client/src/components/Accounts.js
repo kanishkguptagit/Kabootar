@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -13,16 +13,16 @@ import LoadingSpinner from '../components/Spinner/LoadingSpinner';
 
 export default function Accounts(props) {
 	const classes = accountsStyles();
-	
-	const ref = useRef(props.items.map(() => null))
 
-	const userSigninHandler = (event) => {
+	const ref = useRef(props.items.map(() => null));
+
+	const userSigninHandler = event => {
 		event.preventDefault();
-		
+
 		props.login(ref.current);
 	};
 
-	const userSignupHandler = (event) => {
+	const userSignupHandler = event => {
 		event.preventDefault();
 
 		props.register(ref.current);
@@ -39,7 +39,7 @@ export default function Accounts(props) {
 						{props.action}
 					</Typography>
 					<form className={classes.form} noValidate onSubmit={formSubmit}>
-						{props.items.map((item,i) => {
+						{props.items.map((item, i) => {
 							return (
 								<TextField
 									variant="outlined"
@@ -52,45 +52,46 @@ export default function Accounts(props) {
 									name={item.name}
 									autoFocus={item.autofocus}
 									type={item.type}
-									inputRef={r => (ref.current[i] = r)}									
+									inputRef={r => (ref.current[i] = r)}
 								/>
 							);
 						})}
 
 						{props.loading && <LoadingSpinner />}
 
-						{ !props.loading && <div>
-						<Button 
-							type="submit"
-							fullWidth
-							variant="contained"
-							color="primary"
-							className={classes.submit}>
-							{props.action}
-						</Button>
-						{props.action === 'sign in' && (
-							<Grid container>
-								<Grid item xs justify="left">
-									<Link to="#" variant="body2">
-										{'Forgot password?'}
-									</Link>
-								</Grid>
-								<Grid item>
-									<Link to="/signup" variant="body2">
-										{"Don't have an account? Sign Up"}
-									</Link>
-								</Grid>
-							</Grid>
-						)}
-						{props.action === 'sign up' && (
-							<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-								<Link to="/signin" variant="body2">
-									Already have an account? Sign In
-								</Link>
+						{!props.loading && (
+							<div>
+								<Button
+									type="submit"
+									fullWidth
+									variant="contained"
+									color="primary"
+									className={classes.submit}>
+									{props.action}
+								</Button>
+								{props.action === 'sign in' && (
+									<Grid container>
+										<Grid item xs justify="left">
+											<Link to="#" variant="body2">
+												{'Forgot password?'}
+											</Link>
+										</Grid>
+										<Grid item>
+											<Link to="/signup" variant="body2">
+												{"Don't have an account? Sign Up"}
+											</Link>
+										</Grid>
+									</Grid>
+								)}
+								{props.action === 'sign up' && (
+									<div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+										<Link to="/signin" variant="body2">
+											Already have an account? Sign In
+										</Link>
+									</div>
+								)}
 							</div>
 						)}
-
-						</div>}
 					</form>
 				</div>
 			</Grid>

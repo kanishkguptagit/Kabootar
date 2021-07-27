@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import mongoose from 'mongoose';
 
-import Scheduler from '../lib/scheduler'
+import Scheduler from '../lib/scheduler';
 
 async function startAgenda() {
 	console.log(chalk.white.bgYellow('starting scheduler'));

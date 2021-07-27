@@ -26,12 +26,12 @@ function Signin() {
 	const history = useHistory();
 	const [isLoading, setIsLoading] = useState(false);
 
-	const signinHandler = async (inputs) => {
+	const signinHandler = async inputs => {
 		const email = inputs[0].value;
 		const password = inputs[1].value;
 
 		setIsLoading(true);
-		const response = await fetch(process.env.REACT_APP_BACKEND+'/users/signin', {
+		const response = await fetch(process.env.REACT_APP_BACKEND + '/users/signin', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -45,14 +45,12 @@ function Signin() {
 		const data = await response.json();
 		setIsLoading(false);
 
-		if(data.sucess){
+		if (data.sucess) {
 			ctx.login(data.result.accessToken, data.result.id);
 			history.replace('/dashboard');
-		}
-		else{
+		} else {
 			alert(data.result);
 		}
-		
 	};
 
 	return <Accounts items={INPUT} action={'sign in'} login={signinHandler} loading={isLoading} />;

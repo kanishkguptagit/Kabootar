@@ -10,7 +10,11 @@ export default function MailList(props) {
 	return (
 		<Grid item xs={12}>
 			<Paper className={classes.paper}>
-				<Orders item={props.items} modalHandler={props.modalHandler} childOperation={props.childOperation} column={props.column}>
+				<Orders
+					item={props.items}
+					modalHandler={props.modalHandler}
+					childOperation={props.childOperation}
+					column={props.column}>
 					{props.children}
 				</Orders>
 			</Paper>

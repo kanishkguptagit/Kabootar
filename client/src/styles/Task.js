@@ -6,12 +6,12 @@ const useStyles = makeStyles({
 		justifyContent: 'center',
 		width: '100%',
 		textAlign: 'center',
-        margin: '3%'
+		margin: '3%',
 	},
 	text: {
 		flexShrink: 1,
 		marginRight: '1%',
-        width: '100%'
+		width: '100%',
 	},
 	add: {
 		display: 'flex',
@@ -19,10 +19,10 @@ const useStyles = makeStyles({
 		justifyContent: 'center',
 		float: 'right',
 	},
-    button: {
-        height: '100%',
-        width: '',
-    }
+	button: {
+		height: '100%',
+		width: '',
+	},
 });
 
 export default useStyles;

@@ -44,7 +44,7 @@ function Signup() {
 		const password = inputs[3].value;
 
 		setIsLoading(true);
-		const response = await fetch(process.env.REACT_APP_BACKEND+'/users/signup', {
+		const response = await fetch(process.env.REACT_APP_BACKEND + '/users/signup', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -60,16 +60,16 @@ function Signup() {
 		const data = await response.json();
 		setIsLoading(false);
 
-		if(data.sucess){
+		if (data.sucess) {
 			history.push('/');
-		}
-		else{
+		} else {
 			alert(data.result);
 		}
-
 	};
 
-	return <Accounts items={INPUT} action={'sign up'} register={signupHandler} loading={isLoading} />;
+	return (
+		<Accounts items={INPUT} action={'sign up'} register={signupHandler} loading={isLoading} />
+	);
 }
 
 export default Signup;

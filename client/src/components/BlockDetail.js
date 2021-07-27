@@ -11,7 +11,7 @@ export default function BlockDetail(props) {
 	const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
 	const date = new Date();
-	const showDate = date.toDateString().slice(4)
+	const showDate = date.toDateString().slice(4);
 
 	return (
 		<Grid item xs={12} md={4} lg={3}>

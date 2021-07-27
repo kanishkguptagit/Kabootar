@@ -36,7 +36,7 @@ function Dashboard() {
 
 	const [loading, setLoading] = useState(false);
 	const [graphLoading, setGraphLoading] = useState(false);
-	const [graphData, setGraphData] = useState({totalMails:0, graph:[]});
+	const [graphData, setGraphData] = useState({ totalMails: 0, graph: [] });
 
 	const modalHandler = mailId => {
 		setMailId(mailId);
@@ -72,7 +72,7 @@ function Dashboard() {
 			setLoading(false);
 		};
 
-		const fetchName = async () => {			
+		const fetchName = async () => {
 			const url = process.env.REACT_APP_BACKEND + '/users/' + ctx.userId;
 			const response = await fetch(url);
 
@@ -81,38 +81,35 @@ function Dashboard() {
 			const capName =
 				capitalize(data.result.firstName) + ' ' + capitalize(data.result.lastName);
 
-			setName(capName);			
+			setName(capName);
 		};
 
 		fetchData();
 		fetchName();
 	}, [ctx.token, setName, ctx.userId]);
 
-	useEffect(()=>{
-
-		const fetchData = async () =>{
-
+	useEffect(() => {
+		const fetchData = async () => {
 			setGraphLoading(true);
 
 			const url = process.env.REACT_APP_BACKEND + '/mails/analytics/user';
-			const result = await fetch(url,{
+			const result = await fetch(url, {
 				method: 'GET',
 				headers: {
-					'Content-Type':'application/json',
-					Authorization: 'Bearer '+ctx.token
-				}
-			})
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + ctx.token,
+				},
+			});
 
-			const data = await result.json();			
+			const data = await result.json();
 
-			setGraphData({totalMails:data.totalMails, graph:data.graph});
+			setGraphData({ totalMails: data.totalMails, graph: data.graph });
 
 			setGraphLoading(false);
-		}
+		};
 
 		fetchData();
-
-	},[setGraphLoading, ctx.token])
+	}, [setGraphLoading, ctx.token]);
 
 	return (
 		<Layout title={name}>
