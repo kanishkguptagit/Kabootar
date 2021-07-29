@@ -1,51 +1,51 @@
-import { Fragment, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { Snackbar, Chip } from '@material-ui/core';
 
 import Layout from '../components/Layout';
+import Editor from '../components/Editor';
 import AuthContext from '../store/auth-context';
-
-const getScheduled = (recurringSchedule, onceSchedule) => {
-	if (recurringSchedule.toLowerCase() !== 'none') {
-		return { isScheduled: true, scheduled: recurringSchedule.toLowerCase() };
-	} else if (onceSchedule) {
-		return {
-			isScheduled: true,
-			scheduled: new Date(onceSchedule).toISOString(),
-		};
-	}
-	return {
-		isScheduled: false,
-	};
-};
 
 function Create() {
 	const [message, setMessage] = useState('');
 	const ctx = useContext(AuthContext);
 
-	const getEnteredValues = async (to, subject, body, recurringSchedule, onceSchedule) => {
+	const getEnteredValues = async (
+		to,
+		subject,
+		body,
+		optionSelected,
+		recurringSchedule,
+		onceSchedule
+	) => {
 		const toArray = to?.split(',').map(t => t.trim());
+		const withBodyTag = `<body> ${body} </body>`;
 
-		console.log(
-			JSON.stringify({
-				to: toArray,
-				subject,
-				body,
-				...getScheduled(recurringSchedule, onceSchedule),
-			})
-		);
+		const isRecurring = optionSelected === 1;
+		const isScheduled = optionSelected === 2;
+		const scheduled = isRecurring
+			? recurringSchedule
+			: isScheduled
+			? onceSchedule.toISOString()
+			: '';
 
-		const data = await fetch('https://kabootar-mail.herokuapp.com/mails/add', {
+		const requestBody = JSON.stringify({
+			to: toArray,
+			subject,
+			body: withBodyTag,
+			isRecurring,
+			isScheduled,
+			scheduled,
+		});
+
+		console.log(requestBody);
+
+		const data = await fetch(process.env.REACT_APP_BACKEND + '/mails/add', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 				Authorization: 'Bearer ' + ctx.token,
 			},
-			body: JSON.stringify({
-				to: toArray,
-				subject,
-				body,
-				...getScheduled(recurringSchedule, onceSchedule),
-			}),
+			body: requestBody,
 		}).then(res => res.json());
 
 		if (data && data.success) {
@@ -56,8 +56,10 @@ function Create() {
 	};
 
 	return (
-		<Fragment>
-			<Layout editor={true} title={'Create'} getEnteredValues={getEnteredValues} />
+		<>
+			<Layout title={'Compose'}>
+				<Editor getEnteredValues={getEnteredValues} />
+			</Layout>
 			<Snackbar
 				open={message.length > 0}
 				autoHideDuration={4000}
@@ -69,7 +71,7 @@ function Create() {
 					label={message}
 				/>
 			</Snackbar>
-		</Fragment>
+		</>
 	);
 }
 

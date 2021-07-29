@@ -1,10 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 
-const { UserRoutes, MailRoutes } = require('./routes');
+const { UserRoutes, MailRoutes, MailTrackRoutes } = require('./routes');
 const { errorMiddleware } = require('./middleware');
 
-require('dotenv').config();
+if (process.env.NODE_ENV?.toLowerCase() === 'production') {
+	require('dotenv').config({ path: './.env.production' });
+} else {
+	require('dotenv').config();
+}
 
 require('./startup');
 
@@ -16,6 +20,7 @@ app.use(express.json());
 
 app.use('/users', UserRoutes);
 app.use('/mails', MailRoutes);
+app.use('/mail-track', MailTrackRoutes);
 
 app.use(errorMiddleware);
 

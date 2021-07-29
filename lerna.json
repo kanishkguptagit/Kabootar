@@ -4,6 +4,6 @@
     "client/**",
     "server/**"
   ],
-  "version": "1.4.0",
+  "version": "2.5.0",
   "useWorkspaces": false
 }

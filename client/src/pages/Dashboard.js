@@ -1,20 +1,21 @@
-import { useEffect, useContext, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 
 import Layout from '../components/Layout';
 import AuthContext from '../store/auth-context';
+import MailList from '../components/MailList';
+import Modal from '../ui/Modal';
+import Analytics from '../components/Analytics';
+import LoadingSpinner from '../components/Spinner/LoadingSpinner';
+import Graph from '../components/Graph';
+import BlockDetail from '../components/BlockDetail';
 
-function createData(id, schedule, recipient, subject) {
-	return { id, schedule, recipient, subject };
+function createData(id, date, schedule, recipient, subject, recipientSummary) {
+	const scheduleDate = new Date(schedule);
+	const month = scheduleDate.toDateString();
+	const time = scheduleDate.toLocaleTimeString();
+	schedule = month + ' - ' + time;
+	return { id, date, schedule, recipient, subject, recipientSummary };
 }
-
-const chart = {
-	enable: true,
-};
-
-const block = {
-	enable: true,
-	details: null,
-};
 
 const capitalize = s => {
 	if (s) return s[0].toUpperCase() + s.slice(1);
@@ -23,16 +24,32 @@ const capitalize = s => {
 function Dashboard() {
 	const ctx = useContext(AuthContext);
 
+	const [openModal, setOpenModal] = useState(false);
+	const [mailId, setMailId] = useState('');
+
 	const [loadedData, setLoadedData] = useState({
 		enable: true,
 		items: [],
 	});
 
-	const [name, setName] = useState('Dashboard');
+	const [name, setName] = useState('');
+
+	const [loading, setLoading] = useState(false);
+	const [graphLoading, setGraphLoading] = useState(false);
+	const [graphData, setGraphData] = useState({ totalMails: 0, graph: [] });
+
+	const modalHandler = mailId => {
+		setMailId(mailId);
+		setOpenModal(prevState => {
+			return !prevState;
+		});
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const data = await fetch('https://kabootar-mail.herokuapp.com/mails/dashboard', {
+			setLoading(true);
+			const url = process.env.REACT_APP_BACKEND + '/mails/history';
+			const data = await fetch(url, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -40,20 +57,23 @@ function Dashboard() {
 				},
 			}).then(r => r.json());
 
-			if (!data || !data.result || !Array.isArray(data.result)) {
-				setLoadedData({ enable: false, items: [] });
-				return;
-			}
-
-			const results = data.result.map(res =>
-				createData(res._id, res.scheduled, res.recipents?.toString(), res.subject)
+			const results = (data.result || []).map(res =>
+				createData(
+					res._id,
+					'',
+					res.scheduled,
+					res.recipents.slice(1, res.recipents.length),
+					res.subject,
+					res.recipents[0]
+				)
 			);
 
 			setLoadedData({ enable: true, items: results });
+			setLoading(false);
 		};
 
 		const fetchName = async () => {
-			const url = 'https://kabootar-mail.herokuapp.com/users/' + ctx.userId;
+			const url = process.env.REACT_APP_BACKEND + '/users/' + ctx.userId;
 			const response = await fetch(url);
 
 			const data = await response.json();
@@ -66,9 +86,52 @@ function Dashboard() {
 
 		fetchData();
 		fetchName();
-	}, [ctx.token, setLoadedData, ctx.userId, setName]);
+	}, [ctx.token, setName, ctx.userId]);
 
-	return <Layout editor={false} chart={chart} block={block} list={loadedData} title={name} />;
+	useEffect(() => {
+		const fetchData = async () => {
+			setGraphLoading(true);
+
+			const url = process.env.REACT_APP_BACKEND + '/mails/analytics/user';
+			const result = await fetch(url, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + ctx.token,
+				},
+			});
+
+			const data = await result.json();
+
+			setGraphData({ totalMails: data.totalMails, graph: data.graph });
+
+			setGraphLoading(false);
+		};
+
+		fetchData();
+	}, [setGraphLoading, ctx.token]);
+
+	return (
+		<Layout title={name}>
+			{openModal && (
+				<Modal onClose={modalHandler}>
+					<Analytics mailId={mailId} ctx={ctx} />
+				</Modal>
+			)}
+			{!loading && (
+				<Fragment>
+					<Graph items={graphData.graph} loading={graphLoading} />
+					<BlockDetail items={graphData.totalMails} />
+					<MailList items={loadedData.items} modalHandler={modalHandler} />
+				</Fragment>
+			)}
+			{loading && (
+				<div className="centered">
+					<LoadingSpinner />
+				</div>
+			)}
+		</Layout>
+	);
 }
 
 export default Dashboard;

@@ -1,2 +1,2 @@
-import './db'
+import './db';
 import './scheduler';
