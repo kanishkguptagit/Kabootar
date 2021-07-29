@@ -10,24 +10,9 @@ Automatically send and track recurring emails securely. Simple and Minimalist.
 
 To use this in your localhost
 
-(Frontend)
-
-```bash
-  npm install
-  npm start
 ```
-
-(Backend)
-
-```bash
-  npm install
-  npm run dev
-```
-
-To deploy this project run
-
-```bash
-  npm run deploy
+docker-compose build
+docker-compose up
 ```
 
 ## Authors
