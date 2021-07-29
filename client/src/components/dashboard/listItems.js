@@ -5,17 +5,16 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-// import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import CreateIcon from '@material-ui/icons/Create';
-import BarChartIcon from '@material-ui/icons/BarChart';
-// import LayersIcon from '@material-ui/icons/Layers';
+import Schedule from '@material-ui/icons/Schedule';
+import List from '@material-ui/icons/List';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
 import classes from '../../styles/listItems.module.css';
 
 export const mainListItems = (
 	<div>
-		<NavLink to="/dashboard" className={classes.navlink} activeStyle={{color:"#3f5acc"}}>
+		<NavLink to="/dashboard" className={classes.navlink} activeStyle={{ color: '#3f5acc' }}>
 			<ListItem button>
 				<ListItemIcon>
 					<DashboardIcon />
@@ -23,7 +22,7 @@ export const mainListItems = (
 				<ListItemText primary="Dashboard" />
 			</ListItem>
 		</NavLink>
-		<NavLink to="/create" className={classes.navlink} activeStyle={{color:"#3f5acc"}}>
+		<NavLink to="/create" className={classes.navlink} activeStyle={{ color: '#3f5acc' }}>
 			<ListItem button>
 				<ListItemIcon>
 					<CreateIcon />
@@ -31,12 +30,20 @@ export const mainListItems = (
 				<ListItemText primary="Compose" />
 			</ListItem>
 		</NavLink>
-		<NavLink to="/history" className={classes.navlink} activeStyle={{color:"#3f5acc"}}>
+		<NavLink to="/history" className={classes.navlink} activeStyle={{ color: '#3f5acc' }}>
 			<ListItem button>
 				<ListItemIcon>
-					<BarChartIcon />
+					<Schedule />
 				</ListItemIcon>
-				<ListItemText primary="History" />
+				<ListItemText primary="Ongoing" />
+			</ListItem>
+		</NavLink>
+		<NavLink to="/task" className={classes.navlink} activeStyle={{ color: '#3f5acc' }}>
+			<ListItem button>
+				<ListItemIcon>
+					<List />
+				</ListItemIcon>
+				<ListItemText primary="Task" />
 			</ListItem>
 		</NavLink>
 	</div>

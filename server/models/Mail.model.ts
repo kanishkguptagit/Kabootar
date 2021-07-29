@@ -1,21 +1,20 @@
 import mongoose, { Document, Schema, Types } from 'mongoose';
 
 export interface IMail {
-	_id:Types.ObjectId;
+	_id: Types.ObjectId;
 	name?: string;
 	owner: Types.ObjectId;
 	recipents: Array<string>;
 	subject: string;
 	body: string;
-	scheduled?: Date;
+	scheduled?: String;
 	isScheduled?: boolean;
+	mailTracks: Types.ObjectId[];
 }
 
-export interface ICreateMail extends Omit<IMail,'_id'>{}
+export interface ICreateMail extends Omit<IMail, '_id' | 'mailTracks'> {}
 
-interface IMailBase extends Omit<ICreateMail, 'scheduled'>, Document {
-	scheduled: Date | null;
-}
+interface IMailBase extends Omit<IMail, '_id'>, Document {}
 
 const MailSchema = new Schema({
 	name: { type: String, required: false, trim: true },
@@ -23,8 +22,9 @@ const MailSchema = new Schema({
 	recipents: [String],
 	subject: { type: String, required: true },
 	body: { type: String, required: true },
-	scheduled: { type: Date, required: false },
-	isScheduled: { type: Boolean, required: false, index: true },
+	scheduled: { type: Date, required: false, default: new Date().toISOString() },
+	isScheduled: { type: Boolean, required: false, default: false, index: true },
+	mailTracks: { type: [Schema.Types.ObjectId], required: false, default: [] },
 });
 
 export default mongoose.model<IMailBase>('Mail', MailSchema);

@@ -25,7 +25,7 @@ export function getPayloadFromJWT(token: string): Record<string, unknown> | null
 
 		return payload as any;
 	} catch (e) {
-		console.log(chalk.bgRed.white('Could not verify JWT!'));
+		console.log(chalk.bgRed.white('Could not verify JWT for user auth!'));
 		return null;
 	}
 }

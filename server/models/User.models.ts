@@ -1,13 +1,14 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-interface IBaseUser extends Document {
+export interface IUser {
+	_id: string;
 	email: string;
 	password: string;
 	firstName: string;
 	lastName?: string;
 }
 
-export interface IUser extends Omit<IBaseUser, 'password'> {}
+interface IBaseUser extends Omit<IUser, '_id'>, Document {}
 
 const UserSchema: Schema = new Schema({
 	email: { type: String, required: true, unique: true, index: true },

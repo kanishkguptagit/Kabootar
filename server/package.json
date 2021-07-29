@@ -1,11 +1,14 @@
 {
 	"name": "server",
-	"version": "1.4.0",
+	"version": "2.5.0",
 	"private": true,
 	"scripts": {
 		"start": "node build/server.js",
 		"dev": "nodemon --config nodemon.json",
-		"build": "tsc"
+		"prebuild": "npm run decrypt",
+		"build": "tsc",
+		"encrypt": "cp .env.production tools/ && node tools/encrypt.js",
+		"decrypt": "node tools/decrypt.js"
 	},
 	"dependencies": {
 		"agenda": "^4.1.3",
@@ -18,8 +21,8 @@
 		"jsonwebtoken": "^8.5.1",
 		"mongoose": "^5.12.15",
 		"nodemailer": "^6.6.2",
-		"nodemailer-mail-tracking": "^0.1.7",
 		"nodemailer-ses-transport": "^1.5.1",
+		"saslprep": "^1.0.3",
 		"ts-node": "^10.0.0"
 	},
 	"devDependencies": {
