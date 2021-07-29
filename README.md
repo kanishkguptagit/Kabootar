@@ -78,21 +78,21 @@ Install my-project with npm
 -   Lightweight and fast
 -   Made using mern stack
 -   Seamless performance possible due to Reactjs
--   Simple and appealing UI
--   Smooth and responsive experience
--   Various font decoration features while composing a mail
+-   Simple, Smooth and appealing UI
+-   View scheduled mail and history of mails sent
+-   Rich Text Editor with various font formatting option.
 -   Mails can be scheduled to be sent in future
 -   Recurring mails possible
--   View scheduled mail and history of mails sent
--   Backend in node (Typescript) for scalibility purpose
 -   Persistent logins
 -   Highly secured endpoints
 -   Used amazon's mailing service for enhanced speed
--   Required recievers consent so as to avoid spamming
--   Used MongoDB for data security
--   Backend deployed in heroku
--   Frontend hosted in netlify
+-   Required onetime recievers consent so as to avoid spamming
 -   Mails are recovered even after server failure to avoid any inconvenience caused to our clients and their business
+-   Advanced Analytics integrated, see who opened the mail and clicked links(if any) present in the mail.
+-   Self Hosting. Get our product into yours
+-   Auto deployed using CI/CD (Github actions)
+-   Three layer Testing (local, peer, CI/CD)
+-   Save any future tasks as a reminder.
 
 ## Usage/Examples
 
